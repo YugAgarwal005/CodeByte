@@ -1,0 +1,6 @@
+{
+  "name": "CodeByte",
+  "description": "A gamified coding language learning platform with dynamic challenges, league systems, and avatars.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

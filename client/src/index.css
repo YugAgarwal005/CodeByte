@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=swap');
+
+* {
+  font-family: 'Josefin Sans', sans-serif;
+  box-sizing: border-box;
+
+  /* Webkit-based browsers */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #333333CC;
+    border-radius: 16px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #3333334D;
+    border-radius: 16px;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: inline;
+    height: 3px;
+  }
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #0f0f0f;
+}
