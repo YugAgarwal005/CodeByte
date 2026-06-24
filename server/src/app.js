@@ -33,7 +33,7 @@ const setupFrontend = async () => {
     app.use(vite.middlewares);
     console.log("Vite dev server middleware mounted targeting 'client' folder");
   } else {
-    const distPath = path.join(process.cwd(), "client/dist");
+    const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));

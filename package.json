@@ -7,7 +7,7 @@
     "dev": "node server/src/server.js",
     "build": "vite build --config client/vite.config.js",
     "start": "NODE_ENV=production node server/src/server.js",
-    "clean": "rm -rf client/dist",
+    "clean": "rm -rf dist",
     "lint": "vite build --config client/vite.config.js"
   },
   "dependencies": {
