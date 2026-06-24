@@ -42,7 +42,9 @@ const setupFrontend = async () => {
   }
 };
 
-await setupFrontend();
+if (!process.env.VERCEL) {
+  await setupFrontend();
+}
 
 // Centralized error handler
 app.use(errorHandler);
