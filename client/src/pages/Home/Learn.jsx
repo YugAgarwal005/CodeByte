@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components';
 import About from '../../components/common/About';
 import Rightnavbar from '../../components/layout/Rightnavbar';
-import leaderboard from '../../assets/images/coins12.png';
+import leaderboard from '../../assets/images/coins1.png';
 import trophy from '../../assets/images/trophy.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getcourseRoute ,getuserRoute } from '../../utils/Apiroutes';

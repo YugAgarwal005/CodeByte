@@ -7,7 +7,7 @@ import { getuserRoute } from '../../utils/Apiroutes'
 import axios from 'axios';
 import About from '../../components/common/About';
 import { Link, useNavigate } from 'react-router-dom';
-import leaderboard from '../../assets/images/coins12.png';
+import leaderboard from '../../assets/images/coins1.png';
 import welcome from '../../assets/images/welcome.gif';
 
 function Quests() {
