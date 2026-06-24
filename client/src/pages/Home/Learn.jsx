@@ -7,7 +7,7 @@ import trophy from '../../assets/images/trophy.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getcourseRoute ,getuserRoute } from '../../utils/Apiroutes';
 import axios from 'axios';
-import err from '../../assets/images/404.png'
+const err = "https://d35aaqx5ub95lt.cloudfront.net/images/4af31393cf9dee6fd35c07fc7155d404.svg";
 
 function Learn() {
 

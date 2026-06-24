@@ -4,7 +4,7 @@ import Register from './pages/Login/Register';
 import Login from './pages/Login/Login';
 import SetAvatar from './pages/Dashboard/SetAvatar';
 import CodeByte from './pages/Dashboard/CodeByte';
-import err from './assets/images/404.png'
+const err = "https://d35aaqx5ub95lt.cloudfront.net/images/4af31393cf9dee6fd35c07fc7155d404.svg";
 import Learn from './pages/Home/Learn';
 import Leaderboard from './pages/Dashboard/Leaderboard';
 import Profile from './pages/Dashboard/Profile';

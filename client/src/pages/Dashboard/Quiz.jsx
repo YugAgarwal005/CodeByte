@@ -10,7 +10,7 @@ import axios from 'axios';
 import loader from '../../assets/images/loader.gif';
 import resultimg from '../../assets/images/result.png';
 import { getquestionsRoute, quizsubmitRoute } from '../../utils/Apiroutes'
-import err from '../../assets/images/404.png'
+const err = "https://d35aaqx5ub95lt.cloudfront.net/images/4af31393cf9dee6fd35c07fc7155d404.svg";
 
 function Quiz() {
     const { unitnum, levelnum } = useParams();

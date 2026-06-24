@@ -11,7 +11,7 @@ import league from '../../assets/images/league.png'
 import target from '../../assets/images/target.png'
 import unfollow from '../../assets/images/unfollowfriend.png'
 import followfr from '../../assets/images/followfriend.png'
-import err from '../../assets/images/404.png'
+const err = "https://d35aaqx5ub95lt.cloudfront.net/images/4af31393cf9dee6fd35c07fc7155d404.svg";
 import { useNavigate, useParams } from 'react-router-dom'
 import Rightnavbar from '../../components/layout/Rightnavbar'
 import { allUsersRoute, followUnfollowRoute, getuserRoute } from '../../utils/Apiroutes'
