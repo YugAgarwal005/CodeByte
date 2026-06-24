@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
-import firee from '../../assets/images/fireee.png'
+import firee from '../../assets/images/icons8-firee.png'
 import target from '../../assets/images/target.png'
 import Rightnavbar from '../../components/layout/Rightnavbar'
 import { getuserRoute } from '../../utils/Apiroutes'
