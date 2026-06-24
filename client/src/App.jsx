@@ -4,7 +4,7 @@ import Register from './pages/Login/Register';
 import Login from './pages/Login/Login';
 import SetAvatar from './pages/Dashboard/SetAvatar';
 import CodeByte from './pages/Dashboard/CodeByte';
-import err from './assets/images/4044.png'
+import err from './assets/images/404.png'
 import Learn from './pages/Home/Learn';
 import Leaderboard from './pages/Dashboard/Leaderboard';
 import Profile from './pages/Dashboard/Profile';
