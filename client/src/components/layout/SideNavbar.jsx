@@ -94,7 +94,7 @@ function SideNavbar() {
         {moreHovered && (
           <div className="morehover" onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
             <ul>
-              <li onClick={()=>{handleParentClick2()}} className='li'><img src={getAssetUrl('github-logo.png', gitlogo)} alt="gitlogo" /><span><a href='https://github.com/vedantgore1331/CodeByte' ref={childRef2}>Github</a></span></li>
+              <li onClick={()=>{handleParentClick2()}} className='li'><img src={getAssetUrl('github-logo.png', gitlogo)} alt="gitlogo" /><span><a href='https://github.com/YugAgarwal005/CodeByte' ref={childRef2}>Github</a></span></li>
               <li onClick={() => {
                 localStorage.removeItem('codebyte-user');
                 localStorage.removeItem('course');
