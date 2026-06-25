@@ -8,23 +8,8 @@
       "destination": "/api/index.js"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/client/dist/assets/$1"
-    },
-    {
       "source": "/((?!api/).*)",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/html.*"
-        }
-      ],
-      "destination": "/client/dist/index.html"
-    },
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/client/dist/$1"
+      "destination": "/index.html"
     }
   ]
 }
