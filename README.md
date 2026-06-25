@@ -1,5 +1,7 @@
 # CodeByte 🚀
 
+### 🔗 Live Link: [https://codebyte-by-yug.vercel.app/](https://codebyte-by-yug.vercel.app/)
+
 CodeByte is a gamified full-stack coding education platform that provides a structured, progressive pathway for learning coding languages (such as Java, C/C++, and Python). Designed with an elegant, distraction-free interface, CodeByte helps learners master key computer science concepts through dynamic interactive quizzes, daily streaks, customizable avatars, and a real-time competitive leaderboard league.
 
 To ensure an immersive and high-focus learning environment, CodeByte prioritizes progress and consistency. All distracting gamification mechanics like gems, hearts, and shops have been completely removed, allowing users to focus 100% on what matters most: **learning to code**.

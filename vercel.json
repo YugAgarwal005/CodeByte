@@ -4,11 +4,11 @@
   "outputDirectory": "client/dist",
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/:path*",
       "destination": "/api"
     },
     {
-      "source": "/((?!api/|assets/|favicon.ico|logo192.png|logo512.png|manifest.json|robots.txt|SRS.pdf).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
