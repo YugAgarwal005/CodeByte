@@ -131,7 +131,6 @@ function SetAvatar() {
             }
           </div>
           <div className='btns'>
-            <button type="submit" className='more' onClick={fetchAvatars}>VIEW MORE</button>
             <button type="submit" onClick={() => setProfilePicture()}>SET AS PROFILE PICTURE</button>
           </div>
         </Container>
