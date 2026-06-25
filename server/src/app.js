@@ -14,50 +14,9 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 
-// URL Normalization Middleware for Vercel Serverless environment
-app.use((req, res, next) => {
-  // Try to find the original client-requested path
-  let originalUrl = req.headers["x-vercel-forwarded-path"] || req.headers["x-forwarded-url"] || req.headers["x-original-url"];
-  
-  // If we found the original path, let's normalize the req.url
-  if (originalUrl) {
-    // If originalUrl doesn't have query params but the current req.url does, preserve them
-    const urlParts = req.url.split("?");
-    const queryString = urlParts.length > 1 ? "?" + urlParts[1] : "";
-    
-    if (!originalUrl.includes("?") && queryString) {
-      originalUrl += queryString;
-    }
-    
-    console.log(`[Vercel URL Normalizer] Rewriting req.url from ${req.url} to ${originalUrl}`);
-    req.url = originalUrl;
-  } else {
-    // Fallback: If no Vercel forwarding headers exist (e.g. local dev), we shouldn't rewrite unless req.url contains api/index.js
-    if (req.url.includes("api/index.js") || req.url === "/api" || req.url === "/api/") {
-      const fallbackUrl = req.headers["x-matched-path"] || req.url;
-      // Only rewrite if it's not pointing to api/index.js to avoid infinite loops/404s
-      if (fallbackUrl && !fallbackUrl.includes("api/index.js")) {
-        req.url = fallbackUrl;
-      }
-    }
-  }
-  next();
-});
-
 // Standard middlewares
 app.use(cors());
 app.use(express.json());
-
-// Ensure Database is connected before routing (essential for Vercel Serverless environment)
-app.use(async (req, res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (err) {
-    console.error("Database connection error in middleware:", err);
-    next(err);
-  }
-});
 
 // API Routes
 app.use("/api/auth", authRoutes);
