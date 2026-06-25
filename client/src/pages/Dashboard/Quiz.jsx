@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { styled } from 'styled-components'
 import { useState } from 'react'
-import useSound from 'use-sound'
 import success from '../../assets/audio/correct.mp3'
 import fail from '../../assets/audio/wrong.mp3'
 import skip from '../../assets/audio/skip.mp3'
@@ -14,12 +13,9 @@ import err from '../../assets/images/4044.png'
 
 function Quiz() {
     const { unitnum, levelnum } = useParams();
-    const [isCorrect] = useSound(success);
     const location = useLocation();
     const scrollContainerRef = useRef(null);
-    const [isWrong] = useSound(fail);
     const [quiz, setQuiz] = useState(null);
-    const [isSkip] = useSound(skip);
     const [isLoading, SetisLoading] = useState(true);
     const [activeQuestion, setActiveQuestion] = useState(0)
     const [selectedAnswer, setSelectedAnswer] = useState(null)
@@ -32,6 +28,19 @@ function Quiz() {
         correctAnswers: 0,
         wrongAnswers: 0,
     });
+
+    const isCorrect = () => {
+        const audio = new Audio(success);
+        audio.play().catch(e => console.error("Audio playback error:", e));
+    };
+    const isWrong = () => {
+        const audio = new Audio(fail);
+        audio.play().catch(e => console.error("Audio playback error:", e));
+    };
+    const isSkip = () => {
+        const audio = new Audio(skip);
+        audio.play().catch(e => console.error("Audio playback error:", e));
+    };
     const [correctindex,setcorrectIndex]=useState(null);
     const navigate = useNavigate();
 

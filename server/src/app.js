@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 // Database connection middleware (lazy connection with user-friendly error output)
-app.use(async (req, res, next) => {
+app.use(["/api", "/auth", "/quiz"], async (req, res, next) => {
   try {
     await connectDB();
     next();
