@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components';
 import About from '../../components/common/About';
 import Rightnavbar from '../../components/layout/Rightnavbar';
-import leaderboard from '../../assets/images/coins1.png';
+import leaderboard from '../../assets/images/coins12.png';
 import trophy from '../../assets/images/trophy.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getcourseRoute ,getuserRoute } from '../../utils/Apiroutes';
 import axios from 'axios';
-const err = "https://d35aaqx5ub95lt.cloudfront.net/images/4af31393cf9dee6fd35c07fc7155d404.svg";
+import err from '../../assets/images/4044.png'
 
 function Learn() {
 

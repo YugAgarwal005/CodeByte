@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 export default defineConfig(() => {
   return {
     root: path.resolve(__dirname, '.'),
+    publicDir: path.resolve(__dirname, '../public'),
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
@@ -17,7 +18,7 @@ export default defineConfig(() => {
       },
     },
     build: {
-      outDir: path.resolve(__dirname, '../dist'),
+      outDir: path.resolve(__dirname, 'dist'),
       emptyOutDir: true,
     },
     server: {

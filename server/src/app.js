@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { createServer as createViteServer } from "vite";
+import { connectDB } from "./config/db.js";
 
 // Import routes
 import authRoutes from "./routes/auth.routes.js";
@@ -16,6 +17,17 @@ const app = express();
 // Standard middlewares
 app.use(cors());
 app.use(express.json());
+
+// Ensure Database is connected before routing (essential for Vercel Serverless environment)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("Database connection error in middleware:", err);
+    next(err);
+  }
+});
 
 // API Routes
 app.use("/api/auth", authRoutes);
@@ -33,7 +45,7 @@ const setupFrontend = async () => {
     app.use(vite.middlewares);
     console.log("Vite dev server middleware mounted targeting 'client' folder");
   } else {
-    const distPath = path.join(process.cwd(), "dist");
+    const distPath = path.join(process.cwd(), "client/dist");
     app.use(express.static(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));

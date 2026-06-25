@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 export const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    console.log("Using existing database connection");
+    return;
+  }
+
   let mongoUrl = process.env.MONGO_URL;
   if (!mongoUrl) {
     console.warn("Warning: MONGO_URL environment variable is not defined!");

@@ -1,9 +1,5 @@
 # CodeByte 🚀
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://codebyte-by-yug.vercel.app/)
-
-**Live Application Link:** [https://codebyte-by-yug.vercel.app/](https://codebyte-by-yug.vercel.app/)
-
 CodeByte is a gamified full-stack coding education platform that provides a structured, progressive pathway for learning coding languages (such as Java, C/C++, and Python). Designed with an elegant, distraction-free interface, CodeByte helps learners master key computer science concepts through dynamic interactive quizzes, daily streaks, customizable avatars, and a real-time competitive leaderboard league.
 
 To ensure an immersive and high-focus learning environment, CodeByte prioritizes progress and consistency. All distracting gamification mechanics like gems, hearts, and shops have been completely removed, allowing users to focus 100% on what matters most: **learning to code**.
@@ -77,38 +73,7 @@ Create a `.env` file in the root directory and add your secret keys and connecti
 PORT=3000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
-VITE_GOOGLE_CLIENT_ID=your_google_client_id
 ```
-
-### 🔑 Google Sign-In Setup & Configuration
-
-To enable the Google Sign-In feature, you need to configure a Google Cloud project and obtain a Client ID.
-
-#### 1. Obtain your Google Client ID
-1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
-2. Create a new project or select an existing one.
-3. Navigate to **APIs & Services** > **Credentials**.
-4. Click **Create Credentials** and select **OAuth client ID**.
-5. If prompted, configure the **OAuth consent screen** (set App name, User support email, and Developer contact information).
-6. Under **Application type**, choose **Web application**.
-7. In the **Authorized JavaScript origins** section, add:
-   - For local development: `http://localhost:3000`
-   - For production (Live): `https://codebyte-by-yug.vercel.app`
-8. Click **Create** to receive your **Client ID** (e.g., `123456789-abcde.apps.googleusercontent.com`).
-
-#### 2. Configure the Client ID in the Application
-- **For Local Development**:
-  Add the environment variable to your root `.env` file:
-  ```env
-  VITE_GOOGLE_CLIENT_ID=your_google_client_id_here
-  ```
-- **For Production (Vercel)**:
-  1. Go to your Vercel Dashboard and select the **CodeByte** project.
-  2. Navigate to **Project Settings** > **Environment Variables**.
-  3. Add a new variable with Key: `VITE_GOOGLE_CLIENT_ID` and Value: `your_google_client_id_here`.
-  4. Redeploy the application for the environment variable to take effect.
-
----
 
 ### Step 4: Run the Development Server
 From the root directory, start the development server using:
