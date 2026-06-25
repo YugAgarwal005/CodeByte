@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import robot from '../../assets/images/welcome.gif';
 import { useState,useEffect } from 'react';
+import { getAssetUrl } from '../../utils/assets';
 
 function Welcome({currentuser}) {
     const [currentuserName,setCurrentUserName]=useState(undefined);
@@ -13,7 +14,7 @@ function Welcome({currentuser}) {
   return (
     <>
      <Container>
-      <img src={robot} alt="robot" />
+      <img src={getAssetUrl('welcome.gif', robot)} alt="robot" />
       <h1>Welcome, <span>{currentuserName}</span></h1>
       <h3>Please select a chat to start messaging</h3>
      </Container>

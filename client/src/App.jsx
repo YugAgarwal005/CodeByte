@@ -6,6 +6,7 @@ import SetAvatar from './pages/Dashboard/SetAvatar';
 import CodeByte from './pages/Dashboard/CodeByte';
 import err from './assets/images/4044.png'
 import Learn from './pages/Home/Learn';
+import { getAssetUrl } from './utils/assets';
 import Leaderboard from './pages/Dashboard/Leaderboard';
 import Profile from './pages/Dashboard/Profile';
 import Quests from './pages/Dashboard/Quests';
@@ -70,7 +71,7 @@ function App() {
 const ErrorPage = () => {
   return (
     <Containererror>
-      <img src={err} alt="error" className='errorr' />
+      <img src={getAssetUrl('4044.png', err)} alt="error" className='errorr' />
     </Containererror>
   );
 };

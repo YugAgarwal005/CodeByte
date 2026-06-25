@@ -8,6 +8,7 @@ import more from '../../assets/images/icons8-more-64.png'
 import logo from '../../assets/images/icons8-module-481.png'
 import gitlogo from '../../assets/images/github-logo.png'
 import { useState, useEffect, useRef } from 'react';
+import { getAssetUrl } from '../../utils/assets';
 
 function SideNavbar() {
   const location = useLocation();
@@ -45,27 +46,27 @@ function SideNavbar() {
   };
 
   const menuItems = [
-    { to: '/fake', label: 'learn', imgSrc: learn },
-    { to: '/', label: 'learn', imgSrc: learn },
-    { to: '/leaderboards', label: 'leaderboards', imgSrc: leaderboard },
-    { to: '/quests', label: 'quests', imgSrc: quest },
-    { to: '/profile', label: 'profile', imgSrc: user },
-    { to: location.pathname, label: 'more', imgSrc: more },
+    { to: '/fake', label: 'learn', imgSrc: getAssetUrl('icons8-home-64.png', learn) },
+    { to: '/', label: 'learn', imgSrc: getAssetUrl('icons8-home-64.png', learn) },
+    { to: '/leaderboards', label: 'leaderboards', imgSrc: getAssetUrl('coins1.png', leaderboard) },
+    { to: '/quests', label: 'quests', imgSrc: getAssetUrl('icons8-treasure-100.png', quest) },
+    { to: '/profile', label: 'profile', imgSrc: getAssetUrl('icons8-user-male-1001.png', user) },
+    { to: location.pathname, label: 'more', imgSrc: getAssetUrl('icons8-more-64.png', more) },
   ];
 
   const menuItems2 = [
-    { to: '/', label: 'learn', imgSrc: logo },
-    { to: '/', label: '', imgSrc: learn },
-    { to: '/leaderboards', label: 'leaderboards', imgSrc: leaderboard },
-    { to: '/quests', label: 'quests', imgSrc: quest },
-    { to: '/profile', label: 'profile', imgSrc: user },
-    { to: location.pathname, label: 'more', imgSrc: more },
+    { to: '/', label: 'learn', imgSrc: getAssetUrl('icons8-module-481.png', logo) },
+    { to: '/', label: '', imgSrc: getAssetUrl('icons8-home-64.png', learn) },
+    { to: '/leaderboards', label: 'leaderboards', imgSrc: getAssetUrl('coins1.png', leaderboard) },
+    { to: '/quests', label: 'quests', imgSrc: getAssetUrl('icons8-treasure-100.png', quest) },
+    { to: '/profile', label: 'profile', imgSrc: getAssetUrl('icons8-user-male-1001.png', user) },
+    { to: location.pathname, label: 'more', imgSrc: getAssetUrl('icons8-more-64.png', more) },
   ];
 
   return (
     <SidebarContainer>
       <div className='laptop'>
-        <div className='heading'><img src={logo} />CodeByte</div>
+        <div className='heading'><img src={getAssetUrl('icons8-module-481.png', logo)} />CodeByte</div>
         {menuItems.map((item, index) => (
           <Link key={index}
             to={item.to}
@@ -93,7 +94,7 @@ function SideNavbar() {
         {moreHovered && (
           <div className="morehover" onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
             <ul>
-              <li onClick={()=>{handleParentClick2()}} className='li'><img src={gitlogo} alt="gitlogo" /><span><a href='https://github.com/vedantgore1331/CodeByte' ref={childRef2}>Github</a></span></li>
+              <li onClick={()=>{handleParentClick2()}} className='li'><img src={getAssetUrl('github-logo.png', gitlogo)} alt="gitlogo" /><span><a href='https://github.com/vedantgore1331/CodeByte' ref={childRef2}>Github</a></span></li>
               <li onClick={() => {
                 localStorage.removeItem('codebyte-user');
                 localStorage.removeItem('course');

@@ -9,6 +9,7 @@ import About from '../../components/common/About';
 import { Link, useNavigate } from 'react-router-dom';
 import leaderboard from '../../assets/images/coins12.png';
 import welcome from '../../assets/images/welcome.gif';
+import { getAssetUrl } from '../../utils/assets'
 
 function Quests() {
 
@@ -53,14 +54,14 @@ function Quests() {
             <div><h3>Welcome !</h3><span>{userData?.username}</span></div>
             <span>Complete quests to earn rewards! Quests refresh every day.</span>
           </div>
-          <img src={welcome} alt="" />
+          <img src={getAssetUrl('welcome.gif', welcome)} alt="" />
         </div>
         <div className="dailyquests">
           <div className='header'><span>Daily Quests</span> <span className='time'><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity="1"><path d="M1 8C1 4.13401 4.13401 0.999999 8 0.999999C11.866 1 15 4.13401 15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8Z" stroke="currentColor" strokeWidth="2"></path><path fillRule="evenodd" clipRule="evenodd" d="M8 6C9.10457 6 10 6.89543 10 8C10 9.10457 9.10457 10 8 10C6.89543 10 6 9.10457 6 8C6 6.89543 6.89543 6 8 6Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M4.79155 6.09591C4.41476 5.71261 4.41664 5.09746 4.79576 4.71647V4.71647C5.18084 4.3295 5.80777 4.33141 6.19047 4.72073L7.94687 6.50744C8.32366 6.89074 8.32179 7.50589 7.94266 7.88688V7.88688C7.55759 8.27385 6.93065 8.27194 6.54795 7.88263L4.79155 6.09591Z" fill="currentColor"></path></g></svg>
             {24 - hours > 1 ? `${23 - hours} HOURS` : `${59 - minutes} MINUTES`}</span></div>
           <div className='main'>
             <div className="box">
-              <img src={firee} alt="" />
+              <img src={getAssetUrl('fireee.png', firee)} alt="" />
               <div>
                 <h3><span>Earn 100 XP </span> <span>{userData ? ((userData.userData.dailyChallenges.xp) <= 100 ? (userData.userData.dailyChallenges.xp) : 100) : 0}/100</span></h3>
                 <div className="progress-container">
@@ -88,7 +89,7 @@ function Quests() {
               </div>
             </div>
             <div className="box last">
-              <img src={target} alt="" />
+              <img src={getAssetUrl('target.png', target)} alt="" />
               <div>
                 <h3><span>Score 100% in 3 lessons </span> <span>{userData ? ((userData.userData.dailyChallenges.lessonsNumber) <= 3 ? (userData.userData.dailyChallenges.lessonsNumber) : 3) : 0}/3</span></h3>
                 <div className="progress-container">
@@ -123,7 +124,7 @@ function Quests() {
             <Link to='/leaderboards'>VIEW LEAGUE</Link>
           </div>
           <div className="content">
-            <img src={leaderboard} alt="" />
+            <img src={getAssetUrl('coins12.png', leaderboard)} alt="" />
             <div>
               You are ranked <span>#{userData?.rank}</span> Complete lessons to join leaderboard and compete against other learners
             </div>

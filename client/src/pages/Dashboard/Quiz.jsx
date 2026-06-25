@@ -10,6 +10,7 @@ import loader from '../../assets/images/loader.gif';
 import resultimg from '../../assets/images/result.png';
 import { getquestionsRoute, quizsubmitRoute } from '../../utils/Apiroutes'
 import err from '../../assets/images/4044.png'
+import { getAssetUrl } from '../../utils/assets'
 
 function Quiz() {
     const { unitnum, levelnum } = useParams();
@@ -30,15 +31,15 @@ function Quiz() {
     });
 
     const isCorrect = () => {
-        const audio = new Audio(success);
+        const audio = new Audio(getAssetUrl('correct.mp3', success));
         audio.play().catch(e => console.error("Audio playback error:", e));
     };
     const isWrong = () => {
-        const audio = new Audio(fail);
+        const audio = new Audio(getAssetUrl('wrong.mp3', fail));
         audio.play().catch(e => console.error("Audio playback error:", e));
     };
     const isSkip = () => {
-        const audio = new Audio(skip);
+        const audio = new Audio(getAssetUrl('skip.mp3', skip));
         audio.play().catch(e => console.error("Audio playback error:", e));
     };
     const [correctindex,setcorrectIndex]=useState(null);
@@ -197,11 +198,11 @@ function Quiz() {
         <>
             {isLoading ?
                 <ContainerError>
-                    <img src={loader} alt="loader" className='loader' />
+                    <img src={getAssetUrl('loader.gif', loader)} alt="loader" className='loader' />
                 </ContainerError> :
                 quiz === null ?
                     <Containererror>
-                        <img src={err} alt="error" className='errorr' />
+                        <img src={getAssetUrl('4044.png', err)} alt="error" className='errorr' />
                     </Containererror>
                     :
                     <Container>
@@ -233,7 +234,7 @@ function Quiz() {
                                 </div>
                             </div> :
                             <div className="result">
-                                <img src={resultimg} alt="" />
+                                <img src={getAssetUrl('result.png', resultimg)} alt="" />
                                 <div className="resultdiv">
                                     <div className="one">
                                         <div className='top'>Total XP</div>

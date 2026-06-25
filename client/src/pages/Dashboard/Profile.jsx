@@ -15,6 +15,7 @@ import flow from '../../assets/images/flow.png'
 import target from '../../assets/images/target.png'
 import { useNavigate } from 'react-router-dom'
 import error from '../../assets/images/404.png'
+import { getAssetUrl } from '../../utils/assets'
 import Rightnavbar from '../../components/layout/Rightnavbar'
 import { allUsersRoute, matchingUsersRoute, followRoute, getuserRoute, updateUsernameRoute } from '../../utils/Apiroutes'
 import { Edit, Check, X } from 'lucide-react';
@@ -199,14 +200,14 @@ function Profile() {
                 </div>
               )}
               <h5>{user.email}</h5>
-              <h4><img src={clock} />{getJoinedDate(user._id)}</h4>
-              <h4><img src={follow} />{userData ? userData.following.length : 0} Following / {userData ? userData.followers.length : 0} Followers</h4>
+              <h4><img src={getAssetUrl('clock.png', clock)} />{getJoinedDate(user._id)}</h4>
+              <h4><img src={getAssetUrl('follow.png', follow)} />{userData ? userData.following.length : 0} Following / {userData ? userData.followers.length : 0} Followers</h4>
               <h1></h1>
               <br />
             </div>
             <div className="avatar">
               <img src={`data:image/svg+xml;base64,${user.AvatarImage}`} alt="avatar" />
-              <img src={upload} onClick={() => navigate("/setavatar")} />
+              <img src={getAssetUrl('upload.png', upload)} onClick={() => navigate("/setavatar")} />
             </div>
           </div>
           : <div></div>}
@@ -214,14 +215,14 @@ function Profile() {
           <h3>Statistics</h3>
           <div>
             <div className="boxes">
-              <img src={fire} alt="" />
+              <img src={getAssetUrl('icons8-firee.png', fire)} alt="" />
               <div>
                 <h3>{userData ? userData.userData.streak.days : 0}</h3>
                 <h3 className='second'>Day Streak</h3>
               </div>
             </div>
             <div className="boxes">
-              <img src={xp} alt="" />
+              <img src={getAssetUrl('xp.png', xp)} alt="" />
               <div>
                 <h3>{userData ? userData.userData.xp : 0}</h3>
                 <h3 className='second'>Total XP</h3>
@@ -235,7 +236,7 @@ function Profile() {
               </div>
             </div>
             <div className="boxes">
-              <img src={medal} alt="" />
+              <img src={getAssetUrl('medal.png', medal)} alt="" />
               <div>
                 <h3>{userData?.rank <=3 ? userData?.rank : 0}</h3>
                 <h3 className='second'>Top 3 Finishes</h3>
@@ -247,7 +248,7 @@ function Profile() {
           <h3>Achievements</h3>
           <div className='main'>
             <div className="box">
-              <img src={firee} alt="" />
+              <img src={getAssetUrl('fireee.png', firee)} alt="" />
               <div>
                 <h3><span>Wildfire </span> <span>{userData ? ((userData.userData.streak.days) <=7 ? (userData.userData.streak.days) :7) : 0}/7</span></h3>
                 <div className="progress-container">
@@ -261,7 +262,7 @@ function Profile() {
               </div>
             </div>
             <div className="box">
-              <img src={xpe} alt="" />
+              <img src={getAssetUrl('xpe.png', xpe)} alt="" />
               <div>
                 <h3><span>Sage </span> <span>{userData ? ((userData.userData.xp) <=750 ? (userData.userData.xp) :750) : 0}/750</span></h3>
                 <div className="progress-container">
@@ -274,7 +275,7 @@ function Profile() {
               </div>
             </div>
             <div className="box last">
-              <img src={target} alt="" />
+              <img src={getAssetUrl('target.png', target)} alt="" />
               <div>
                 <h3><span>Scholar </span> <span>{userData ? ((userData.userData.correctQues) <=50 ? (userData.userData.correctQues) :50) : 0}/50</span></h3>
                 <div className="progress-container">
@@ -319,7 +320,7 @@ function Profile() {
               {
                 chats2.map((chat, index) => {
                   return (
-                    <div className='friend' key={index} onClick={()=>{navigate(`/profile/u/${chat._id}`)}}><img src={`data:image/svg+xml;base64,${chat.AvatarImage}`} alt="avatar" /><div><h3>{chat.username}</h3><span>{chat.userData.xp} XP</span></div><img src={(chat.isFollowing) ? right : followuser}
+                    <div className='friend' key={index} onClick={()=>{navigate(`/profile/u/${chat._id}`)}}><img src={`data:image/svg+xml;base64,${chat.AvatarImage}`} alt="avatar" /><div><h3>{chat.username}</h3><span>{chat.userData.xp} XP</span></div><img src={(chat.isFollowing) ? getAssetUrl('right.png', right) : getAssetUrl('followuser.png', followuser)}
                       className={(chat.isFollowing) ? "end rightt" : "end"}
                       onClick={(event) => {
                         if (!chat.isFollowing){
@@ -331,7 +332,7 @@ function Profile() {
                 })}
             </div>
             : <div className='error'>
-              <img src={error} alt="" />
+              <img src={getAssetUrl('404.png', error)} alt="" />
               <span>Sorry ! we didn’t find any matching learners. Try searching again.</span>
             </div>}
         </div>

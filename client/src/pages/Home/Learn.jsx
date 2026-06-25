@@ -8,6 +8,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getcourseRoute ,getuserRoute } from '../../utils/Apiroutes';
 import axios from 'axios';
 import err from '../../assets/images/4044.png'
+import { getAssetUrl } from '../../utils/assets';
 
 function Learn() {
 
@@ -70,7 +71,7 @@ function Learn() {
           (
             !user ?
               <Containererror>
-                <img src={err} alt="error" className='errorr' />
+                <img src={getAssetUrl('4044.png', err)} alt="error" className='errorr' />
               </Containererror>
               :
               <Container>
@@ -108,7 +109,7 @@ function Learn() {
                         {unit.level < innerindex ? <div className="float locked">
                           <h3>Complete all levels above to unlock this !</h3> <div>locked</div>
                         </div> : null}
-                        {innerindex + 1 === unit.lessons.length ? <img src={trophy} alt="" /> :
+                        {innerindex + 1 === unit.lessons.length ? <img src={getAssetUrl('trophy.png', trophy)} alt="" /> :
                           unit.level === 0 && innerindex === 0 ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/5e4203031e39fc43d94371565fd0d369.svg" alt="" /> :
                             unit.level === innerindex ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/ef9c771afdb674f0ff82fae25c6a7b0a.svg" alt="" />
                               : unit.level < innerindex + 1 ?
@@ -130,7 +131,7 @@ function Learn() {
                   <Link to='/leaderboards'>VIEW LEAGUE</Link>
                 </div>
                 <div className="content">
-                  <img src={leaderboard} alt="" />
+                  <img src={getAssetUrl('coins12.png', leaderboard)} alt="" />
                   <div>
                     You are ranked <span>#{userData?.rank}</span> Complete lessons to join leaderboard and compete against other learners
                   </div>

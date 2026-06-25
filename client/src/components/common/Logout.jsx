@@ -3,6 +3,7 @@ import logout from '../../assets/images/logout.png';
 import logoutclick from '../../assets/images/switch.png'
 import styled from 'styled-components';
 import {useNavigate, useSearchParams} from 'react-router-dom';
+import { getAssetUrl } from '../../utils/assets';
 
 function Logout() {
   const [ishover,setishover]=useState(false);  
@@ -13,7 +14,7 @@ function Logout() {
   }
   return (
     <Button>
-        <img src={!ishover ? logout :logoutclick} alt="logout" 
+        <img src={!ishover ? getAssetUrl('logout.png', logout) : getAssetUrl('switch.png', logoutclick)} alt="logout" 
         onMouseOver={()=>setishover(true)} 
         onMouseOut={()=>setishover(false)}
         onClick={()=>handleclick()}    

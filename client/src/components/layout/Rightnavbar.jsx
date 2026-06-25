@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import CalendarApp from '../common/Calendar'
 import { getuserRoute } from '../../utils/Apiroutes'
 import axios from 'axios';
+import { getAssetUrl } from '../../utils/assets'
 
 function Rightnavbar(props) {
 
@@ -47,7 +48,7 @@ function Rightnavbar(props) {
   return (
     <Container>
       <div className='box'>
-        <img src={courses} alt="courses" />
+        <img src={getAssetUrl('icons8-courses-64.png', courses)} alt="courses" />
         <div className="course" >
           <h3 id='one'>MY COURSES</h3>
           <h3 onClick={() => handleCourseClick('c&c++')} className='crs'>C & C++ BASICS</h3>
@@ -59,7 +60,7 @@ function Rightnavbar(props) {
           props.onShowStreakChange(false);
         }
       }}>
-        <img src={fire} alt="fire" className='fire' /> <span>{userData?.userData.streak.days}</span>
+        <img src={getAssetUrl('icons8-firee.png', fire)} alt="fire" className='fire' /> <span>{userData?.userData.streak.days}</span>
         <div className="course hoverfire">
           <div className="calendardiv">
             <h3>Streak</h3>

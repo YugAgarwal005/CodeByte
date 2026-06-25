@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { setAvatarRoute } from '../../utils/Apiroutes';
 import loader from '../../assets/images/loader.gif';
+import { getAssetUrl } from '../../utils/assets';
 
 function SetAvatar() {
   const avatarApi = 'https://api.multiavatar.com/';
@@ -112,7 +113,7 @@ function SetAvatar() {
       {isLoading ? 
       
        <Container>
-         <img src={loader} alt="loader" className='loader' />
+         <img src={getAssetUrl('loader.gif', loader)} alt="loader" className='loader' />
        </Container> :
 
         <Container>

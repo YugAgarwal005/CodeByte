@@ -12,6 +12,7 @@ import target from '../../assets/images/target.png'
 import unfollow from '../../assets/images/unfollowfriend.png'
 import followfr from '../../assets/images/followfriend.png'
 import err from '../../assets/images/4044.png'
+import { getAssetUrl } from '../../utils/assets'
 import { useNavigate, useParams } from 'react-router-dom'
 import Rightnavbar from '../../components/layout/Rightnavbar'
 import { allUsersRoute, followUnfollowRoute, getuserRoute } from '../../utils/Apiroutes'
@@ -110,7 +111,7 @@ function Profile() {
   if (error) {
     return (
       <Containererror>
-        <img src={err} alt="error" className='errorr' />
+        <img src={getAssetUrl('4044.png', err)} alt="error" className='errorr' />
       </Containererror>
     );
   }
@@ -124,9 +125,9 @@ function Profile() {
               <div>
                 <h3 className='username'>{user.username}</h3>
                 <h5>{user.email}</h5>
-                <h4><img src={clock} />{getJoinedDate(user._id)}</h4>
-                <h4><img src={follow} />{user ? user.following.length : 0} Following / {user ? user.followers.length : 0} Followers</h4>
-                <img src={user.isFollowing ? unfollow : followfr} className={user.isFollowing ? 'btn ' : 'flow btn'}
+                <h4><img src={getAssetUrl('clock.png', clock)} />{getJoinedDate(user._id)}</h4>
+                <h4><img src={getAssetUrl('follow.png', follow)} />{user ? user.following.length : 0} Following / {user ? user.followers.length : 0} Followers</h4>
+                <img src={user.isFollowing ? getAssetUrl('unfollowfriend.png', unfollow) : getAssetUrl('followfriend.png', followfr)} className={user.isFollowing ? 'btn ' : 'flow btn'}
                   onClick={() => {
                           handleFollowRequest(user._id)
                      }} 
@@ -142,14 +143,14 @@ function Profile() {
             <h3>Statistics</h3>
             <div>
               <div className="boxes">
-                <img src={fire} alt="" />
+                <img src={getAssetUrl('icons8-firee.png', fire)} alt="" />
                 <div>
                   <h3>{user ? user.userData.streak.days : 0}</h3>
                   <h3 className='second'>Day Streak</h3>
                 </div>
               </div>
               <div className="boxes">
-                <img src={xp} alt="" />
+                <img src={getAssetUrl('xp.png', xp)} alt="" />
                 <div>
                   <h3>{user ? user.userData.xp : 0}</h3>
                   <h3 className='second'>Total XP</h3>
@@ -163,7 +164,7 @@ function Profile() {
                 </div>
               </div>
               <div className="boxes">
-                <img src={medal} alt="" />
+                <img src={getAssetUrl('medal.png', medal)} alt="" />
                 <div>
                   <h3>{user?.rank <=3 ? user?.rank : 0}</h3>
                   <h3 className='second'>Top 3 Finishes</h3>
@@ -175,7 +176,7 @@ function Profile() {
           <h3>Achievements</h3>
           <div className='main'>
             <div className="box">
-              <img src={firee} alt="" />
+              <img src={getAssetUrl('fireee.png', firee)} alt="" />
               <div>
                 <h3><span>Wildfire </span> <span>{user ? ((user.userData.streak.days) <=7 ? (user.userData.streak.days) :7) : 0}/7</span></h3>
                 <div className="progress-container">
@@ -189,7 +190,7 @@ function Profile() {
               </div>
             </div>
             <div className="box">
-              <img src={xpe} alt="" />
+              <img src={getAssetUrl('xpe.png', xpe)} alt="" />
               <div>
                 <h3><span>Sage </span> <span>{user ? ((user.userData.xp) <=750 ? (user.userData.xp) :750) : 0}/750</span></h3>
                 <div className="progress-container">
@@ -202,7 +203,7 @@ function Profile() {
               </div>
             </div>
             <div className="box last">
-              <img src={target} alt="" />
+              <img src={getAssetUrl('target.png', target)} alt="" />
               <div>
                 <h3><span>Scholar </span> <span>{user ? ((user.userData.correctQues) <=50 ? (user.userData.correctQues) :50) : 0}/50</span></h3>
                 <div className="progress-container">
