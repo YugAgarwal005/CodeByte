@@ -14,6 +14,18 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 
+// URL Normalization Middleware for Vercel Serverless environment
+app.use((req, res, next) => {
+  const originalUrl = req.headers["x-matched-path"] || req.headers["x-forwarded-url"] || req.headers["x-now-route-api-path"] || req.url;
+  
+  // If req.url is rewritten to the function's entry point, restore the original path
+  if (req.url.includes("api/index.js") || req.url === "/api" || req.url === "/api/") {
+    console.log(`[Vercel URL Normalizer] Rewriting req.url from ${req.url} to ${originalUrl}`);
+    req.url = originalUrl;
+  }
+  next();
+});
+
 // Standard middlewares
 app.use(cors());
 app.use(express.json());
