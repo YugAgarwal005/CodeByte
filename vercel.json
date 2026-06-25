@@ -5,11 +5,26 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api"
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "/client/dist/assets/$1"
     },
     {
       "source": "/((?!api/).*)",
-      "destination": "/index.html"
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/html.*"
+        }
+      ],
+      "destination": "/client/dist/index.html"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/client/dist/$1"
     }
   ]
 }
