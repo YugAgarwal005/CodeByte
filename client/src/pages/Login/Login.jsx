@@ -79,7 +79,7 @@ function Login() {
           <span>Don't Have An Account ? <Link to='/register'>Register</Link></span>
           <div className='line'></div>
           <a className="btn btn-block btn-social btn-lg btn-google" onClick={()=>{childref.current.click()}}>
-            <span className="fa fa-google"></span><GoogleLogin reference={childref} txt='In' toast={toast} options={options}/>
+            <span className="fab fa-google"></span><GoogleLogin reference={childref} txt='In' toast={toast} options={options}/>
           </a>
         </form>
       </FormContainer>

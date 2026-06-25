@@ -34,6 +34,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/api/quiz", quizRoutes);
 
+// Vercel Serverless compatibility (handles requests when /api prefix is stripped by Vercel function routing)
+app.use("/auth", authRoutes);
+app.use("/auth", userRoutes);
+app.use("/quiz", quizRoutes);
+
 // Vite Integration for frontend (Dev vs Prod)
 const setupFrontend = async () => {
   if (process.env.NODE_ENV !== "production") {

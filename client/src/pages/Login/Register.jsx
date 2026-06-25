@@ -100,7 +100,7 @@ function Register() {
           <span>Already Have An Account ? <Link to='/login'>Login</Link></span>
           <div className='line'></div>
           <a className="btn btn-block btn-social btn-lg btn-google" onClick={()=>{childref.current.click()}}>
-            <span className="fa fa-google"></span><GoogleLogin reference={childref} txt='Up' toast={toast} options={options}/>
+            <span className="fab fa-google"></span><GoogleLogin reference={childref} txt='Up' toast={toast} options={options}/>
           </a>
         </form>
       </FormContainer>

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { googleRoute } from '../../utils/Apiroutes';
 import _ from 'lodash';
 import { useNavigate } from 'react-router-dom';
-import { Buffer } from 'buffer';
 
 function GoogleLogin(props) {
   const navigate = useNavigate();
@@ -18,7 +17,8 @@ function GoogleLogin(props) {
           }
         );
         const { name, picture, email } = res.data;
-        const buffer = Buffer.from(picture).toString("base64");
+        // Standard, browser-safe base64 encoding of the profile picture URL
+        const buffer = btoa(unescape(encodeURIComponent(picture)));
 
         const username = _.toLower(_.replace(name, / /g, ''));
         const { data } = await axios.post(googleRoute, {

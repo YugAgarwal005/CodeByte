@@ -5,7 +5,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { setAvatarRoute } from '../../utils/Apiroutes';
-import { Buffer } from 'buffer';
 import loader from '../../assets/images/loader.gif';
 
 function SetAvatar() {
@@ -40,7 +39,7 @@ function SetAvatar() {
           withCredentials: false,
           timeout: 5000,
         });
-        const buffer = Buffer.from(image.data).toString("base64");
+        const buffer = btoa(unescape(encodeURIComponent(image.data)));
         data.push(buffer);
       }
       setAvatars(data);
