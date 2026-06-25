@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
-import { createServer as createViteServer } from "vite";
 import { connectDB } from "./config/db.js";
 
 // Import routes
@@ -18,6 +17,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Database connection middleware (lazy connection with user-friendly error output)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("Database connection failed in middleware:", err);
+    res.status(500).json({
+      success: false,
+      error: "Database Connection Failed",
+      message: "The server failed to connect to the database. If you are using MongoDB Atlas, make sure you have allowed access from all IP addresses (0.0.0.0/0) in your MongoDB Atlas Security -> Network Access settings, as Vercel uses dynamic IP addresses that cannot be easily whitelisted individually.",
+      details: err.message
+    });
+  }
+});
+
 // API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", userRoutes);
@@ -31,6 +46,7 @@ app.use("/quiz", quizRoutes);
 // Vite Integration for frontend (Dev vs Prod)
 const setupFrontend = async () => {
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       root: path.join(process.cwd(), "client"),
       server: { middlewareMode: true },
