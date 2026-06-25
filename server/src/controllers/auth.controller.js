@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { Users } from '../models/user.model.js';
 import _ from 'lodash';
 
