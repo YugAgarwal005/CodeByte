@@ -18,9 +18,6 @@ export const register = async (req, res, next) => {
             email: email,
             password: hashedPass
         });
-        await Users.findOneAndUpdate({ username: 'vedantgore1331' }, { $addToSet: { followers: user._id.toString() } });
-        await Users.findOneAndUpdate({ username: 'codebyte-admin' }, { $addToSet: { followers: user._id.toString() } });
-        await Users.findOneAndUpdate({ username: 'codebyte-admin' }, { $addToSet: { following: user._id.toString() } });
         // Exclude sensitive fields from the response
         const { password, followers, following, courseProgress, isAdmin, userData, ...userWithoutSensitiveInfo } = user.toObject();
         return res.json({ status: true, user: userWithoutSensitiveInfo });
@@ -40,7 +37,7 @@ export const login = async (req, res, next) => {
             return res.json({ msg: "User with this Email or Username does not exist", status: false });
 
         if (!user.password) {
-            return res.json({ msg: "Account registered using Google or Facebook, try logging in with the same method", status: false });
+            return res.json({ msg: "Account registered using Google, try logging in with the same method", status: false });
         }
 
         const IsPassValid = await bcrypt.compare(loginPassword, user.password);
@@ -79,9 +76,6 @@ export const googlelogin = async (req, res, next) => {
             profilePic: buffer
         });
 
-        await Users.findOneAndUpdate({ username: 'vedantgore1331' }, { $addToSet: { followers: user._id.toString() } });
-        await Users.findOneAndUpdate({ username: 'codebyte-admin' }, { $addToSet: { followers: user._id.toString() } });
-        await Users.findOneAndUpdate({ username: 'codebyte-admin' }, { $addToSet: { following: user._id.toString() } });
 
         const { password, followers, following, courseProgress, isAdmin, userData, ...userWithoutSensitiveInfo } = user.toObject();
         return res.json({ status: true, user: userWithoutSensitiveInfo });

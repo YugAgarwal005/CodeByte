@@ -73,8 +73,12 @@ cd ..
 Create a `.env` file in the root directory and add your secret keys and connection strings:
 ```env
 PORT=3000
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
+MONGO_URL=your_mongodb_connection_string
+
+# ImageKit Configuration (for CDN asset serving and profile uploads)
+VITE_IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
+IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
+IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
 ```
 
 ### Step 4: Run the Development Server
