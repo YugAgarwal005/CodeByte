@@ -344,18 +344,6 @@ color: white;
           border-radius: 16px;
           background: linear-gradient(to left, #FF5722, #FFC107);
          }
-         .heartdiv{
-         flex-direction: row;
-         display: flex;
-         transform: translateY(-3%);
-         gap:4px;
-          .heart{
-         width: 30px;
-      }
-       span{
-      transform: translateY(9%);
-     }
-  }     
 }
 .result{
     width:1000px ;

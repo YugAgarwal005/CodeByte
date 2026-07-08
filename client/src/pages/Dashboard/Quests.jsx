@@ -142,6 +142,9 @@ color: #AFAFAF;
 margin:25px auto 0;
 padding:0 25px;
 gap:25px;
+@media (max-width: 705px) {
+  padding-bottom: 120px;
+}
 .left{
   margin-top: 15px;
 }
@@ -154,6 +157,11 @@ gap:25px;
   .right{
     flex: 0 0 auto; 
     width: 400px; 
+  }
+}
+@media (max-width: 899px) {
+  .right {
+    display: none;
   }
 }
  .welcome{

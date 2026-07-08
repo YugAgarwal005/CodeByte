@@ -11,7 +11,6 @@ export const matchingUsersRoute=`${host}/api/auth/getmatchingusers`;
 export const followRoute=`${host}/api/auth/follow`;
 export const followUnfollowRoute=`${host}/api/auth/followunfollow`;
 export const getuserRoute=`${host}/api/auth/getuser`;
-export const shopRoute=`${host}/api/auth/shop`;
 export const getleaderboardRoute=`${host}/api/auth/leaderboard`
 export const updateUsernameRoute=`${host}/api/auth/updateusername`
 

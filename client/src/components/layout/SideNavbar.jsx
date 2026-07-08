@@ -265,13 +265,17 @@ height: 100%;
   @media screen and (max-width: 705px){
     padding:0;
     flex-direction:row;
-    position:absolute;
-    justify-content:space-between;
+    position:fixed;
+    left:0;
+    right:0;
+    justify-content:space-around;
     bottom: 0;
     width:100%;
     height:80px;
     border:none;
     border-top: 1px solid #333;
+    background-color: #0f0f0f;
+    z-index: 9999;
     .menuitem{
     padding:1rem 0rem;
   }

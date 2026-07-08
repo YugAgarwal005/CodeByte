@@ -80,47 +80,54 @@ function Learn() {
           :
           <Container onMouseEnter={()=>{setTimeout(()=>{setShowStreak(false)},1000)}}>
             <div className="left">
-              <h3 className='header'>Section 1 : {course.name === 'java' ? "Java Concepts" : "C & C++ Basics"}</h3>
-              {course.units.map((unit, outerindex) => (
-                <div className={`unit ${outerindex% 3 == 0 ? 'unit3' : outerindex% 3 == 1 ? 'unit2' : 'unit1'}`} key={outerindex}>
-                  <div className="rectangle">
-                    <div className="one">
-                      <h3>Unit {unit.unitNumber}</h3>
-                      <h4>{unit.heading}</h4>
+              <h3 className='header'>{course.name === 'java' ? "Java" : "C & C++"}</h3>
+              {course.units.filter((unit, index) => {
+                if (index === 0) return true;
+                const prevUnit = course.units[index - 1];
+                return prevUnit && prevUnit.level >= prevUnit.lessons.length;
+              }).map((unit) => {
+                const originalIndex = unit.unitNumber - 1;
+                return (
+                  <div className={`unit ${originalIndex % 5 === 0 ? 'unit1' : originalIndex % 5 === 1 ? 'unit2' : originalIndex % 5 === 2 ? 'unit3' : originalIndex % 5 === 3 ? 'unit4' : 'unit5'}`} key={unit.unitNumber}>
+                    <div className="rectangle">
+                      <div className="one">
+                        <h3>Unit {unit.unitNumber}</h3>
+                        <h4>{unit.heading}</h4>
+                      </div>
+                      <div className="two">
+                        <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/5b531828e59ae83aadb3d88e6b3a98a8.svg" /><span>GUIDEBOOK</span>
+                        <div className="guidebook">{unit.guideBook}</div>
+                      </div>
                     </div>
-                    <div className="two">
-                      <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/5b531828e59ae83aadb3d88e6b3a98a8.svg" /><span>GUIDEBOOK</span>
-                      <div className="guidebook">{unit.guideBook}</div>
+                    <div className={`circles ${unit.level > 0 ? "circlesstarted" : null}`}>
+                      {unit.lessons.map((lesson, innerindex) => (
+                        <button
+                          className={`circle ${unit.unitNumber % 2 === 0 ? 'd' : 'c'}${innerindex + 1} ${unit.level < innerindex ? null : 'solved'}`}
+                          key={innerindex} onClick={() => {
+                            if (!(unit.level < innerindex) || innerindex === 0)
+                              setTimeout(() => {
+                                navigate(`/quiz/unit/${unit.unitNumber}/level/${lesson.lessonNumber}`);
+                              }, 700);
+                          }}
+                        >
+                          {innerindex === 0 && unit.level < innerindex + 1 ? <div className="float">JUMP HERE ?</div> : null}
+                          {innerindex != 0 && unit.level === innerindex ? <div className="float strt">START</div> : null}
+                          {unit.level < innerindex ? <div className="float locked">
+                            <h3>Complete all levels above to unlock this !</h3> <div>locked</div>
+                          </div> : null}
+                          {innerindex + 1 === unit.lessons.length ? <img src={getAssetUrl('trophy.png', trophy)} alt="" /> :
+                            unit.level === 0 && innerindex === 0 ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/5e4203031e39fc43d94371565fd0d369.svg" alt="" /> :
+                              unit.level === innerindex ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/ef9c771afdb674f0ff82fae25c6a7b0a.svg" alt="" />
+                                : unit.level < innerindex + 1 ?
+                                  <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/261caf5e7127c22944a432ef5c191cfa.svg" alt="" />
+                                  : <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/bfa591f6854b4de08e1656b3e8ca084f.svg" alt="" />
+                          }
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  <div className={`circles ${unit.level > 0 ? "circlesstarted" : null}`}>
-                    {unit.lessons.map((lesson, innerindex) => (
-                      <button
-                        className={`circle ${unit.unitNumber % 2 === 0 ? 'd' : 'c'}${innerindex + 1} ${unit.level < innerindex ? null : 'solved'}`}
-                        key={innerindex} onClick={() => {
-                          if (!(unit.level < innerindex) || innerindex === 0)
-                            setTimeout(() => {
-                              navigate(`/quiz/unit/${unit.unitNumber}/level/${lesson.lessonNumber}`);
-                            }, 700);
-                        }}
-                      >
-                        {innerindex === 0 && unit.level < innerindex + 1 ? <div className="float">JUMP HERE ?</div> : null}
-                        {innerindex != 0 && unit.level === innerindex ? <div className="float strt">START</div> : null}
-                        {unit.level < innerindex ? <div className="float locked">
-                          <h3>Complete all levels above to unlock this !</h3> <div>locked</div>
-                        </div> : null}
-                        {innerindex + 1 === unit.lessons.length ? <img src={getAssetUrl('trophy.png', trophy)} alt="" /> :
-                          unit.level === 0 && innerindex === 0 ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/5e4203031e39fc43d94371565fd0d369.svg" alt="" /> :
-                            unit.level === innerindex ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/ef9c771afdb674f0ff82fae25c6a7b0a.svg" alt="" />
-                              : unit.level < innerindex + 1 ?
-                                <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/261caf5e7127c22944a432ef5c191cfa.svg" alt="" />
-                                : <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/bfa591f6854b4de08e1656b3e8ca084f.svg" alt="" />
-                        }
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
 
             </div>
             <div className="right">
@@ -205,6 +212,9 @@ gap:25px;
   }
   padding-top: 6px;
   padding-bottom: 20px;
+  @media (max-width: 705px) {
+    padding-bottom: 120px;
+  }
   &::-webkit-scrollbar{
     width: 0;
   }
@@ -244,6 +254,7 @@ gap:25px;
           }
         .guidebook{
           position: absolute;
+          z-index: 10000;
           display: none;
           padding: 15px;
           /* color:goldenrod; */
@@ -487,6 +498,42 @@ gap:25px;
     }
    }
   }
+  .unit4{
+  .rectangle{
+    background: linear-gradient(to right, #a18cd1, #fbc2eb);
+  }
+  .circles{
+    .float{
+      color:#a18cd1;
+    }
+    .d1,.c1,.solved{
+      background: linear-gradient(to right, #a18cd1, #fbc2eb);
+      border: 1px solid #fbc2eb80;
+      box-shadow: 0px 6px 0px 0px #fbc2eb8c;
+      &:active{
+        box-shadow: none;
+      }
+    }
+   }
+  }
+  .unit5{
+  .rectangle{
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+  }
+  .circles{
+    .float{
+      color:#4facfe;
+    }
+    .d1,.c1,.solved{
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      border: 1px solid #00f2fe80;
+      box-shadow: 0px 6px 0px 0px #00f2fe8c;
+      &:active{
+        box-shadow: none;
+      }
+    }
+   }
+  }
 }
 
 @media (min-width: 900px) {
@@ -498,6 +545,11 @@ gap:25px;
   .right{
     flex: 0 0 auto; 
     width: 400px; 
+  }
+}
+@media (max-width: 899px) {
+  .right {
+    display: none;
   }
 }
 .right{

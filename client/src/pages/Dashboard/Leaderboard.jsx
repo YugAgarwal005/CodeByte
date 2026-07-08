@@ -159,6 +159,9 @@ gap:25px;
 }
   padding-top: 6px;
   padding-bottom: 20px;
+  @media (max-width: 705px) {
+    padding-bottom: 120px;
+  }
   &::-webkit-scrollbar{
     width: 0;
   }
@@ -226,6 +229,11 @@ gap:25px;
   .right{
     flex: 0 0 auto; 
     width: 400px; 
+  }
+}
+@media (max-width: 899px) {
+  .right {
+    display: none;
   }
 }
 .right{

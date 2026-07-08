@@ -183,65 +183,6 @@ export const getuser = async (req, res, next) => {
     }
 }
 
-export const shop = async (req, res, next) => {
-    try {
-        const id = req.params.id;
-        const User = await Users.findOne({ _id: id });
-
-        if (!User) {
-            return res.send({ status: false, message: "User not found." });
-        }
-
-        // Find today's date
-        const now = new Date();
-        const offset = 5.5 * 60 * 60 * 1000;
-        const today = (new Date(now.getTime() + offset)).toISOString().split('T')[0];
-        // Find yesterday's date
-        const yesterday = (new Date(now.getTime() + offset));
-        yesterday.setDate(yesterday.getDate() - 1);
-        const yesterdayWithoutTime = yesterday.toISOString().split('T')[0];
-
-        const dateStrings = (User.userData.streak.dates || []).map(date => new Date(date).toISOString().split('T')[0]);
-        const hasToday = dateStrings.includes(today);
-        const hasYesterday = dateStrings.includes(yesterdayWithoutTime);
-
-        if (User.userData.gems < 200) {
-            return res.send({ status: false, message: "You don't have enough gems! Complete more lessons to earn gems." });
-        }
-
-        if (hasToday && hasYesterday) {
-            return res.send({ status: false, message: "Your streak is already active and safe for yesterday and today! You don't need a Streak Freeze right now." });
-        }
-
-        let purchased = false;
-        let message = "";
-
-        if (!hasYesterday) {
-            User.userData.streak.dates.push(yesterdayWithoutTime);
-            User.userData.gems -= 200;
-            purchased = true;
-            message = "Streak Freeze purchased successfully! Yesterday's date has been frozen to protect your streak.";
-        } else if (!hasToday) {
-            User.userData.streak.dates.push(today);
-            User.userData.gems -= 200;
-            purchased = true;
-            message = "Streak Freeze purchased successfully! Today's date has been frozen to protect your streak.";
-        }
-
-        if (purchased) {
-            // add streak to user data
-            User.userData.streak.days = calculateStreak(User.userData.streak.dates);
-            // Save the changes to the database
-            await User.save();
-            return res.send({ status: true, message });
-        } else {
-            return res.send({ status: false, message: "Your streak is already safe! You don't need a Streak Freeze right now." });
-        }
-    } catch (error) {
-        next(error)
-    }
-}
-
 const calculateStreak = (dates) => {
     const now = new Date();
     const offset = 5.5 * 60 * 60 * 1000;

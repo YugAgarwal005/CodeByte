@@ -350,6 +350,9 @@ color: #AFAFAF;
 margin:25px auto 0;
 padding:0 25px;
 gap:25px;
+@media (max-width: 705px) {
+  padding-bottom: 120px;
+}
 .left{
   margin-top: 15px;
 }
@@ -545,6 +548,11 @@ gap:25px;
   }
   .profilebox{
     border-bottom: 1.5px solid #333;
+  }
+}
+@media (max-width: 899px) {
+  .right {
+    display: none;
   }
 }
 .right{

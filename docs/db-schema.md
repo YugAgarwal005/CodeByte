@@ -1,6 +1,6 @@
 # Database Schema Documentation
 
-CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course structures, question banks, and gamified progress. To keep the learning process pristine and high-focus, virtual currencies and health pools (gems, shops, and hearts) have been completely removed from the active user interface, leaving a lean, consistency-focused progression system.
+CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course structures, question banks, and progress. To keep the learning process pristine and high-focus, CodeByte utilizes a lean, consistency-focused progression system.
 
 ## 1. Users Collection Schema (`users`)
 * **`username`**: (String, required, unique) Minimum 3 characters, lowercase.

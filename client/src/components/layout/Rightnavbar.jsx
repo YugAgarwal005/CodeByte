@@ -8,6 +8,23 @@ import { getuserRoute } from '../../utils/Apiroutes'
 import axios from 'axios';
 import { getAssetUrl } from '../../utils/assets'
 
+const CppLogo = () => (
+  <svg viewBox="0 0 128 128" width="24" height="24" style={{ minWidth: '24px' }}>
+    <path fill="#00599C" d="M117.5 33.5L64 2.5 10.5 33.5v61l53.5 31 53.5-31v-61z"/>
+    <path fill="#004482" d="M64 2.5v123l53.5-31v-61L64 2.5z"/>
+    <path fill="#FFF" d="M80 60.5h10v7H80V78h-7V67.5H63v-7h10V50h7v10.5zm19 0h10v7H99V78h-7V67.5H82v-7h10V50h7v10.5z"/>
+    <path fill="#FFF" d="M35 64c0-11 8.5-20 19-20 6 0 11.5 2.5 15 7l-5.5 4.5c-2.5-3-6-4.5-9.5-4.5-7 0-12 6-12 13s5 13 12 13c3.5 0 7-1.5 9.5-4.5l5.5 4.5c-3.5 4.5-9 7-15 7-10.5 0-19-9-19-20z"/>
+  </svg>
+);
+
+const JavaLogo = () => (
+  <svg viewBox="0 0 128 128" width="24" height="24" style={{ minWidth: '24px' }}>
+    <path fill="#5382a1" d="M88.7 82.5c2.3 1.1 4.5 2.5 6.3 4.2 4.1-1.7 5.7-4.3 4.4-6.8-2.3-4.3-13.6-5.8-25.2-3.4 5 1.7 10.2 3.6 14.5 6zM96.4 69c4.2-3.8 6.4-7.5 5.2-10-2-3.9-12-3.3-22.3 1.3 5.4.9 11.2 2.4 17.1 8.7z"/>
+    <path fill="#f89820" d="M51.2 121.2c5.9 0 11.1-.3 15.3-.9 11.1-1.5 18-5.3 18.5-10.3.6-5-5-8.4-14.4-10-8.5-1.5-19.1-1.9-26.6-.7-10 1.6-15.6 5.3-15.1 10.2.6 5.1 7.2 8.5 17 10.4 1.8.3 3.6.7 5.3 1.3zm31-23.7c-2 0-3.9.1-5.7.3 10 2.2 14.9 5.8 14.3 9-.5 2.8-4.4 5.1-11.2 6.4 13.9.7 20-2.4 20.6-7.3.7-5.4-6-8.4-18-8.4zm-48.4 19.3c-7-1.4-10.7-3.6-11.1-6-.4-2.5 2.6-5 8.1-6.7-1 1.7-1.4 3.7-1.2 5.7.4 3 2.1 5.3 4.2 7zM71 78.5c5.3-7.5 10.5-15.5 13-25.5 3-12.2.8-21.6-6-27-2-1.6-4.2-2.9-6.6-3.8.3 1-.1 2.2-.8 3.5-3 5.3-9.1 9.4-14.7 14.4-5.5 5-11 11-13.9 18.2-3.4 8.7-2.7 16 1.8 21.3 5.6 6.5 15.7 9.5 27.2 8.9zm-29.3-17c1.7-5.1 5.4-9.3 9.4-13.2 4.3-4.1 8.9-7.9 11.6-12.6.4-.7.6-1.4.7-2.1 1 1 2 2.2 2.8 3.6 4.3 7 2.2 14.9-1.3 21.6-3 5.7-7.2 11.2-11.2 16.7-4.1.2-8-.8-10.7-3.8-2.6-2.9-2.9-6.9-1.3-10.2z"/>
+    <path fill="#5382a1" d="M60.1 23c4.1-1.4 6-4.5 4.5-7.7-1.2-2.6-4.7-3.9-8.4-4.2 1.3 1.1 2.3 2.8 2.2 4.6-.2 4-4.8 6.4-8.8 8l2.6 1.1c2.6-1 5.3-1.4 7.9-1.8zm-11-2.5c3.2-1.6 4.4-4.4 2.9-7.1-.9-1.7-3.1-2.6-5.5-3 .9.8 1.5 2 1.3 3.3-.2 2.8-3.4 4.5-6.2 5.7l1.8.8c1.9-.7 3.8-1 5.7-1.3zM40 92.5c6.5.6 13.8.3 20.3-1 .9 2.5 1.5 5 2.1 7.4-6.4 1.1-13.4 1.2-19.8.5-1-.9-1.8-1.7-2.6-6.9zm13.1-49.8c.8 4 1.1 8 .6 12-4.3.4-8.3.1-12-.9 1-3.6 3.1-7 6.4-9.5 1.6-.7 3.3-1.2 5-1.6z"/>
+  </svg>
+);
+
 function Rightnavbar(props) {
 
   const [user, setUser] = useState(null);
@@ -45,14 +62,19 @@ function Rightnavbar(props) {
 
   const navigate = useNavigate();
 
+  const currentCourse = localStorage.getItem('course') || 'c&c++';
+
   return (
     <Container>
       <div className='box'>
-        <img src={getAssetUrl('icons8-courses-64.png', courses)} alt="courses" />
+        {currentCourse === 'java' ? <JavaLogo /> : <CppLogo />}
+        <span className="course-btn-text">
+          {currentCourse === 'java' ? 'Java' : 'C & C++'}
+        </span>
         <div className="course" >
           <h3 id='one'>MY COURSES</h3>
-          <h3 onClick={() => handleCourseClick('c&c++')} className='crs'>C & C++ BASICS</h3>
-          <h3 id='last' onClick={() => handleCourseClick('java')} className='crs'>JAVA CONCEPTS</h3>
+          <h3 onClick={() => handleCourseClick('c&c++')} className='crs'>C & C++</h3>
+          <h3 id='last' onClick={() => handleCourseClick('java')} className='crs'>Java</h3>
         </div>
       </div>
       <div className={`box ${forceHover ? 'force-hover' : null}`} onMouseLeave={() => {
@@ -60,7 +82,7 @@ function Rightnavbar(props) {
           props.onShowStreakChange(false);
         }
       }}>
-        <img src={getAssetUrl('icons8-firee.png', fire)} alt="fire" className='fire' /> <span>{userData?.userData.streak.days}</span>
+        <img src={getAssetUrl('icons8-firee.png', fire)} alt="fire" className='fire' /> <span>{userData?.userData.streak.days || 0}</span>
         <div className="course hoverfire">
           <div className="calendardiv">
             <h3>Streak</h3>
@@ -74,238 +96,169 @@ function Rightnavbar(props) {
 }
 
 const Container = styled.div`
-position:relative;
-display:flex;
+position: relative;
+display: flex;
 width: 100%;
-justify-content: space-around;
-margin-bottom:10px;
-z-index: 2;
-h3{
-  &:hover{
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+z-index: 10;
+gap: 15px;
+
+h3 {
+  &:hover {
     background-color: transparent;
   }
 }
 
-.box{
+.box {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    padding: 5px 12px;
-    border-radius: 12px;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1.5px solid #333;
+    border-radius: 16px;
     cursor: pointer;
-    &:hover{
-     background-color:hsla(0, 0%, 100%, 0.02);
-     transform: translateY(-10%);
-     .course{
-      display: flex;
-      transition: opacity 0.3s ease;
-     }
+    background-color: #0f0f0f;
+    transition: all 0.2s ease;
+    flex: 1;
+
+    &:hover {
+      background-color: #1a1a1a;
+      border-color: #555;
+      transform: translateY(-2px);
+      .course {
+        display: flex;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
     }
-    img{
-        width: 30px;
+
+    img {
+        width: 24px;
+        height: 24px;
     }
-    .gem{
-      padding: 1.5px;
-      transform: translateY(-12%);
-    }
-    .fire{
-        width: 26px;
-        transform: translateY(-8%);
-    }
-    span{
-        font-size: 1.05rem;
+    
+    .course-btn-text, span {
+        font-size: 0.95rem;
         color: whitesmoke;
-        font-size: 900;
+        font-weight: 700;
     }
-    .course{
+
+    .fire {
+        width: 22px;
+        height: 22px;
+    }
+
+    .course {
       display: none;
-      background-color:#0f0f0f;
+      background-color: #0f0f0f;
       flex-direction: column;
-      z-index: 2;
-      width: 240px;
-      top: 65px;
-      border: 1px solid #333;
+      z-index: 100;
+      width: 200px;
+      top: 55px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 1.5px solid #333;
       border-radius: 16px;
       position: absolute;
-      font-size: 0.75rem;
-      .crs:active{
-        background: none;
-      }
-      &::before,&::after {
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+
+      &::before {
         content: '';
         position: absolute;
-        top: -16%;
+        top: -12px;
         left: 50%;
         transform: translateX(-50%);
-        border: 12px solid transparent;
+        border: 6px solid transparent;
         border-bottom-color: #333; 
-       }
-       &::after {
-        border-bottom: 12px solid #0f0f0f;
-        top: calc(-16% + 2.4px); 
-       }
-      h3{
-        text-align: center;
-        padding: 17px;
-        margin:0;
-        color:#fff;
-        opacity: 0.8;
-        &:hover{
-          background-color:hsla(0, 0%, 100%, 0.02);
-         }
       }
-      #one{
+      &::after {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-bottom-color: #0f0f0f; 
+      }
+
+      h3 {
+        text-align: center;
+        padding: 12px;
+        margin: 0;
+        color: #fff;
+        opacity: 0.8;
+        font-size: 0.9rem;
+        cursor: pointer;
+        &:hover {
+          background-color: hsla(0, 0%, 100%, 0.05);
+        }
+      }
+      #one {
         text-align: left;
-        color:#ffffff80;
+        color: #ffffff80;
         opacity: 0.7;
-        &:hover{
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        border-bottom: 1.5px solid #333;
+        padding: 10px 12px;
+        pointer-events: none;
+        &:hover {
           background: none;
         }
       }
     }
-    .hoverfire{
-      width: 365px;
-      z-index: 1;
-      transform: translateX(3px);
-      &::before,&::after {
-        content: '';
-        position: absolute;
-        top: -4.5%;
-        left: 50%;
-        transform: translateX(-50%);
-        border: 12px solid transparent;
-        border-bottom-color: #333; 
-       }
-       &::after {
-        border-bottom: 12px solid #0f0f0f;
-        top: calc(-4.5% + 2.4px); 
-       }
-      .calendardiv{
+
+    .hoverfire {
+      width: 320px;
+      z-index: 100;
+      
+      .calendardiv {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 10px 0 22px;
-        h3{
-        font-family:"Bricolage Grotesque";
-        padding-bottom: 0;
-        font-size: 1.3rem;
-        &:hover{
-          background: transparent;
+        padding: 12px;
+        
+        h3 {
+          font-family: "Bricolage Grotesque";
+          padding-bottom: 0;
+          font-size: 1.1rem;
+          color: #fff;
+          border-bottom: none;
+          &:hover {
+            background: transparent;
+          }
         }
-        }
-        h4{
-          font-size:1rem;
+        h4 {
+          font-size: 0.85rem;
           opacity: 0.8;
           line-height: 1.3;
           text-align: center;
-          padding:0 50px;
-          margin-top: 12px;
-          margin-bottom: 26px;
+          padding: 0 15px;
+          margin-top: 8px;
+          margin-bottom: 15px;
+          color: #aaa;
+          font-weight: normal;
         }
       } 
     }
-    .hoverlove{
-      right: -25px;
-      &::before,&::after {
-        content: '';
-        position: absolute;
-        top: -17%;
-        left: 74%;
-        transform: translateX(-50%);
-        border: 12px solid transparent;
-        border-bottom-color: #333; 
-       }
-       &::after {
-        border-bottom: 12px solid #0f0f0f;
-        top: calc(-17% + 2.4px); 
-       }
-      h3{
-        font-size: 1.04rem;
-        opacity: 0.85;
-        font-weight: normal;
-        padding: 26px;
-        &:hover{
-          background: transparent;
-        }
-        span{
-          font-size: 1.2rem;
-        }
-        padding-bottom:20px;
-      }
-      #last{
-        padding-top: 0px;
-        padding-bottom:25px;
-      }
-    }
-    .hovergem{
-      flex-direction: row;
-      right: -60px;
-      justify-content: flex-start;
-      gap: 20px;
-      align-items: center;
-      padding:20px;
-      width: 368px;
-      &::before,&::after {
-        content: '';
-        position: absolute;
-        top: -16%;
-        left: 70%;
-        transform: translateX(-50%);
-        border: 12px solid transparent;
-        border-bottom-color: #333; 
-       }
-       &::after {
-        border-bottom: 12px solid #0f0f0f;
-        top: calc(-16% + 2.4px); 
-       }
-      img{
-        width: 100px;
-        height: 100px;
-        transform: translateY(-4%);
-      }
-      .gemsdiv{
-        display: flex;
-        flex-direction: column;
-        h3{
-          &:hover{
-            background:none;
-          }
-          font-size: 1.3rem;
-          padding: 0;
-          font-family:"Bricolage Grotesque";
-          text-align: left;
-        }
-        h4{
-          font-size: 1rem;
-          font-weight: normal;
-        }
-        a{
-          text-decoration: none;
-          color: #1cb0f6;
-          font-size: 0.85rem;
-        }
-      }
-    }
 }
-.force-hover{
-    background-color:hsla(0, 0%, 100%, 0.02);
-    transform: translateY(-10%);
-  .course{
+
+.force-hover {
+  background-color: #1a1a1a;
+  border-color: #555;
+  transform: translateY(-2px);
+  .course {
     display: flex;
+    opacity: 1;
     transition: opacity 0.3s ease;
   }
 }
-  .heartdiv{
-      gap:4px;
-    .heart{
-      width: 26px;
-    }
-    span{
-      transform: translateY(-6%);
-    }
-  }
 `
 
 export default Rightnavbar

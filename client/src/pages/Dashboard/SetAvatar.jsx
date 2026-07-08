@@ -46,7 +46,7 @@ function SetAvatar() {
       setAvatars(data);
       SetisLoading(false);
     } catch (err) {
-      console.error("Error fetching avatars, using fallbacks:", err);
+      console.warn("Error fetching avatars, using fallbacks:", err);
       // Fallback to beautiful programming language badges
       const fallbacks = [
         btoa(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
