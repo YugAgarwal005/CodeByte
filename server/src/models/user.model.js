@@ -43,12 +43,14 @@ const userSchema=new mongoose.Schema({
         correctQues:{type:Number,default:0},
         streak:{
             dates:{type:[Date],default:[]},
-            days:{type:Number,default:0}
+            days:{type:Number,default:0},
+            maxStreak:{type:Number,default:0}
         },
         dailyChallenges: {
             xp: { type: Number, default: 0 },
             correctQuestions: { type: Number, default: 0 },
             lessonsNumber :{ type: Number, default: 0 },
+            claimedQuests: { type: [String], default: [] },
             date:{type:Date,default:new Date().toISOString().split('T')[0]}
         }
     },

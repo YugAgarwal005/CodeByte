@@ -12,10 +12,11 @@ import target from '../../assets/images/target.png'
 import unfollow from '../../assets/images/unfollowfriend.png'
 import followfr from '../../assets/images/followfriend.png'
 import err from '../../assets/images/4044.png'
-import { getAssetUrl } from '../../utils/assets'
+import { getAssetUrl, getAvatarSrc, defaultAvatar } from '../../utils/assets'
 import { useNavigate, useParams } from 'react-router-dom'
 import Rightnavbar from '../../components/layout/Rightnavbar'
 import { allUsersRoute, followUnfollowRoute, getuserRoute } from '../../utils/Apiroutes'
+import { getMaxStreakDisplay } from '../../utils/streak'
 import axios from 'axios';
 import About from '../../components/common/About'
 import { ToastContainer, toast } from 'react-toastify'
@@ -135,7 +136,7 @@ function Profile() {
                 <br />
               </div>
               <div className="avatar">
-                <img src={`data:image/svg+xml;base64,${user.AvatarImage}`} alt="avatar" />
+                <img src={getAvatarSrc(user.AvatarImage)} alt="" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = defaultAvatar; }} />
               </div>
             </div>
             : <div></div>}
@@ -157,17 +158,17 @@ function Profile() {
                 </div>
               </div>
               <div className="boxes">
-              <img src="https://d35aaqx5ub95lt.cloudfront.net/images/leagues/74d6ab6e5b6f92e7d16a4a6664d1fafd.svg" alt="" />
+                <img src={getAssetUrl('fireee.png', firee)} alt="" />
                 <div>
-                  <h3>Ruby</h3>
-                  <h3 className='second'>Current League</h3>
+                  <h3>{getMaxStreakDisplay(user)}</h3>
+                  <h3 className='second'>Maximum Streak</h3>
                 </div>
               </div>
               <div className="boxes">
                 <img src={getAssetUrl('medal.png', medal)} alt="" />
                 <div>
-                  <h3>{user?.rank <=3 ? user?.rank : 0}</h3>
-                  <h3 className='second'>Top 3 Finishes</h3>
+                  <h3>{user?.rank ? `#${user.rank}` : '-'}</h3>
+                  <h3 className='second'>Leaderboard Rank</h3>
                 </div>
               </div>
             </div>
@@ -234,7 +235,7 @@ function Profile() {
                      { navigate(`/profile/u/${chat._id}`);
                       setForceRerender(prev => !prev)
                      }}>
-                     <img src={`data:image/svg+xml;base64,${chat.AvatarImage}`} alt="avatar" />
+                     <img src={getAvatarSrc(chat.AvatarImage)} alt="avatar" />
                      <div>
                      <h3>{chat.username}</h3><span>{chat.userData.xp} XP</span>
                       </div>
@@ -273,14 +274,31 @@ color: #AFAFAF;
 margin:25px auto 0;
 padding:0 25px;
 gap:25px;
-@media (max-width: 705px) {
-  padding-bottom: 120px;
+width: 100%;
+box-sizing: border-box;
+@media (max-width: 899px) {
+  padding: 0 12px 20px;
+  margin-top: 10px;
+  gap: 15px;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 .left{
   margin-top: 15px;
+  @media (max-width: 899px) {
+    margin-top: 0;
+    width: 100%;
+  }
 }
 .profilebox{
   display: flex;
+  @media (max-width: 550px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
   .btn{
     width: 115px;
     height: 65px;
@@ -295,8 +313,11 @@ gap:25px;
   }
   div{
     flex: 1;
+    @media (max-width: 550px) {
+      width: 100%;
+    }
   .username{
-    line-height:0;
+    line-height:1.2;
     font-size:1.3rem;
     color:#fff;
     font-family:"Bricolage Grotesque";
@@ -322,6 +343,8 @@ gap:25px;
     flex: 0 0 auto;
     img:nth-child(1){
       width: 128px;
+      height: 128px;
+      object-fit: cover;
       border:1px solid #fff;
       border-radius: 50%;
     }
@@ -347,6 +370,9 @@ gap:25px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
     .boxes{
       display: flex;
       align-items: center;
@@ -354,6 +380,9 @@ gap:25px;
       border-radius:16px;
       gap:16px;
       padding: 15px 25px;
+      @media (max-width: 480px) {
+        padding: 12px 16px;
+      }
       img{
         width:24px;
         height:24px;
@@ -396,6 +425,12 @@ gap:25px;
       padding:22px 25px;
       gap:32px;
       border-bottom:1.5px solid #333;
+      @media (max-width: 550px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 16px 14px;
+      }
       div{
         display: flex;
         flex-direction: column;
@@ -511,8 +546,11 @@ gap:25px;
         cursor: pointer;
         /* transition: 0.5s ease-out; */
       }
-      img{
+      img:first-child{
         width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
       }
       div{
         display: flex;

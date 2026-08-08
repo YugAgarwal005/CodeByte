@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import firee from '../../assets/images/fireee.png'
 import target from '../../assets/images/target.png'
 import Rightnavbar from '../../components/layout/Rightnavbar'
-import { getuserRoute } from '../../utils/Apiroutes'
+import { getuserRoute, claimQuestRoute } from '../../utils/Apiroutes'
 import axios from 'axios';
 import About from '../../components/common/About';
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,6 +28,18 @@ function Quests() {
 
   const hours = currentTime.getHours();
   const minutes = currentTime.getMinutes();
+
+  const handleClaimQuest = async (questId) => {
+    if (!user || !user._id) return;
+    try {
+      const { data } = await axios.post(claimQuestRoute, { userId: user._id, questId });
+      if (data.status && data.user) {
+        setUserData(data.user);
+      }
+    } catch (err) {
+      console.error("Error claiming quest:", err);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -62,7 +74,7 @@ function Quests() {
           <div className='main'>
             <div className="box">
               <img src={getAssetUrl('fireee.png', firee)} alt="" />
-              <div>
+              <div className="box-content">
                 <h3><span>Earn 100 XP </span> <span>{userData ? ((userData.userData.dailyChallenges.xp) <= 100 ? (userData.userData.dailyChallenges.xp) : 100) : 0}/100</span></h3>
                 <div className="progress-container">
                   <div
@@ -74,10 +86,21 @@ function Quests() {
                 </div>
                 <h3 className='second'>Earn XP by solving lessons</h3>
               </div>
+              <div className="quest-action">
+                {userData?.userData?.dailyChallenges?.claimedQuests?.includes('earn100xp') ? (
+                  <span className="claimed-badge">CLAIMED ✓</span>
+                ) : (userData?.userData?.dailyChallenges?.xp || 0) >= 100 ? (
+                  <button className="claim-btn" onClick={() => handleClaimQuest('earn100xp')}>
+                    CLAIM +50 XP
+                  </button>
+                ) : (
+                  <span className="reward-badge">+50 XP</span>
+                )}
+              </div>
             </div>
             <div className="box">
               <img src="https://d35aaqx5ub95lt.cloudfront.net/images/goals/2b5a211d830a24fab92e291d50f65d1d.svg" alt="" className='star' />
-              <div>
+              <div className="box-content">
                 <h3><span>Solve 10 Questions Correctly</span> <span>{userData ? ((userData.userData.dailyChallenges.correctQuestions) <= 10 ? (userData.userData.dailyChallenges.correctQuestions) : 10) : 0}/10</span></h3>
                 <div className="progress-container">
                   <div
@@ -87,10 +110,21 @@ function Quests() {
                 </div>
                 <h3 className='second'>Ace the challenge: complete 10 questions perfectly</h3>
               </div>
+              <div className="quest-action">
+                {userData?.userData?.dailyChallenges?.claimedQuests?.includes('solve10ques') ? (
+                  <span className="claimed-badge">CLAIMED ✓</span>
+                ) : (userData?.userData?.dailyChallenges?.correctQuestions || 0) >= 10 ? (
+                  <button className="claim-btn" onClick={() => handleClaimQuest('solve10ques')}>
+                    CLAIM +50 XP
+                  </button>
+                ) : (
+                  <span className="reward-badge">+50 XP</span>
+                )}
+              </div>
             </div>
             <div className="box last">
               <img src={getAssetUrl('target.png', target)} alt="" />
-              <div>
+              <div className="box-content">
                 <h3><span>Score 100% in 3 lessons </span> <span>{userData ? ((userData.userData.dailyChallenges.lessonsNumber) <= 3 ? (userData.userData.dailyChallenges.lessonsNumber) : 3) : 0}/3</span></h3>
                 <div className="progress-container">
                   <div
@@ -100,28 +134,27 @@ function Quests() {
                 </div>
                 <h3 className='second'>Strive for excellence: get 100% in 3 lessons</h3>
               </div>
+              <div className="quest-action">
+                {userData?.userData?.dailyChallenges?.claimedQuests?.includes('score3lessons') ? (
+                  <span className="claimed-badge">CLAIMED ✓</span>
+                ) : (userData?.userData?.dailyChallenges?.lessonsNumber || 0) >= 3 ? (
+                  <button className="claim-btn" onClick={() => handleClaimQuest('score3lessons')}>
+                    CLAIM +50 XP
+                  </button>
+                ) : (
+                  <span className="reward-badge">+50 XP</span>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="right">
         <Rightnavbar />
-        <div className="monthly">
-          <div className='divv'>
-            <div className="text">
-              <span className='hd'>Monthly challenges unlock soon!</span>
-              <span>Complete each month’s challenge to earn exclusive badges</span>
-            </div>
-            <img src="https://d35aaqx5ub95lt.cloudfront.net/images/goals/e07e459ea20aef826b42caa71498d85f.svg" alt="" />
-          </div>
-          <div className="lesson" onClick={() => setTimeout(() => { navigate('/') }, 700)}>
-            Start a lesson
-          </div>
-        </div>
         <div className="leaderboard">
           <div className="head">
             <span>Rankings</span>
-            <Link to='/leaderboards'>VIEW LEAGUE</Link>
+            <Link to='/leaderboards'>VIEW LEADERBOARD</Link>
           </div>
           <div className="content">
             <img src={getAssetUrl('coins12.png', leaderboard)} alt="" />
@@ -142,11 +175,22 @@ color: #AFAFAF;
 margin:25px auto 0;
 padding:0 25px;
 gap:25px;
-@media (max-width: 705px) {
-  padding-bottom: 120px;
+width: 100%;
+box-sizing: border-box;
+@media (max-width: 899px) {
+  padding: 0 12px 20px;
+  margin-top: 10px;
+  gap: 15px;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 .left{
   margin-top: 15px;
+  @media (max-width: 899px) {
+    margin-top: 0;
+    width: 100%;
+  }
 }
 @media (min-width: 900px) {
   max-width: 1080px;
@@ -174,12 +218,25 @@ gap:25px;
   flex-direction: row;
   justify-content: space-between;
   background: linear-gradient(to right, #ff8c00, #ff0080);
+  @media (max-width: 600px) {
+    height: auto;
+    min-height: 180px;
+    padding: 15px;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
   .text{
     align-self: center;
     padding: 30px;
     padding-right: 0;
     font-size: 1.25rem;
     line-height: 1.5;
+    @media (max-width: 600px) {
+      padding: 0;
+      font-size: 1rem;
+    }
   div{
     h3{
     margin-bottom: 5px;
@@ -196,6 +253,12 @@ gap:25px;
     color: #fff;
   }
 }
+  img {
+    @media (max-width: 600px) {
+      width: 120px;
+      height: auto;
+    }
+  }
  }
   .dailyquests{
   margin-bottom: 30px;
@@ -208,6 +271,9 @@ gap:25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
     span{
     font-family:"Bricolage Grotesque";
     svg{
@@ -217,6 +283,9 @@ gap:25px;
     .time{
       color: #ff9600;
       font-size: 1.05rem;
+      @media (max-width: 480px) {
+        font-size: 0.9rem;
+      }
     }
   }
   h3{
@@ -235,16 +304,23 @@ gap:25px;
       align-items: center;
       flex-direction: row;
       padding:22px 25px;
-      gap:32px;
+      gap:24px;
       border-bottom:1.5px solid #333;
+      @media (max-width: 550px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 16px 14px;
+      }
       .star{
-          width: 73px;
+          width: 70px;
         }
-      div{
+      .box-content{
         display: flex;
         flex-direction: column;
+        flex: 1;
+        gap:15px;
         width: 100%;
-        gap:20px;
         .progress-container {
           width: 100%;
           background-color: #33333380;
@@ -256,7 +332,65 @@ gap:25px;
           border-radius: 16px;
           background: linear-gradient(to left, #FF5722, #FFC107);
          }
-    }
+      }
+      .quest-action {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        min-width: 110px;
+        @media (max-width: 550px) {
+          width: 100%;
+          justify-content: flex-start;
+          min-width: unset;
+        }
+
+        .claim-btn {
+          background: #58cc02;
+          color: #fff;
+          border: none;
+          padding: 10px 18px;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 0.85rem;
+          font-family: "Bricolage Grotesque", sans-serif;
+          cursor: pointer;
+          box-shadow: 0 4px 0 #46a302;
+          transition: all 0.15s ease;
+          white-space: nowrap;
+
+          &:hover {
+            background: #61df02;
+          }
+          &:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #46a302;
+          }
+        }
+
+        .claimed-badge {
+          background: rgba(88, 204, 2, 0.15);
+          color: #58cc02;
+          border: 1.5px solid rgba(88, 204, 2, 0.4);
+          padding: 8px 14px;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 0.85rem;
+          font-family: "Bricolage Grotesque", sans-serif;
+          white-space: nowrap;
+        }
+
+        .reward-badge {
+          background: rgba(255, 150, 0, 0.15);
+          color: #ff9600;
+          border: 1.5px solid rgba(255, 150, 0, 0.3);
+          padding: 8px 14px;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 0.85rem;
+          font-family: "Bricolage Grotesque", sans-serif;
+          white-space: nowrap;
+        }
+      }
       img{
         width: 70px;
         height: 70px;
@@ -287,54 +421,6 @@ gap:25px;
   flex-direction: column;
   align-items: center;
   gap:20px;
-  .monthly{
-    width: 368px;
-    border: 1.5px solid #333;
-    border-radius: 16px;
-    padding: 22px;
-    padding-top: 35px;
-    padding-bottom: 25px;
-    z-index: 0;
-    height: 275px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    .divv{
-      display: flex;
-      flex-direction: row;
-      .text{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        line-height: 1.5;
-        font-weight: 600;
-        color: #AFAFAf80;
-        .hd{
-          color: #fff;
-        }
-      }
-    }
-    .lesson{
-      padding: 13px;
-      border: 1.5px solid #333;
-      border-radius: 12px;
-      background-color: #0f0f0f;
-      box-shadow: 0px 3px 0px 0px #222;
-      text-align: center;
-      color: #1cb0f6;
-      cursor: pointer;
-      text-transform: uppercase;
-      &:active{
-        box-shadow: none;
-        transform: translateY(10%);
-        border: 1px solid #33333380;
-      }
-      &:hover{
-        background-color:hsla(0, 0%, 100%, 0.02);
-        /* transition: 0.5s ease-out; */
-      }
-    }
-  }
   .leaderboard{
     width: 368px;
     border: 1.5px solid #333;

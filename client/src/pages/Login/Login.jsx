@@ -33,7 +33,9 @@ function Login() {
   const [values, setValues] = useState({
     username: "",
     password: "",
-  })
+  });
+
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleValidation = () => {
     const { password, username } = values;
@@ -50,7 +52,8 @@ function Login() {
       const { password, username } = values;
       const { data } = await axios.post(loginRoute, {
         username,
-        password
+        password,
+        rememberMe
       });
       if (data.status === false) {
         toast.error(data.msg, options);
@@ -75,6 +78,18 @@ function Login() {
           <h1>Code-Byte</h1>
           <input type="text" placeholder='Username or Email' name="username" onChange={handleChange} autoComplete='off' min='3' />
           <input type="password" name="password" id="pass" placeholder='Password' onChange={handleChange} />
+          
+          <div className="remember-container">
+            <label className="remember-label">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <span>Keep me logged in for 1 month</span>
+            </label>
+          </div>
+
           <button type="submit">Login</button>
           <span>Don't Have An Account ? <Link to='/register'>Register</Link></span>
           <div className='line'></div>
@@ -105,7 +120,15 @@ form{
   justify-content:center;
   align-items:center;
   padding:2rem 3rem;
-  gap:1.5rem;
+  gap:1.2rem;
+  max-width: 450px;
+  width: 90%;
+  box-sizing: border-box;
+  @media (max-width: 480px) {
+    padding: 1.5rem 1.2rem;
+    width: 95%;
+  }
+
   h1{
     color:white;
     text-transform:uppercase;
@@ -113,7 +136,7 @@ form{
     margin-bottom:10px;
     font-family:"Bricolage Grotesque"
   }
-  input{
+  input[type="text"], input[type="password"], input[type="email"]{
     background-color:transparent;
     padding:0.8rem; 
     border:0.1rem solid #f57b51;
@@ -125,6 +148,36 @@ form{
       outline:none;
     }
   }
+
+  .remember-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .remember-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ccc;
+      font-size: 0.85rem;
+      cursor: pointer;
+      user-select: none;
+
+      input[type="checkbox"] {
+        accent-color: #eb2632;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      span {
+        color: #ddd;
+        text-transform: none;
+        font-weight: normal;
+      }
+    }
+  }
+
   button{
     width:100%;
     color:white;

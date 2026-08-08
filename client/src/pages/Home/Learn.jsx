@@ -135,7 +135,7 @@ function Learn() {
               <div className="leaderboard">
                 <div className="head">
                   <span>Rankings</span>
-                  <Link to='/leaderboards'>VIEW LEAGUE</Link>
+                  <Link to='/leaderboards'>VIEW LEADERBOARD</Link>
                 </div>
                 <div className="content">
                   <img src={getAssetUrl('coins12.png', leaderboard)} alt="" />
@@ -201,9 +201,26 @@ color: #AFAFAF;
 margin:0px auto 0;
 padding:25px 25px 0;
 gap:25px;
+width: 100%;
+box-sizing: border-box;
+@media (max-width: 705px) {
+  padding: 15px 12px 40px;
+  gap: 15px;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 .left{
   overflow-y: scroll;
   height: 97vh;
+  @media (max-width: 705px) {
+    height: auto;
+    max-height: none;
+    width: 100%;
+    overflow-y: visible;
+    overflow-x: hidden;
+    padding-bottom: 20px;
+  }
   .header{
     text-align: center;
     border-bottom: 1.5px solid #333;
@@ -212,9 +229,6 @@ gap:25px;
   }
   padding-top: 6px;
   padding-bottom: 20px;
-  @media (max-width: 705px) {
-    padding-bottom: 120px;
-  }
   &::-webkit-scrollbar{
     width: 0;
   }
@@ -227,11 +241,21 @@ gap:25px;
       padding: 4px 20px;
       align-items: center;
       text-transform: capitalize;
+      @media (max-width: 480px) {
+        padding: 10px 12px;
+        gap: 10px;
+      }
       h3{
         font-size:1.3rem;
+        @media (max-width: 480px) {
+          font-size: 1.1rem;
+        }
       }
       h4{
           font-weight: 600;
+          @media (max-width: 480px) {
+            font-size: 0.9rem;
+          }
         }
       border-radius: 13px;
       .two{
@@ -240,11 +264,18 @@ gap:25px;
         gap: 12px;
         position: relative;
         padding: 14px 18px;
+        @media (max-width: 480px) {
+          padding: 8px 12px;
+          gap: 6px;
+        }
         border-radius: 16px;
         box-shadow: rgba(0, 0, 0, 0.3) 0 2px 0;
         border: 2px solid rgba(0,0,0, 0.2);
         span{
         font-family:"Bricolage Grotesque";
+        @media (max-width: 480px) {
+          font-size: 0.85rem;
+        }
         } 
           cursor: pointer;
           &:hover{
@@ -266,6 +297,7 @@ gap:25px;
           background: #0f0f0f;
           transform: translateX(-50%);
           width: 220px;
+          max-width: 85vw;
           height: 120px;
           border: 1.5px solid #333;
           border-radius: 12px;
@@ -362,6 +394,7 @@ gap:25px;
       }
       .locked{
         width: 230px;
+        max-width: 85vw;
         height: 140px;
         z-index: 2;
         animation: none;
@@ -417,27 +450,35 @@ gap:25px;
     }
     .c2{
         right: 8%;
+        @media (max-width: 500px) { right: 4%; }
     }
     .c3{
         right: 15%;
+        @media (max-width: 500px) { right: 7%; }
     }
     .c4{
         right: 15%;
+        @media (max-width: 500px) { right: 7%; }
     }
     .c5{
         right: 8%;
+        @media (max-width: 500px) { right: 4%; }
     }
     .d2{
         right: -8%;
+        @media (max-width: 500px) { right: -4%; }
     }
     .d3{
         right: -15%;
+        @media (max-width: 500px) { right: -7%; }
     }
     .d4{
         right: -15%;
+        @media (max-width: 500px) { right: -7%; }
     }
     .d5{
         right: -8%;
+        @media (max-width: 500px) { right: -4%; }
     }
 
   }

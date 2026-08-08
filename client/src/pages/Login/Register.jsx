@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../assets/css/bootstrap-social.css';
@@ -22,7 +22,7 @@ function Register() {
     theme: "dark",
   };
 
-  const childref=useRef();
+  const childref = useRef();
 
   useEffect(() => {
     if (localStorage.getItem('codebyte-user')) {
@@ -35,7 +35,9 @@ function Register() {
     password: "",
     cnfpassword: "",
     email: ""
-  })
+  });
+
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleValidation = () => {
     const { password, username, cnfpassword, email } = values;
@@ -43,7 +45,7 @@ function Register() {
       toast.error("Username and Password are required fields", options);
       return false;
     }
-    else if (password != cnfpassword) {
+    else if (password !== cnfpassword) {
       toast.error("Password And confirmed password doesn't match", options);
       return false;
     }
@@ -55,8 +57,8 @@ function Register() {
       toast.error("Password should be greater than 3 characters", options);
       return false;
     }
-    else if(!validator.isEmail(email) || email=== ""){
-      toast.error("Please enter an valid Email address", options);
+    else if (!validator.isEmail(email) || email === "") {
+      toast.error("Please enter a valid Email address", options);
       return false;
     }
     return true;
@@ -69,7 +71,8 @@ function Register() {
       const { data } = await axios.post(registerRoute, {
         username,
         password,
-        email
+        email,
+        rememberMe
       });
       if (data.status === false) {
         toast.error(data.msg, options);
@@ -96,6 +99,18 @@ function Register() {
           <input type="email" name="email" id="email" placeholder='Email' onChange={handleChange} autoComplete='off' spellCheck='false'/>
           <input type="password" name="password" id="pass" placeholder='Password' onChange={handleChange} />
           <input type="password" name="cnfpassword" id="cnfpass" placeholder='Confirm Password' onChange={handleChange} />
+          
+          <div className="remember-container">
+            <label className="remember-label">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <span>Keep me logged in for 1 month</span>
+            </label>
+          </div>
+
           <button type="submit">Sign Up</button>
           <span>Already Have An Account ? <Link to='/login'>Login</Link></span>
           <div className='line'></div>
@@ -125,7 +140,15 @@ form{
   justify-content:center;
   align-items:center;
   padding:2rem 3rem;
-  gap:1.5rem;
+  gap:1.2rem;
+  max-width: 450px;
+  width: 90%;
+  box-sizing: border-box;
+  @media (max-width: 480px) {
+    padding: 1.5rem 1.2rem;
+    width: 95%;
+  }
+
   h1{
     color:white;
     text-transform:uppercase;
@@ -133,7 +156,7 @@ form{
     margin-bottom:10px;
     font-family:"Bricolage Grotesque"
   }
-  input{
+  input[type="text"], input[type="password"], input[type="email"]{
     background-color:transparent;
     padding:0.8rem; 
     border:0.1rem solid #f57b51;
@@ -145,6 +168,36 @@ form{
       outline:none;
     }
   }
+
+  .remember-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .remember-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ccc;
+      font-size: 0.85rem;
+      cursor: pointer;
+      user-select: none;
+
+      input[type="checkbox"] {
+        accent-color: #eb2632;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      span {
+        color: #ddd;
+        text-transform: none;
+        font-weight: normal;
+      }
+    }
+  }
+
   button{
     width:100%;
     color:white;

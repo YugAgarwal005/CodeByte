@@ -50,6 +50,7 @@ function CreateUnit() {
                     <select id="options" name="topic">
                         <option value="c&c++">C & C++</option>
                         <option value="java">Java</option>
+                        <option value="python">Python</option>
                     </select>
                     <label for="numberField">unit number:</label>
                     <input type="number" id="numberField" name="unitnum" min="1" required></input>
@@ -71,28 +72,39 @@ display: flex;
 flex-direction: column;
 align-items: center;
 background-color: white;
-height: 100vh;
+min-height: 100vh;
+padding: 20px 15px;
+box-sizing: border-box;
 form{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
+    max-width: 500px;
     input{
         padding: 10px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+        width: 100%;
+        box-sizing: border-box;
     }
     textarea{
-        font-size:1.6rem;
+        font-size: 1.2rem;
+        width: 100%;
+        box-sizing: border-box;
     }
 }
 button{
-    margin: 30px;
-    padding: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    font-size: 1rem;
+    cursor: pointer;
 }
 select{
-    padding: 10px 40px;
+    padding: 10px 20px;
+    width: 100%;
     option{
         padding: 10px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 }
 `

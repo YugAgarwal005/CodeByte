@@ -17,26 +17,47 @@ import CreateQues from './pages/Dashboard/CreateQues';
 import { styled } from 'styled-components';
 import axios from 'axios';
 import { getuserRoute } from './utils/Apiroutes';
+import { setupAxiosInterceptors, startTokenRefreshTimer, refreshAuthToken, getStoredUser } from './utils/tokenManager';
+
+// Setup global axios interceptors for Bearer token & auto retry on 401
+setupAxiosInterceptors();
 
 function App() {
 
   const [user, setUser] = useState(null);
-  const [userData,setuserData]=useState(null)
+  const [userData, setuserData] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await JSON.parse(localStorage.getItem('codebyte-user'));
-      setUser(userData);
+    const initAuth = async () => {
+      const stored = getStoredUser();
+      if (stored) {
+        if (stored.refreshToken) {
+          const newAccessToken = await refreshAuthToken();
+          if (newAccessToken) {
+            setUser(getStoredUser());
+            startTokenRefreshTimer();
+          } else {
+            setUser(null);
+          }
+        } else {
+          setUser(stored);
+          startTokenRefreshTimer();
+        }
+      }
     };
-    fetchUser();
+    initAuth();
   }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
-      if(user){
-        const { data } = await axios.get(`${getuserRoute}/${user._id}`);
-        setuserData(data);
+      if (user && user._id) {
+        try {
+          const { data } = await axios.get(`${getuserRoute}/${user._id}`);
+          setuserData(data);
+        } catch (err) {
+          console.error("Error fetching user data:", err);
         }
+      }
     };
     fetchUser();
   }, [user]);

@@ -13,10 +13,11 @@ import { getAssetUrl } from '../../utils/assets';
 function SideNavbar() {
   const location = useLocation();
   const [moreHovered, setMoreHovered] = useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const childRef2 = useRef(null);
   const timeoutRef = useRef(null);
-  
+  const containerRef = useRef(null);
+
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -31,15 +32,24 @@ function SideNavbar() {
   };
 
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setMoreHovered(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, []);
 
   const handleParentClick2 = () => {
-    // Trigger a click on the child element
     if (childRef2.current) {
       childRef2.current.click();
     }
@@ -64,9 +74,9 @@ function SideNavbar() {
   ];
 
   return (
-    <SidebarContainer>
+    <SidebarContainer ref={containerRef}>
       <div className='laptop'>
-        <div className='heading'><img src={getAssetUrl('icons8-module-481.png', logo)} />CodeByte</div>
+        <div className='heading'><img src={getAssetUrl('icons8-module-481.png', logo)} alt="logo" />CodeByte</div>
         {menuItems.map((item, index) => (
           <Link key={index}
             to={item.to}
@@ -87,15 +97,16 @@ function SideNavbar() {
               }
             }}
             className={`menuitem ${location.pathname === item.to && item.label !== 'more'  ? 'active' : ''} ${item.to === '/fake' ? 'more' : ''}`} >
-            <img src={item.imgSrc} />
+            <img src={item.imgSrc} alt={item.label} />
             {item.label}
           </Link>
         ))}
         {moreHovered && (
           <div className="morehover" onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
             <ul>
-              <li onClick={()=>{handleParentClick2()}} className='li'><img src={getAssetUrl('github-logo.png', gitlogo)} alt="gitlogo" /><span><a href='https://github.com/YugAgarwal005/CodeByte' ref={childRef2}>Github</a></span></li>
+              <li onClick={()=>{handleParentClick2(); setMoreHovered(false);}} className='li'><img src={getAssetUrl('github-logo.png', gitlogo)} alt="gitlogo" /><span><a href='https://github.com/YugAgarwal005/CodeByte' ref={childRef2}>Github</a></span></li>
               <li onClick={() => {
+                setMoreHovered(false);
                 localStorage.removeItem('codebyte-user');
                 localStorage.removeItem('course');
                 navigate('/login');
@@ -110,10 +121,40 @@ function SideNavbar() {
           <Link
             key={index}
             to={item.to}
+            onClick={(e) => {
+              if (item.label === 'more') {
+                e.preventDefault();
+                e.stopPropagation();
+                setMoreHovered(prev => !prev);
+              }
+            }}
+            onMouseEnter={() => {
+              if (item.label === 'more') {
+                handleMouseEnter();
+              }
+            }}
+            onMouseLeave={() => {
+              if (item.label === 'more') {
+                handleMouseLeave();
+              }
+            }}
             className='menuitem'>
-            <img src={item.imgSrc} className={`${location.pathname === `/${item.label}` && item.label !== 'more' && item.imgSrc !== logo ? 'active' : ''} ${item.label === 'more' || item.imgSrc === logo ? 'more' : ''}`} />
+            <img src={item.imgSrc} alt={item.label || 'nav'} className={`${location.pathname === `/${item.label}` && item.label !== 'more' && item.imgSrc !== logo ? 'active' : ''} ${item.imgSrc === logo ? 'logo-icon' : ''}`} />
           </Link>
         ))}
+        {moreHovered && (
+          <div className="morehover-mobile" onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
+            <ul>
+              <li onClick={()=>{handleParentClick2(); setMoreHovered(false);}} className='li'><img src={getAssetUrl('github-logo.png', gitlogo)} alt="gitlogo" /><span><a href='https://github.com/YugAgarwal005/CodeByte' ref={childRef2}>Github</a></span></li>
+              <li onClick={() => {
+                setMoreHovered(false);
+                localStorage.removeItem('codebyte-user');
+                localStorage.removeItem('course');
+                navigate('/login');
+              }}>LOGOUT</li>
+            </ul>
+          </div>
+        )}
       </div>
     </SidebarContainer>
   )
@@ -121,8 +162,11 @@ function SideNavbar() {
 
 const SidebarContainer = styled.div`
 height: 100%;
+position: relative;
+z-index: 10000;
  .laptop{
   position: fixed;
+  z-index: 10000;
   text-transform: uppercase;
   display:flex;
   flex-direction:column;
@@ -152,7 +196,7 @@ height: 100%;
     transform: translateX(241.5px);
     position: relative;
     bottom: 78px;
-    z-index: 2;
+    z-index: 99999;
     border: 1px solid #333;
     border-radius: 12px;
     background-color: #0f0f0f;
@@ -227,6 +271,7 @@ height: 100%;
 
 .mobileortab{
   position: fixed;
+  z-index: 10000;
   display:flex;
   flex-direction:column;
   padding:1.5rem 0.2rem;
@@ -245,7 +290,7 @@ height: 100%;
      background-color:hsla(0, 0%, 100%, 0.08);
     }
     }
-    img.more{
+    img.logo-icon{
       &:hover{
         background-color:transparent;
       }
@@ -258,30 +303,92 @@ height: 100%;
       background-color:#eb2632;
      }
     }
+
+  .morehover-mobile{
+    width: 200px;
+    position: absolute;
+    left: 95px;
+    bottom: 20px;
+    z-index: 99999;
+    border: 1px solid #333;
+    border-radius: 12px;
+    background-color: #0f0f0f;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    ul{
+      padding:0 0 5px 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      list-style:none;
+      .li{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-bottom: 13px;
+        gap:25px;
+        border-bottom: 1px solid #333;
+      }
+      li{
+        padding: 16px 25px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        a{
+          text-decoration: none;
+          color: #fff;
+        }
+        &:hover{
+          background-color:hsla(0, 0%, 100%, 0.02);
+        }
+      }
+      img{
+        width: 30px;
+        transform: translateY(-3px);
+      }
+    }
+  }
   
   @media screen and (min-width: 1199px){
     display: none;
   }
   @media screen and (max-width: 705px){
-    padding:0;
-    flex-direction:row;
-    position:fixed;
-    left:0;
-    right:0;
-    justify-content:space-around;
+    padding: 0 10px;
+    flex-direction: row;
+    position: fixed;
+    left: 0;
+    right: 0;
+    justify-content: space-around;
+    align-items: center;
     bottom: 0;
-    width:100%;
-    height:80px;
-    border:none;
+    width: 100%;
+    height: 65px;
+    border: none;
     border-top: 1px solid #333;
     background-color: #0f0f0f;
     z-index: 9999;
+    box-sizing: border-box;
     .menuitem{
-    padding:1rem 0rem;
-  }
-  .more{
-    display:none;
-  }
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        width: 38px;
+        height: 38px;
+        padding: 4px;
+        box-sizing: border-box;
+      }
+    }
+    .logo-icon{
+      display: none;
+    }
+    .morehover-mobile{
+      position: fixed;
+      bottom: 72px;
+      right: 15px;
+      left: auto;
+      width: 180px;
+    }
   }
 }
 `

@@ -15,9 +15,10 @@ import flow from '../../assets/images/flow.png'
 import target from '../../assets/images/target.png'
 import { useNavigate } from 'react-router-dom'
 import error from '../../assets/images/404.png'
-import { getAssetUrl } from '../../utils/assets'
+import { getAssetUrl, getAvatarSrc, defaultAvatar } from '../../utils/assets'
 import Rightnavbar from '../../components/layout/Rightnavbar'
-import { allUsersRoute, matchingUsersRoute, followRoute, getuserRoute, updateUsernameRoute } from '../../utils/Apiroutes'
+import { allUsersRoute, matchingUsersRoute, followRoute, getuserRoute, updateUsernameRoute, setAvatarRoute } from '../../utils/Apiroutes'
+import { getMaxStreakDisplay } from '../../utils/streak'
 import { Edit, Check, X } from 'lucide-react';
 import axios from 'axios';
 import About from '../../components/common/About'
@@ -51,6 +52,46 @@ function Profile() {
   const [userData, setUserData] = useState(null);
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [newUsername, setNewUsername] = useState('');
+  const fileInputRef = React.useRef(null);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image size should be less than 5MB", options);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      const base64Data = reader.result;
+      setIsUploadingImage(true);
+      try {
+        const userId = user._id || user.id;
+        const { data } = await axios.post(`${setAvatarRoute}/${userId}`, {
+          image: base64Data
+        });
+
+        if (data.isSet) {
+          const updatedUser = { ...user, IsAvatarImageSet: true, AvatarImage: data.setimage };
+          setUser(updatedUser);
+          localStorage.setItem("codebyte-user", JSON.stringify(updatedUser));
+          toast.success("Profile picture updated successfully!", options);
+          setForceRerender(prev => !prev);
+        } else {
+          toast.error("Failed to update profile picture", options);
+        }
+      } catch (err) {
+        console.error("Error uploading profile image:", err);
+        toast.error("Error uploading image. Please try again.", options);
+      } finally {
+        setIsUploadingImage(false);
+      }
+    };
+  };
 
   const navigate = useNavigate();
 
@@ -206,8 +247,42 @@ function Profile() {
               <br />
             </div>
             <div className="avatar">
-              <img src={`data:image/svg+xml;base64,${user.AvatarImage}`} alt="avatar" />
-              <img src={getAssetUrl('upload.png', upload)} onClick={() => navigate("/setavatar")} />
+              <img 
+                className="avatar-img"
+                src={getAvatarSrc(user ? user.AvatarImage : null)} 
+                alt="" 
+                onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = defaultAvatar; }}
+                onClick={() => navigate("/setavatar")}
+                style={{ cursor: 'pointer' }}
+                title="Change profile avatar"
+              />
+              <img 
+                className="upload-icon"
+                src={getAssetUrl('upload.png', upload)} 
+                alt=""
+                onClick={() => navigate("/setavatar")} 
+                style={{ cursor: 'pointer' }}
+                title="Change profile avatar"
+              />
+              {isUploadingImage && (
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '128px',
+                  height: '128px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'rgba(0,0,0,0.6)',
+                  borderRadius: '50%',
+                  color: '#fff',
+                  fontSize: '12px',
+                  fontWeight: 'bold'
+                }}>
+                  Uploading...
+                </div>
+              )}
             </div>
           </div>
           : <div></div>}
@@ -229,17 +304,17 @@ function Profile() {
               </div>
             </div>
             <div className="boxes">
-           <img src="https://d35aaqx5ub95lt.cloudfront.net/images/leagues/74d6ab6e5b6f92e7d16a4a6664d1fafd.svg" alt="" /> 
+              <img src={getAssetUrl('fireee.png', firee)} alt="" /> 
               <div>
-                <h3>Ruby</h3>
-                <h3 className='second'>Current League</h3>
+                <h3>{getMaxStreakDisplay(userData)}</h3>
+                <h3 className='second'>Maximum Streak</h3>
               </div>
             </div>
             <div className="boxes">
               <img src={getAssetUrl('medal.png', medal)} alt="" />
               <div>
-                <h3>{userData?.rank <=3 ? userData?.rank : 0}</h3>
-                <h3 className='second'>Top 3 Finishes</h3>
+                <h3>{userData?.rank ? `#${userData.rank}` : '-'}</h3>
+                <h3 className='second'>Leaderboard Rank</h3>
               </div>
             </div>
           </div>
@@ -301,7 +376,7 @@ function Profile() {
             {
               chats.map((chat, index) => {
                 return (
-                  <div className='friend' key={index} onClick={()=>{navigate(`/profile/u/${chat._id}`)}}><img src={`data:image/svg+xml;base64,${chat.AvatarImage}`} alt="avatar" /><div><h3>{chat.username}</h3><span>{chat.userData.xp} XP</span></div></div>
+                  <div className='friend' key={index} onClick={()=>{navigate(`/profile/u/${chat._id}`)}}><img src={getAvatarSrc(chat.AvatarImage)} alt="" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = defaultAvatar; }} /><div><h3>{chat.username}</h3><span>{chat.userData.xp} XP</span></div></div>
                 )
               })}
             <div className="boxx">
@@ -320,7 +395,7 @@ function Profile() {
               {
                 chats2.map((chat, index) => {
                   return (
-                    <div className='friend' key={index} onClick={()=>{navigate(`/profile/u/${chat._id}`)}}><img src={`data:image/svg+xml;base64,${chat.AvatarImage}`} alt="avatar" /><div><h3>{chat.username}</h3><span>{chat.userData.xp} XP</span></div><img src={(chat.isFollowing) ? getAssetUrl('right.png', right) : getAssetUrl('followuser.png', followuser)}
+                    <div className='friend' key={index} onClick={()=>{navigate(`/profile/u/${chat._id}`)}}><img src={getAvatarSrc(chat.AvatarImage)} alt="" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = defaultAvatar; }} /><div><h3>{chat.username}</h3><span>{chat.userData.xp} XP</span></div><img src={(chat.isFollowing) ? getAssetUrl('right.png', right) : getAssetUrl('followuser.png', followuser)}
                       className={(chat.isFollowing) ? "end rightt" : "end"}
                       onClick={(event) => {
                         if (!chat.isFollowing){
@@ -350,16 +425,39 @@ color: #AFAFAF;
 margin:25px auto 0;
 padding:0 25px;
 gap:25px;
-@media (max-width: 705px) {
-  padding-bottom: 120px;
+width: 100%;
+box-sizing: border-box;
+@media (max-width: 899px) {
+  padding: 0 12px 20px;
+  margin-top: 10px;
+  gap: 15px;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 .left{
   margin-top: 15px;
+  @media (max-width: 899px) {
+    margin-top: 0;
+    width: 100%;
+  }
 }
 .profilebox{
   display: flex;
-  div{
+  justify-content: space-between;
+  align-items: flex-start;
+  @media (max-width: 550px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+  > div:first-child{
     flex: 1;
+    @media (max-width: 550px) {
+      width: 100%;
+    }
+  }
   .username{
     font-size:1.3rem;
     color:#fff;
@@ -371,6 +469,9 @@ gap:25px;
     align-items: center;
     gap: 8px;
     margin-bottom: 8px;
+    @media (max-width: 550px) {
+      justify-content: center;
+    }
   }
   .edit-username-input {
     background: #121212;
@@ -416,24 +517,29 @@ gap:25px;
   h5{
     font-size: 0.85rem;
   }
-}   
   .avatar{
-    max-width: 140px;
+    width: 128px;
+    height: 128px;
     position: relative;
-    flex: 0 0 auto;
-    img:nth-child(1){
+    flex: 0 0 128px;
+    img.avatar-img, img:nth-of-type(1){
       width: 128px;
+      height: 128px;
+      object-fit: cover;
       border:1px solid #fff;
       border-radius: 50%;
+      display: block;
     }
-    img:nth-child(2){
+    img.upload-icon, img:nth-of-type(2){
       width: 28px;
+      height: 28px;
       position:absolute;
       right:9px;
       top:7px;
       border:2px solid #fff;
       border-radius: 50%;
       cursor: pointer;
+      background-color: #0f0f0f;
     }
   }
 } 
@@ -448,6 +554,9 @@ gap:25px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
     .boxes{
       display: flex;
       align-items: center;
@@ -455,6 +564,9 @@ gap:25px;
       border-radius:16px;
       gap:16px;
       padding: 15px 25px;
+      @media (max-width: 480px) {
+        padding: 12px 16px;
+      }
       img{
         width:24px;
         height:24px;
@@ -495,6 +607,12 @@ gap:25px;
       padding:22px 25px;
       gap:32px;
       border-bottom:1.5px solid #333;
+      @media (max-width: 550px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 16px 14px;
+      }
       div{
         display: flex;
         flex-direction: column;
@@ -704,8 +822,11 @@ gap:25px;
         cursor: pointer;
         /* transition: 0.5s ease-out; */
       }
-      img{
+      img:first-child{
         width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
       }
       .end{
         margin-left: auto;

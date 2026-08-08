@@ -17,13 +17,11 @@ function GoogleLogin(props) {
           }
         );
         const { name, picture, email } = res.data;
-        // Standard, browser-safe base64 encoding of the profile picture URL
-        const buffer = btoa(unescape(encodeURIComponent(picture)));
 
         const username = _.toLower(_.replace(name, / /g, ''));
         const { data } = await axios.post(googleRoute, {
           username,
-          buffer,
+          picture,
           email
         });
         if (data.status === false) {

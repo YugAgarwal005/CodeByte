@@ -4,6 +4,8 @@ import About from '../../components/common/About';
 import Rightnavbar from '../../components/layout/Rightnavbar';
 import { Link, useNavigate } from 'react-router-dom';
 import { getuserRoute, getleaderboardRoute } from '../../utils/Apiroutes';
+import { getAvatarSrc, defaultAvatar } from '../../utils/assets';
+import { Trophy } from 'lucide-react';
 import axios from 'axios';
 
 function Leaderboard() {
@@ -50,9 +52,9 @@ function Leaderboard() {
     <Container>
       <div className="left">
         <div className="fix">
-          <img src="https://d35aaqx5ub95lt.cloudfront.net/images/leagues/74d6ab6e5b6f92e7d16a4a6664d1fafd.svg" alt="" />
-          <h3 className='header head'>Ruby League</h3>
-          <h3 className="header">More leagues coming soon ...</h3>
+          <Trophy size={60} color="#f59e0b" style={{ marginTop: '10px' }} />
+          <h3 className='header head'>Leaderboard</h3>
+          <h3 className="header">Compete with other learners and climb the ranks!</h3>
         </div>
         <div className="leaderbd">
           {leaderboard != null ?
@@ -66,7 +68,7 @@ function Leaderboard() {
                       <span className="num"><img src="https://d35aaqx5ub95lt.cloudfront.net/images/leagues/eef523c872b71178ef5acb2442d453a2.svg" alt="" /></span> :
                       <span className="num">{index + 1}</span>
                 }
-                <img src={`data:image/svg+xml;base64,${user.AvatarImage}`} alt="" />
+                <img src={getAvatarSrc(user.AvatarImage)} alt="" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = defaultAvatar; }} />
                 <span className='name'>{user.username}</span>
                 <span className='xp'>{user.userData.xp} XP</span>
               </div>
@@ -130,14 +132,33 @@ color: #AFAFAF;
 margin:25px auto 0;
 padding:0 25px;
 gap:25px;
+width: 100%;
+box-sizing: border-box;
+@media (max-width: 899px) {
+  padding: 0 12px 20px;
+  margin-top: 10px;
+  gap: 15px;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 .left{
   overflow-y: scroll;
   height: 97vh;
+  @media (max-width: 899px) {
+    height: auto;
+    max-height: none;
+    width: 100%;
+    overflow-y: visible;
+    overflow-x: hidden;
+    padding-bottom: 20px;
+  }
   .fix{
     display: flex;
     flex-direction: column;
     align-items: center;
     border-bottom: 1.5px solid #333;
+    text-align: center;
   img{
     width: 80px;
   }
@@ -147,6 +168,10 @@ gap:25px;
     padding-top: 0px;
     font-weight: normal;
     margin-top: 15px;
+    @media (max-width: 480px) {
+      font-size: 0.95rem;
+      padding: 10px;
+    }
   }
   .head{
     padding-bottom: 0px;
@@ -159,9 +184,6 @@ gap:25px;
 }
   padding-top: 6px;
   padding-bottom: 20px;
-  @media (max-width: 705px) {
-    padding-bottom: 120px;
-  }
   &::-webkit-scrollbar{
     width: 0;
   }
@@ -173,18 +195,29 @@ gap:25px;
     margin-bottom:25px;
     .rank{
       display: grid;
-      grid-template-columns:0.9fr 1.3fr 2fr 4.2fr;
+      grid-template-columns: 36px 52px 1fr auto;
       align-items: center;
       padding: 8px 10px;
       gap: 10px;
       margin-bottom:1px;
       border-radius: 16px;
       cursor: pointer;
+      @media (max-width: 480px) {
+        grid-template-columns: 30px 42px 1fr auto;
+        gap: 6px;
+        padding: 8px 6px;
+      }
       .num{
         font-size: 1.2rem;
         text-align: center;
+        @media (max-width: 480px) {
+          font-size: 1rem;
+        }
         img{
           padding: 2px;
+          @media (max-width: 480px) {
+            width: 24px;
+          }
         }
       }
       &:hover{
@@ -193,15 +226,31 @@ gap:25px;
       .name{
         color: #fff;
         font-size: 1.1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        @media (max-width: 480px) {
+          font-size: 0.95rem;
+        }
       }
       .xp{
         justify-self:flex-end;
         color: #777777cc;
         padding-right:20px;
+        @media (max-width: 480px) {
+          font-size: 0.85rem;
+          padding-right: 5px;
+        }
       }
       img{
         width: 48px;
         height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        @media (max-width: 480px) {
+          width: 38px;
+          height: 38px;
+        }
       }
     }
     .crect{
