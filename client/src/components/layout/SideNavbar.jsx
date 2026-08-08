@@ -65,7 +65,7 @@ function SideNavbar() {
   ];
 
   const menuItems2 = [
-    { to: '/', label: 'learn', imgSrc: getAssetUrl('icons8-module-481.png', logo) },
+    { to: '/', label: 'logo', isLogo: true, imgSrc: getAssetUrl('icons8-module-481.png', logo) },
     { to: '/', label: '', imgSrc: getAssetUrl('icons8-home-64.png', learn) },
     { to: '/leaderboards', label: 'leaderboards', imgSrc: getAssetUrl('coins1.png', leaderboard) },
     { to: '/quests', label: 'quests', imgSrc: getAssetUrl('icons8-treasure-100.png', quest) },
@@ -138,8 +138,8 @@ function SideNavbar() {
                 handleMouseLeave();
               }
             }}
-            className='menuitem'>
-            <img src={item.imgSrc} alt={item.label || 'nav'} className={`${location.pathname === `/${item.label}` && item.label !== 'more' && item.imgSrc !== logo ? 'active' : ''} ${item.imgSrc === logo ? 'logo-icon' : ''}`} />
+            className={`menuitem ${item.isLogo ? 'logo-link' : ''}`}>
+            <img src={item.imgSrc} alt={item.label || 'nav'} className={`${(location.pathname === item.to || (item.to === '/' && location.pathname === '/')) && !item.isLogo && item.label !== 'more' ? 'active' : ''} ${item.isLogo ? 'logo-icon' : ''}`} />
           </Link>
         ))}
         {moreHovered && (
@@ -352,7 +352,7 @@ z-index: 10000;
     display: none;
   }
   @media screen and (max-width: 705px){
-    padding: 0 10px;
+    padding: 0 4px;
     flex-direction: row;
     position: fixed;
     left: 0;
@@ -361,31 +361,33 @@ z-index: 10000;
     align-items: center;
     bottom: 0;
     width: 100%;
-    height: 65px;
+    height: 60px;
     border: none;
     border-top: 1px solid #333;
     background-color: #0f0f0f;
     z-index: 9999;
     box-sizing: border-box;
     .menuitem{
-      padding: 6px;
+      padding: 4px 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex: 1;
+      max-width: 20%;
       img {
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
         padding: 4px;
         box-sizing: border-box;
       }
     }
-    .logo-icon{
-      display: none;
+    .logo-link{
+      display: none !important;
     }
     .morehover-mobile{
       position: fixed;
-      bottom: 72px;
-      right: 15px;
+      bottom: 68px;
+      right: 10px;
       left: auto;
       width: 180px;
     }

@@ -218,6 +218,35 @@ function Profile() {
             </div>
           </div>
         </div>
+        <div className="social-section-mobile">
+          <div className="followers">
+            <div className="header">
+              <span onClick={() => handleFollowChange('following')} className={selectedTab === 'following' ? 'selected' : ''} >FOLLOWING</span>
+              <span onClick={() => handleFollowChange('followers')} className={selectedTab === 'followers' ? 'selected' : ''}>FOLLOWERS</span>
+            </div>
+            <div className='scroll'>
+              {
+                chats.map((chat, index) => {
+                  return (
+                    <div className='friend' key={index} 
+                    onClick={() =>
+                     { navigate(`/profile/u/${chat._id}`);
+                      setForceRerender(prev => !prev)
+                     }}>
+                     <img src={getAvatarSrc(chat.AvatarImage)} alt="avatar" />
+                     <div>
+                     <h3>{chat.username}</h3><span>{chat.userData.xp} XP</span>
+                      </div>
+                    </div>
+                  )
+                })}
+              <div className="boxx">
+                <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/a925a18c6be921a81bf0e13102983168.svg" alt="" />
+              </div>
+              <div className='txt'>Take the first step! Learning together is fun and effective </div>
+            </div>
+          </div>
+        </div>
         </div>
         <div className='right'>
           <Rightnavbar />
@@ -276,7 +305,7 @@ padding:0 25px;
 gap:25px;
 width: 100%;
 box-sizing: border-box;
-@media (max-width: 899px) {
+@media (max-width: 1024px) {
   padding: 0 12px 20px;
   margin-top: 10px;
   gap: 15px;
@@ -286,14 +315,17 @@ box-sizing: border-box;
 }
 .left{
   margin-top: 15px;
-  @media (max-width: 899px) {
+  width: 100%;
+  @media (max-width: 1024px) {
     margin-top: 0;
-    width: 100%;
   }
 }
 .profilebox{
   display: flex;
-  @media (max-width: 550px) {
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1.5px solid #333;
+  @media (max-width: 1024px) {
     flex-direction: column-reverse;
     align-items: center;
     text-align: center;
@@ -313,14 +345,20 @@ box-sizing: border-box;
   }
   div{
     flex: 1;
-    @media (max-width: 550px) {
+    @media (max-width: 1024px) {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   .username{
     line-height:1.2;
     font-size:1.3rem;
     color:#fff;
     font-family:"Bricolage Grotesque";
+    @media (max-width: 1024px) {
+      text-align: center;
+    }
   }
   h4{
     font-weight: normal;
@@ -328,6 +366,11 @@ box-sizing: border-box;
     color: #ffffff;
     font-size: 1.05rem;
     margin:10px 0;
+    display: flex;
+    align-items: center;
+    @media (max-width: 1024px) {
+      justify-content: center;
+    }
     img{
       margin-right:10px;
       transform: translateY(3px);
@@ -335,6 +378,9 @@ box-sizing: border-box;
   }
   h5{
     font-size: 0.85rem;
+    @media (max-width: 1024px) {
+      text-align: center;
+    }
   }
 }   
   .avatar{
@@ -472,128 +518,140 @@ box-sizing: border-box;
     }
   }
 }
-@media (min-width: 900px) {
-  max-width: 1080px;
-  .left{
-    flex: 1;
-    /* border:1px white solid; */
-  }
-  .right{
-    flex: 0 0 auto; 
-    width: 400px; 
-  }
-  .profilebox{
-    border-bottom: 1.5px solid #333;
-  }
+.social-section-mobile {
+  display: none;
 }
-@media (max-width: 899px) {
-  .right {
+.followers{
+  border:1.5px solid #333;
+  width: 100%;
+  max-width: 368px;
+  height: 400px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 6px;
+  box-sizing: border-box;
+  .scroll{
+   overflow-y: scroll;
+   &::-webkit-scrollbar{
+    width: 5px;
+    background-color: #0f0f0f;
+   }
+   &::-webkit-scrollbar-thumb {
+    background: #333333CC;
+    border-radius: 12px;
+    opacity: 0.5;
+   }
+   &::-webkit-scrollbar-track {
+    background: #3333334D;
+    border-radius: 12px;
+   }
+   &::-webkit-scrollbar-button {
     display: none;
+   }
+  .boxx{
+    display: flex;
+    padding: 15px 0;
+    justify-content:center;
+    img{
+      width: 270px;
+    }
+  }
+  .txt{
+    text-align: center;
+    padding: 10px 30px 20px;
+    color: #1cb0f6;
   }
 }
+  .friend{
+    display: flex;
+    padding: 20px;
+    gap: 15px;
+    &:hover{
+      background-color:hsla(0, 0%, 100%, 0.02);
+      cursor: pointer;
+    }
+    img:first-child{
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    div{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+       h3{
+        margin: 4px auto;
+        font-weight: 600;
+        color: #fff;
+       }
+       span{
+        font-size: 0.9rem;
+        transform: translateX(2px);
+        color: #ffffff4D;
+        z-index: -1;
+       }
+    }
+  }
+  .header{
+    display: flex;
+    padding-bottom: 5px;
+    border-width: 50%;
+    .selected{
+     color: #1cb0f6;
+     border-bottom:1px solid #1cb0f6;
+    }
+    span{
+      color: #ffffff80;
+      padding-top: 20px;
+      padding-bottom: 15px;
+      width: 50%;
+      font-size:0.95rem;
+      text-align: center;
+      cursor: pointer;
+      border-bottom:1px solid #333;
+      &:hover{
+        color: #1cb0f6;
+        border-bottom:1px solid #1cb0f6;
+      }
+    }
+  }
+} 
 .right{
   display: flex;
   padding-left:15px;
   flex-direction: column;
   align-items: center;
   gap:20px;
-  .followers{
-    border:1.5px solid #333;
-    width: 368px;
-    height: 400px;
-    border-radius: 16px;
+}
+
+@media (min-width: 1025px) {
+  max-width: 1080px;
+  .left{
+    flex: 1;
+  }
+  .right{
+    flex: 0 0 auto; 
+    width: 380px; 
+  }
+  .profilebox{
+    border-bottom: 1.5px solid #333;
+  }
+}
+@media (max-width: 1024px) {
+  .right {
+    display: none !important;
+  }
+  .social-section-mobile {
     display: flex;
     flex-direction: column;
-    padding-bottom: 6px;
-    .scroll{
-     overflow-y: scroll;
-     &::-webkit-scrollbar{
-      width: 5px;
-      background-color: #0f0f0f;
-     }
-     &::-webkit-scrollbar-thumb {
-      background: #333333CC;
-      border-radius: 12px;
-      opacity: 0.5;
-     }
-     &::-webkit-scrollbar-track {
-      background: #3333334D;
-      border-radius: 12px;
-     }
-     &::-webkit-scrollbar-button {
-     display: none;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 25px;
   }
-    .boxx{
-      display: flex;
-      padding: 15px 0;
-      justify-content:center;
-      img{
-        width: 270px;
-      }
-    }
-    .txt{
-      text-align: center;
-      padding: 10px 30px 20px;
-      color: #1cb0f6;
-    }
-  }
-    .friend{
-      display: flex;
-      padding: 20px;
-      gap: 15px;
-      &:hover{
-        background-color:hsla(0, 0%, 100%, 0.02);
-        cursor: pointer;
-        /* transition: 0.5s ease-out; */
-      }
-      img:first-child{
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-      div{
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-         h3{
-          margin: 4px auto;
-          font-weight: 600;
-          color: #fff;
-         }
-         span{
-          font-size: 0.9rem;
-          transform: translateX(2px);
-          color: #ffffff4D;
-          z-index: -1;
-         }
-      }
-    }
-    .header{
-      display: flex;
-      padding-bottom: 5px;
-      border-width: 50%;
-      .selected{
-       color: #1cb0f6;
-       border-bottom:1px solid #1cb0f6;
-      }
-      span{
-        color: #ffffff80;
-        padding-top: 20px;
-        padding-bottom: 15px;
-        width: 50%;
-        font-size:0.95rem;
-        text-align: center;
-        cursor: pointer;
-        border-bottom:1px solid #333;
-        &:hover{
-          color: #1cb0f6;
-          border-bottom:1px solid #1cb0f6;
-        }
-      }
-    }
-  } 
 }
-`
+`;
 
 export default Profile

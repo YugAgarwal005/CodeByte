@@ -177,7 +177,7 @@ padding:0 25px;
 gap:25px;
 width: 100%;
 box-sizing: border-box;
-@media (max-width: 899px) {
+@media (max-width: 1024px) {
   padding: 0 12px 20px;
   margin-top: 10px;
   gap: 15px;
@@ -187,25 +187,73 @@ box-sizing: border-box;
 }
 .left{
   margin-top: 15px;
-  @media (max-width: 899px) {
+  width: 100%;
+  @media (max-width: 1024px) {
     margin-top: 0;
-    width: 100%;
   }
 }
-@media (min-width: 900px) {
+.right{
+  display: flex;
+  padding-left:15px;
+  flex-direction: column;
+  align-items: center;
+  gap:20px;
+  .leaderboard{
+    width: 368px;
+    border: 1.5px solid #333;
+    border-radius: 16px;
+    padding: 22px;
+    z-index: 0;
+    .head{
+      display: flex;
+      font-weight: 600;
+      font-size: 0.9rem;
+      justify-content: space-between;
+      span{
+        text-transform: uppercase;
+        color: #fff;
+      }
+      a{
+        text-decoration: none;
+        color: #1cb0f6;
+        z-index: 2;
+      }
+      margin-bottom: 25px;
+    }
+    .two{
+        margin-top: 25px;
+        margin-bottom:10px;
+      }
+    .content{
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      color: #777;
+      align-items: center;
+      line-height: 1.2;
+      span{
+        color: #eb2632;
+      }
+      img{
+        width:73px ;
+      }
+    }
+  }
+}
+
+@media (min-width: 1025px) {
   max-width: 1080px;
   .left{
     flex: 1;
-    /* border:1px white solid; */
   }
   .right{
     flex: 0 0 auto; 
-    width: 400px; 
+    width: 380px; 
   }
 }
-@media (max-width: 899px) {
+@media (max-width: 1024px) {
   .right {
-    display: none;
+    display: none !important;
   }
 }
  .welcome{
@@ -415,53 +463,6 @@ box-sizing: border-box;
     }
   }
 }
-.right{
-  display: flex;
-  padding-left:15px;
-  flex-direction: column;
-  align-items: center;
-  gap:20px;
-  .leaderboard{
-    width: 368px;
-    border: 1.5px solid #333;
-    border-radius: 16px;
-    padding: 22px;
-    z-index: 0;
-    .head{
-      display: flex;
-      font-weight: 600;
-      font-size: 0.9rem;
-      justify-content: space-between;
-      span{
-        text-transform: uppercase;
-        color: #fff;
-      }
-      a{
-        text-decoration: none;
-        color: #1cb0f6;
-        z-index: 2;
-      }
-      margin-bottom: 25px;
-    }
-    .two{
-        margin-top: 25px;
-        margin-bottom:10px;
-      }
-    .content{
-      display: flex;
-      justify-content: space-between;
-      gap: 22px;
-      color: #777;
-      align-items: center;
-      line-height: 1.2;
-      span{
-        color: #eb2632;
-      }
-      img{
-        width:73px ;
-      }
-    }
-  }
-  }`;
+`;
 
 export default Quests

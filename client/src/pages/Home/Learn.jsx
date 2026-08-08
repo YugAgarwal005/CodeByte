@@ -80,7 +80,7 @@ function Learn() {
           :
           <Container onMouseEnter={()=>{setTimeout(()=>{setShowStreak(false)},1000)}}>
             <div className="left">
-              <h3 className='header'>{course.name === 'java' ? "Java" : "C & C++"}</h3>
+              <h3 className='header'>{course.name === 'java' ? "Java" : course.name === 'python' ? "Python" : "C & C++"}</h3>
               {course.units.filter((unit, index) => {
                 if (index === 0) return true;
                 const prevUnit = course.units[index - 1];
@@ -105,9 +105,7 @@ function Learn() {
                           className={`circle ${unit.unitNumber % 2 === 0 ? 'd' : 'c'}${innerindex + 1} ${unit.level < innerindex ? null : 'solved'}`}
                           key={innerindex} onClick={() => {
                             if (!(unit.level < innerindex) || innerindex === 0)
-                              setTimeout(() => {
-                                navigate(`/quiz/unit/${unit.unitNumber}/level/${lesson.lessonNumber}`);
-                              }, 700);
+                              navigate(`/quiz/unit/${unit.unitNumber}/level/${lesson.lessonNumber}`);
                           }}
                         >
                           {innerindex === 0 && unit.level < innerindex + 1 ? <div className="float">JUMP HERE ?</div> : null}
@@ -203,8 +201,8 @@ padding:25px 25px 0;
 gap:25px;
 width: 100%;
 box-sizing: border-box;
-@media (max-width: 705px) {
-  padding: 15px 12px 40px;
+@media (max-width: 1024px) {
+  padding: 15px 12px 20px;
   gap: 15px;
   width: 100%;
   max-width: 100vw;
@@ -213,10 +211,10 @@ box-sizing: border-box;
 .left{
   overflow-y: scroll;
   height: 97vh;
-  @media (max-width: 705px) {
+  width: 100%;
+  @media (max-width: 1024px) {
     height: auto;
     max-height: none;
-    width: 100%;
     overflow-y: visible;
     overflow-x: hidden;
     padding-bottom: 20px;
@@ -577,22 +575,6 @@ box-sizing: border-box;
   }
 }
 
-@media (min-width: 900px) {
-  max-width: 1080px;
-  .left{
-    flex: 1;
-    /* border:1px white solid; */
-  }
-  .right{
-    flex: 0 0 auto; 
-    width: 400px; 
-  }
-}
-@media (max-width: 899px) {
-  .right {
-    display: none;
-  }
-}
 .right{
   display: flex;
   padding-left:15px;
@@ -660,6 +642,23 @@ box-sizing: border-box;
       }
     }
   }
-  }`;
+}
+
+@media (min-width: 1025px) {
+  max-width: 1080px;
+  .left{
+    flex: 1;
+  }
+  .right{
+    flex: 0 0 auto; 
+    width: 380px; 
+  }
+}
+@media (max-width: 1024px) {
+  .right {
+    display: none !important;
+  }
+}
+`;
 
 export default Learn

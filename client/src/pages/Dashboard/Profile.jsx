@@ -233,7 +233,7 @@ function Profile() {
                   </button>
                 </div>
               ) : (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <div className="edit-username-container">
                   <h3 className='username'>{user.username}</h3>
                   <button className="edit-icon-btn" onClick={() => setIsEditingUsername(true)} title="Edit Username">
                     <Edit size={16} color="#AFAFAF" />
@@ -364,6 +364,51 @@ function Profile() {
             </div>
           </div>
         </div>
+        <div className="social-section-mobile">
+          <div className="followers">
+            <div className="header">
+              <span onClick={() => handleFollowChange('following')} className={selectedTab === 'following' ? 'selected' : ''} >FOLLOWING</span>
+              <span onClick={() => handleFollowChange('followers')} className={selectedTab === 'followers' ? 'selected' : ''}>FOLLOWERS</span>
+            </div>
+            <div className='scroll'>
+              {
+                chats.map((chat, index) => {
+                  return (
+                    <div className='friend' key={index} onClick={()=>{navigate(`/profile/u/${chat._id}`)}}><img src={getAvatarSrc(chat.AvatarImage)} alt="" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = defaultAvatar; }} /><div><h3>{chat.username}</h3><span>{chat.userData.xp} XP</span></div></div>
+                  )
+                })}
+              <div className="boxx">
+                <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/a925a18c6be921a81bf0e13102983168.svg" alt="" />
+              </div>  
+              <div className='txt'>Take the first step! Learning together is fun and effective </div>
+            </div>
+          </div>
+          <div className="addfriends">
+            <div className="header">Add friends</div>
+            <div className="find"><img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/48b8884ac9d7513e65f3a2b54984c5c4.svg" alt="" /><span>Find Friends</span></div>
+            <div className='input'><input type="text" name="username" placeholder='Enter Username' autoComplete='off' spellCheck='false' value={searchQuery} onChange={handleSearch} /></div>
+            {chats2.length !== 0 ?
+              <div className='scroll'>
+                {
+                  chats2.map((chat, index) => {
+                    return (
+                      <div className='friend' key={index} onClick={()=>{navigate(`/profile/u/${chat._id}`)}}><img src={getAvatarSrc(chat.AvatarImage)} alt="" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = defaultAvatar; }} /><div><h3>{chat.username}</h3><span>{chat.userData.xp} XP</span></div><img src={(chat.isFollowing) ? getAssetUrl('right.png', right) : getAssetUrl('followuser.png', followuser)}
+                        className={(chat.isFollowing) ? "end rightt" : "end"}
+                        onClick={(event) => {
+                          if (!chat.isFollowing){
+                            event.stopPropagation();
+                            handleFollowRequest(chat._id)
+                          }
+                        }} /></div>
+                    )
+                  })}
+              </div>
+              : <div className='error'>
+                <img src={getAssetUrl('404.png', error)} alt="" />
+                <span>Sorry ! we didn’t find any matching learners. Try searching again.</span>
+              </div>}
+          </div>
+        </div>
       </div>
       <div className='right'>
         <Rightnavbar />
@@ -427,7 +472,7 @@ padding:0 25px;
 gap:25px;
 width: 100%;
 box-sizing: border-box;
-@media (max-width: 899px) {
+@media (max-width: 1024px) {
   padding: 0 12px 20px;
   margin-top: 10px;
   gap: 15px;
@@ -437,16 +482,19 @@ box-sizing: border-box;
 }
 .left{
   margin-top: 15px;
-  @media (max-width: 899px) {
+  width: 100%;
+  @media (max-width: 1024px) {
     margin-top: 0;
-    width: 100%;
   }
 }
 .profilebox{
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  @media (max-width: 550px) {
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1.5px solid #333;
+  @media (max-width: 1024px) {
     flex-direction: column-reverse;
     align-items: center;
     text-align: center;
@@ -454,8 +502,11 @@ box-sizing: border-box;
   }
   > div:first-child{
     flex: 1;
-    @media (max-width: 550px) {
+    @media (max-width: 1024px) {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
   .username{
@@ -469,8 +520,9 @@ box-sizing: border-box;
     align-items: center;
     gap: 8px;
     margin-bottom: 8px;
-    @media (max-width: 550px) {
+    @media (max-width: 1024px) {
       justify-content: center;
+      width: 100%;
     }
   }
   .edit-username-input {
@@ -509,6 +561,11 @@ box-sizing: border-box;
     color: #ffffff;
     font-size: 1.05rem;
     margin:10px 0;
+    display: flex;
+    align-items: center;
+    @media (max-width: 1024px) {
+      justify-content: center;
+    }
     img{
       margin-right:10px;
       transform: translateY(3px);
@@ -516,6 +573,9 @@ box-sizing: border-box;
   }
   h5{
     font-size: 0.85rem;
+    @media (max-width: 1024px) {
+      text-align: center;
+    }
   }
   .avatar{
     width: 128px;
@@ -654,23 +714,237 @@ box-sizing: border-box;
     }
   }
 }
-@media (min-width: 900px) {
-  max-width: 1080px;
-  .left{
-    flex: 1;
-    /* border:1px white solid; */
+.social-section-mobile {
+  display: none;
+}
+.followers{
+  border:1.5px solid #333;
+  width: 100%;
+  max-width: 368px;
+  height: 400px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 6px;
+  box-sizing: border-box;
+  .scroll{
+   overflow-y: scroll;
+   &::-webkit-scrollbar{
+    width: 5px;
+    background-color: #0f0f0f;
+   }
+   &::-webkit-scrollbar-thumb {
+    background: #333333CC;
+    border-radius: 12px;
+    opacity: 0.5;
+   }
+   &::-webkit-scrollbar-track {
+    background: #3333334D;
+    border-radius: 12px;
+   }
+   &::-webkit-scrollbar-button {
+    display: none;
+   }
   }
-  .right{
-    flex: 0 0 auto; 
-    width: 400px; 
+  .boxx{
+    display: flex;
+    padding: 15px 0;
+    justify-content:center;
+    img{
+      width: 270px;
+    }
   }
-  .profilebox{
-    border-bottom: 1.5px solid #333;
+  .txt{
+    text-align: center;
+    padding: 10px 30px 20px;
+    color: #1cb0f6;
+  }
+  .friend{
+    display: flex;
+    padding: 20px;
+    &:hover{
+      background-color:hsla(0, 0%, 100%, 0.02);
+      cursor: pointer;
+    }
+    gap: 15px;
+    img{
+      width: 48px;
+    }
+    div{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+       h3{
+        margin: 4px auto;
+        font-weight: 600;
+        color: #fff;
+       }
+       span{
+        font-size: 0.9rem;
+        transform: translateX(2px);
+        color: #ffffff4D;
+        z-index: -1;
+       }
+    }
+  }
+  .header{
+    display: flex;
+    padding-bottom: 5px;
+    border-width: 50%;
+    .selected{
+     color: #1cb0f6;
+     border-bottom:1px solid #1cb0f6;
+    }
+    span{
+      color: #ffffff80;
+      padding-top: 20px;
+      padding-bottom: 15px;
+      width: 50%;
+      font-size:0.95rem;
+      text-align: center;
+      cursor: pointer;
+      border-bottom:1px solid #333;
+      &:hover{
+        color: #1cb0f6;
+        border-bottom:1px solid #1cb0f6;
+      }
+    }
   }
 }
-@media (max-width: 899px) {
-  .right {
+.addfriends{
+  border:1.5px solid #333;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 368px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 6px;
+  box-sizing: border-box;
+  .error{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: goldenrod;
+    line-height: 1.3;
+    opacity: 0.95;
+    padding: 0 20px;
+    img{
+      width: 130px;
+    }
+  }
+  .scroll{
+   overflow-y: scroll;
+   &::-webkit-scrollbar{
+    width: 5px;
+    background-color: #0f0f0f;
+   }
+   &::-webkit-scrollbar-thumb {
+    background: #333333CC;
+    border-radius: 12px;
+    opacity: 0.5;
+   }
+   &::-webkit-scrollbar-track {
+    background: #3333334D;
+    border-radius: 12px;
+   }
+   &::-webkit-scrollbar-button {
     display: none;
+   }
+  }
+  .friend{
+    display: flex;
+    padding: 20px;
+    gap: 15px;
+    &:hover{
+      background-color:hsla(0, 0%, 100%, 0.02);
+      cursor: pointer;
+    }
+    img:first-child{
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .end{
+      margin-left: auto;
+      align-self: center;
+      margin-right: 40px;
+      cursor: pointer;
+      width: 25px;
+      height: 25px;
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+    .rightt{
+      pointer-events: none;
+    }
+    div{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+       h3{
+        margin: 4px auto;
+        font-weight: 600;
+        color: #fff;
+       }
+       span{
+        font-size: 0.9rem;
+        transform: translateX(2px);
+        color: #ffffff4D;
+        z-index: -1;
+       }
+    }
+  }
+  .header{
+    font-size: 1.2rem;
+    color: #fff;
+    padding: 23px;
+    padding-top:26px;
+    padding-bottom: 0;
+  }
+  .find{
+    padding-top: 10px;
+    padding-left: 15px;
+    z-index: -1;
+    img{
+    width: 52px;
+    }
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    color: #fff;
+    opacity: 0.95;
+  }
+
+  .input{
+    padding-bottom:5px;
+    border-bottom: 1.5px solid #333;
+  }
+
+  div{
+    input{
+      margin-left: 73px;
+      color: #1cb0f6;
+      background-color:transparent;
+      width: 190px;
+      border: none;
+      transform: translateY(-10px);
+      font-size: 1rem;
+      padding:5px;
+      &::placeholder{
+        opacity: 0.9;
+        color: #1cb0f6;
+      }
+      border-bottom: 1px solid #ffffff80;
+      &:focus{
+        outline: none;
+      }
+    }
   }
 }
 .right{
@@ -679,235 +953,34 @@ box-sizing: border-box;
   flex-direction: column;
   align-items: center;
   gap:20px;
-  .followers{
-    border:1.5px solid #333;
-    width: 368px;
-    height: 400px;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 6px;
-    .scroll{
-     overflow-y: scroll;
-     &::-webkit-scrollbar{
-      width: 5px;
-      background-color: #0f0f0f;
-     }
-     &::-webkit-scrollbar-thumb {
-      background: #333333CC;
-      border-radius: 12px;
-      opacity: 0.5;
-     }
-     &::-webkit-scrollbar-track {
-      background: #3333334D;
-      border-radius: 12px;
-     }
-     &::-webkit-scrollbar-button {
-     display: none;
-  }
-    .boxx{
-      display: flex;
-      padding: 15px 0;
-      justify-content:center;
-      img{
-        width: 270px;
-      }
-    }
-    .txt{
-      text-align: center;
-      padding: 10px 30px 20px;
-      color: #1cb0f6;
-    }
-  }
-    .friend{
-      display: flex;
-      padding: 20px;
-      &:hover{
-        background-color:hsla(0, 0%, 100%, 0.02);
-        cursor: pointer;
-        /* transition: 0.5s ease-out; */
-      }
-      gap: 15px;
-      img{
-        width: 48px;
-      }
-      div{
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-         h3{
-          margin: 4px auto;
-          font-weight: 600;
-          color: #fff;
-         }
-         span{
-          font-size: 0.9rem;
-          transform: translateX(2px);
-          color: #ffffff4D;
-          z-index: -1;
-         }
-      }
-    }
-    .header{
-      display: flex;
-      padding-bottom: 5px;
-      border-width: 50%;
-      .selected{
-       color: #1cb0f6;
-       border-bottom:1px solid #1cb0f6;
-      }
-      span{
-        color: #ffffff80;
-        padding-top: 20px;
-        padding-bottom: 15px;
-        width: 50%;
-        font-size:0.95rem;
-        text-align: center;
-        cursor: pointer;
-        border-bottom:1px solid #333;
-        &:hover{
-          color: #1cb0f6;
-          border-bottom:1px solid #1cb0f6;
-        }
-      }
-    }
-  }
-  .addfriends{
-    border:1.5px solid #333;
-    border-radius: 16px;
-    width: 368px;
-    height: 340px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding-bottom: 6px;
-    .error{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      color: goldenrod;
-      line-height: 1.3;
-      opacity: 0.95;
-      padding: 0 20px;
-      img{
-        width: 130px;
-      }
-    }
-    .scroll{
-     overflow-y: scroll;
-     &::-webkit-scrollbar{
-      width: 5px;
-      background-color: #0f0f0f;
-     }
-     &::-webkit-scrollbar-thumb {
-      background: #333333CC;
-      border-radius: 12px;
-      opacity: 0.5;
-     }
-     &::-webkit-scrollbar-track {
-      background: #3333334D;
-      border-radius: 12px;
-     }
-     &::-webkit-scrollbar-button {
-     display: none;
-  }
-    }
-    .friend{
-      display: flex;
-      padding: 20px;
-      gap: 15px;
-      &:hover{
-        background-color:hsla(0, 0%, 100%, 0.02);
-        cursor: pointer;
-        /* transition: 0.5s ease-out; */
-      }
-      img:first-child{
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-      .end{
-        margin-left: auto;
-        align-self: center;
-        margin-right: 40px;
-        cursor: pointer;
-        width: 25px;
-        height: 25px;
-        &:hover{
-          opacity: 0.7;
-        }
-      }
-      .rightt{
-        pointer-events: none;
-      }
-      div{
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-         h3{
-          margin: 4px auto;
-          font-weight: 600;
-          color: #fff;
-         }
-         span{
-          font-size: 0.9rem;
-          transform: translateX(2px);
-          color: #ffffff4D;
-          z-index: -1;
-         }
-      }
-    }
-    .header{
-      font-size: 1.2rem;
-      color: #fff;
-      padding: 23px;
-      padding-top:26px;
-      padding-bottom: 0;
-    }
-    .find{
-      padding-top: 10px;
-      padding-left: 15px;
-      z-index: -1;
-      img{
-      width: 52px;
-      }
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.2rem;
-      color: #fff;
-      opacity: 0.95;
-    }
+}
 
-    .input{
-      padding-bottom:5px;
-      border-bottom: 1.5px solid #333;
-    }
-
-    div{
-      input{
-        margin-left: 73px;
-        color: #1cb0f6;
-        background-color:transparent;
-        width: 190px;
-        border: none;
-        transform: translateY(-10px);
-        font-size: 1rem;
-        padding:5px;
-        &::placeholder{
-          opacity: 0.9;
-          color: #1cb0f6;
-        }
-        border-bottom: 1px solid #ffffff80;
-        &:focus{
-          outline: none;
-        }
-      }
-    }
+@media (min-width: 1025px) {
+  max-width: 1080px;
+  .left{
+    flex: 1;
+  }
+  .right{
+    flex: 0 0 auto; 
+    width: 380px; 
+  }
+  .profilebox{
+    border-bottom: 1.5px solid #333;
   }
 }
-`
+@media (max-width: 1024px) {
+  .right {
+    display: none !important;
+  }
+  .social-section-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 25px;
+  }
+}
+`;
 
 export default Profile

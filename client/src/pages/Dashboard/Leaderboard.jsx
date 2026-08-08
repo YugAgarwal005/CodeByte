@@ -134,7 +134,7 @@ padding:0 25px;
 gap:25px;
 width: 100%;
 box-sizing: border-box;
-@media (max-width: 899px) {
+@media (max-width: 1024px) {
   padding: 0 12px 20px;
   margin-top: 10px;
   gap: 15px;
@@ -145,10 +145,10 @@ box-sizing: border-box;
 .left{
   overflow-y: scroll;
   height: 97vh;
-  @media (max-width: 899px) {
+  width: 100%;
+  @media (max-width: 1024px) {
     height: auto;
     max-height: none;
-    width: 100%;
     overflow-y: visible;
     overflow-x: hidden;
     padding-bottom: 20px;
@@ -269,22 +269,6 @@ box-sizing: border-box;
       }
   }
 }
-@media (min-width: 900px) {
-  max-width: 1080px;
-  .left{
-    flex: 1;
-    /* border:1px white solid; */
-  }
-  .right{
-    flex: 0 0 auto; 
-    width: 400px; 
-  }
-}
-@media (max-width: 899px) {
-  .right {
-    display: none;
-  }
-}
 .right{
   display: flex;
   padding-left:15px;
@@ -352,6 +336,23 @@ box-sizing: border-box;
       }
     }
   }
-  }`;
+}
+
+@media (min-width: 1025px) {
+  max-width: 1080px;
+  .left{
+    flex: 1;
+  }
+  .right{
+    flex: 0 0 auto; 
+    width: 380px; 
+  }
+}
+@media (max-width: 1024px) {
+  .right {
+    display: none !important;
+  }
+}
+`;
 
 export default Leaderboard

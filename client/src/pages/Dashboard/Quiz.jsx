@@ -60,7 +60,7 @@ function Quiz() {
         };
         const course = localStorage.getItem('course');
         const id = JSON.parse(localStorage.getItem('codebyte-user'))._id;
-        setTimeout(fetchData, 2000);
+        fetchData();
     }, []);
 
     useLayoutEffect(() => {
