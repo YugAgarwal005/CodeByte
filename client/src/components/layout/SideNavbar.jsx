@@ -7,6 +7,7 @@ import user from '../../assets/images/icons8-user-male-1001.png'
 import more from '../../assets/images/icons8-more-64.png'
 import logo from '../../assets/images/icons8-module-481.png'
 import gitlogo from '../../assets/images/github-logo.png'
+import practice from '../../assets/images/icons8-courses-64.png'
 import { useState, useEffect, useRef } from 'react';
 import { getAssetUrl } from '../../utils/assets';
 
@@ -60,6 +61,8 @@ function SideNavbar() {
     { to: '/', label: 'learn', imgSrc: getAssetUrl('icons8-home-64.png', learn) },
     { to: '/leaderboards', label: 'leaderboards', imgSrc: getAssetUrl('coins1.png', leaderboard) },
     { to: '/quests', label: 'quests', imgSrc: getAssetUrl('icons8-treasure-100.png', quest) },
+    // Practice link — opens the online judge problem list
+    { to: '/problems', label: 'practice', imgSrc: getAssetUrl('icons8-courses-64.png', practice) },
     { to: '/profile', label: 'profile', imgSrc: getAssetUrl('icons8-user-male-1001.png', user) },
     { to: location.pathname, label: 'more', imgSrc: getAssetUrl('icons8-more-64.png', more) },
   ];
@@ -69,6 +72,8 @@ function SideNavbar() {
     { to: '/', label: '', imgSrc: getAssetUrl('icons8-home-64.png', learn) },
     { to: '/leaderboards', label: 'leaderboards', imgSrc: getAssetUrl('coins1.png', leaderboard) },
     { to: '/quests', label: 'quests', imgSrc: getAssetUrl('icons8-treasure-100.png', quest) },
+    // Practice link for mobile/tablet nav bar
+    { to: '/problems', label: 'practice', imgSrc: getAssetUrl('icons8-courses-64.png', practice) },
     { to: '/profile', label: 'profile', imgSrc: getAssetUrl('icons8-user-male-1001.png', user) },
     { to: location.pathname, label: 'more', imgSrc: getAssetUrl('icons8-more-64.png', more) },
   ];

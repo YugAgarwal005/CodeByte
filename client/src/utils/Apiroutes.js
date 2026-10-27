@@ -23,3 +23,10 @@ export const createquestionRoute=`${host}/api/quiz/createquestion`;
 export const getquestionsRoute=`${host}/api/quiz/questions`;
 export const getcourseRoute=`${host}/api/quiz/course`;
 export const quizsubmitRoute=`${host}/api/quiz/submit`;
+
+// ── Judge / online-judge routes ───────────────────────────────────────────────
+export const problemsRoute     = `${host}/api/problems`;         // GET list
+export const problemRoute      = `${host}/api/problems`;         // GET /:slug
+export const submissionsRoute  = `${host}/api/submissions`;      // POST (create)
+export const mySubmissionsRoute= `${host}/api/submissions/me`;   // GET history
+export const problemSubmissionsRoute = (slug) => `${host}/api/submissions/problem/${slug}`;

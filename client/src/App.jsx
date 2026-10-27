@@ -14,6 +14,8 @@ import Quiz from './pages/Dashboard/Quiz';
 import FriendProfile from './pages/Dashboard/FriendProfile';
 import CreateUnit from './pages/Dashboard/CreateUnit';
 import CreateQues from './pages/Dashboard/CreateQues';
+import ProblemPage from './pages/Judge/ProblemPage';
+import ProblemListPage from './pages/Judge/ProblemList';
 import { styled } from 'styled-components';
 import axios from 'axios';
 import { getuserRoute } from './utils/Apiroutes';
@@ -69,6 +71,8 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/setavatar' element={<SetAvatar />} />
         <Route path='/quiz/unit/:unitnum/level/:levelnum' element={<Quiz />} />
+        {/* ProblemPage is full-screen (no sidebar) — same pattern as Quiz */}
+        <Route path='/problems/:slug' element={<ProblemPage />} />
         {
         userData?.isAdmin ? <>
           <Route path='/createunit' element={<CreateUnit />} />
@@ -81,6 +85,8 @@ function App() {
           <Route path='quests' element={<Quests />} />
           <Route path='profile' element={<Profile />} />
           <Route path='profile/u/:id' element={<FriendProfile />} />
+          {/* Problem list page — inside CodeByte layout so sidebar is visible */}
+          <Route path='problems' element={<ProblemListPage />} />
           {/* Catch-all route for any other paths */}
           <Route path='*' element={<ErrorPage />} />
         </Route>

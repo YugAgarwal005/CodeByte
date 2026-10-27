@@ -4,9 +4,11 @@ import path from "path";
 import { connectDB } from "./config/db.js";
 
 // Import routes
-import authRoutes from "./routes/auth.routes.js";
-import userRoutes from "./routes/user.routes.js";
-import quizRoutes from "./routes/quiz.routes.js";
+import authRoutes       from "./routes/auth.routes.js";
+import userRoutes       from "./routes/user.routes.js";
+import quizRoutes       from "./routes/quiz.routes.js";
+import problemRoutes    from "./routes/problem.routes.js";
+import submissionRoutes from "./routes/submission.routes.js";
 
 // Import error middleware
 import { errorHandler } from "./middlewares/error.middleware.js";
@@ -19,7 +21,8 @@ app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ limit: "20mb", extended: true }));
 
 // Database connection middleware (lazy connection with user-friendly error output)
-app.use(["/api", "/auth", "/quiz"], async (req, res, next) => {
+// Keep this list in sync whenever a new route prefix is added
+app.use(["/api", "/auth", "/quiz", "/problems", "/submissions"], async (req, res, next) => {
   try {
     await connectDB();
     next();
@@ -35,14 +38,18 @@ app.use(["/api", "/auth", "/quiz"], async (req, res, next) => {
 });
 
 // API Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/auth", userRoutes);
-app.use("/api/quiz", quizRoutes);
+app.use("/api/auth",        authRoutes);
+app.use("/api/auth",        userRoutes);
+app.use("/api/quiz",        quizRoutes);
+app.use("/api/problems",    problemRoutes);
+app.use("/api/submissions", submissionRoutes);
 
-// Vercel Serverless compatibility (handles requests when /api prefix is stripped by Vercel function routing)
-app.use("/auth", authRoutes);
-app.use("/auth", userRoutes);
-app.use("/quiz", quizRoutes);
+// Vercel Serverless compatibility (Vercel strips /api prefix before routing to Express)
+app.use("/auth",        authRoutes);
+app.use("/auth",        userRoutes);
+app.use("/quiz",        quizRoutes);
+app.use("/problems",    problemRoutes);
+app.use("/submissions", submissionRoutes);
 
 // Vite Integration for frontend (Dev vs Prod)
 const setupFrontend = async () => {
