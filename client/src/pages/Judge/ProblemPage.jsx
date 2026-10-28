@@ -56,6 +56,9 @@ function ProblemPage() {
   const [activeTab,  setActiveTab]  = useState('results');
   const [history,    setHistory]    = useState([]);
 
+  // ── First-AC celebration toast (Phase 2) ─────────────────────────────────
+  const [showXpToast, setShowXpToast] = useState(false);
+
   // ── Auth guard ────────────────────────────────────────────────────────────
   useEffect(() => {
     if (!localStorage.getItem('codebyte-user')) {
@@ -132,6 +135,12 @@ function ProblemPage() {
         setVerdict(sub.verdict);
         setTestResults(sub.testResults || []);
         setErrorOutput(sub.errorOutput || '');
+
+        // Phase 2: celebrate first AC with a temporary XP toast
+        if (mode === 'submit' && sub.verdict === 'AC' && sub.firstAC) {
+          setShowXpToast(true);
+          setTimeout(() => setShowXpToast(false), 4000);
+        }
       }
     } catch (err) {
       setVerdict('RE');
@@ -149,6 +158,12 @@ function ProblemPage() {
 
   return (
     <PageWrap>
+      {/* ── First-AC XP toast (Phase 2) ──────────────────────────────────── */}
+      {showXpToast && (
+        <XpToast>
+          🎉 <strong>+50 XP</strong> — First solve! Keep it up!
+        </XpToast>
+      )}
       {/* ── Top bar ──────────────────────────────────────────────────────── */}
       <TopBar>
         <button className="back-btn" onClick={() => navigate('/problems')}>← Problems</button>
@@ -695,6 +710,31 @@ const ResultsPane = styled.div`
     .history-mode { color: #444; font-size: 0.75rem; }
     .history-time { margin-left: auto; color: #444; font-size: 0.78rem; }
     .history-ms { color: #555; font-size: 0.78rem; }
+  }
+`;
+
+// ── XP Toast — slides in from the top when the user gets their first AC ───────
+const XpToast = styled.div`
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #16a34a, #4ade80);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 24px rgba(74, 222, 128, 0.4);
+  z-index: 9999;
+  animation: slideDown 0.4s ease, fadeOut 0.5s ease 3.5s forwards;
+
+  @keyframes slideDown {
+    from { top: -60px; opacity: 0; }
+    to   { top: 20px;  opacity: 1; }
+  }
+  @keyframes fadeOut {
+    to { opacity: 0; pointer-events: none; }
   }
 `;
 

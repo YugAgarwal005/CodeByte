@@ -1,6 +1,10 @@
 import { Problem }    from "../models/problem.model.js";
 import { Submission } from "../models/submission.model.js";
 import { executeCode } from "../executor/index.js";
+import { awardXPAndStreak } from "../utils/gamification.js";
+import { Users } from "../models/user.model.js";
+import Quiz     from "../models/quiz.model.js";
+
 
 // ─── Allowed values ────────────────────────────────────────────────────────────
 const ALLOWED_LANGUAGES = ["cpp", "java", "python"];
@@ -204,6 +208,59 @@ export const createSubmission = async (req, res, next) => {
     // Strip hidden test case details from what we send to the client
     const safeResults = safeTestResults(rawResults, allTestCases);
 
+    // ── Gamification hook (Phase 2) ───────────────────────────────────────────
+    // Only trigger on a real Submit (not Run) that resulted in AC.
+    if (mode === "submit" && verdict === "AC") {
+      // Check if this is the FIRST ever AC for this user on this problem.
+      // We do this BEFORE creating the current submission so we look at
+      // *previous* submissions only.
+      const previousAC = await Submission.exists({
+        userId:    req.user.userId,
+        problemId: problem._id,
+        verdict:   "AC",
+        mode:      "submit",
+        _id:       { $ne: submission._id }, // exclude the submission we just created
+      });
+
+      if (!previousAC) {
+        // First AC — award XP and update streak
+        const XP_FOR_AC = 50;
+        await awardXPAndStreak(req.user.userId, XP_FOR_AC, 1, 1);
+
+        // Mark exerciseSolved = true in the user's courseProgress if this problem
+        // is attached as a codingExercise to any unit.
+        const linkedUnit = await Quiz.findOne(
+          { "units.codingExercise": problem.slug },
+          { name: 1, "units.$": 1 }   // return only the matching unit
+        ).lean();
+
+        if (linkedUnit) {
+          const unitNumber = linkedUnit.units[0].unitNumber;
+          const courseName = linkedUnit.name;
+
+          // Update only the matching unit inside the matching course entry
+          await Users.updateOne(
+            {
+              _id: req.user.userId,
+              "courseProgress.courseName": courseName,
+              "courseProgress.units.unitNumber": unitNumber,
+            },
+            {
+              $set: {
+                "courseProgress.$[course].units.$[unit].exerciseSolved": true,
+              },
+            },
+            {
+              arrayFilters: [
+                { "course.courseName": courseName },
+                { "unit.unitNumber":  unitNumber  },
+              ],
+            }
+          );
+        }
+      }
+    }
+
     return res.json({
       status: true,
       submission: {
@@ -217,6 +274,16 @@ export const createSubmission = async (req, res, next) => {
         memoryKb,
         errorOutput,
         createdAt:   submission.createdAt,
+        // Tell the client whether this was a first AC (handy for showing celebration)
+        firstAC: mode === "submit" && verdict === "AC"
+          ? !(await Submission.exists({
+              userId:    req.user.userId,
+              problemId: problem._id,
+              verdict:   "AC",
+              mode:      "submit",
+              _id:       { $ne: submission._id },
+            }))
+          : false,
       },
     });
   } catch (error) {
@@ -305,6 +372,38 @@ export const getProblemSubmissions = async (req, res, next) => {
       .lean();
 
     return res.json({ status: true, submissions });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * checkSolved
+ * GET /api/submissions/check/:slug
+ *
+ * Returns { solved: true/false } — whether the current user has ever
+ * gotten AC (submit mode) on the given problem.
+ * Used by the course map to show a green badge on solved coding exercises.
+ * Auth required.
+ */
+export const checkSolved = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+
+    const problem = await Problem.findOne({ slug }).select("_id").lean();
+    if (!problem) {
+      // Problem not found — treat as unsolved rather than 404
+      return res.json({ status: true, solved: false });
+    }
+
+    const ac = await Submission.exists({
+      userId:    req.user.userId,
+      problemId: problem._id,
+      verdict:   "AC",
+      mode:      "submit",
+    });
+
+    return res.json({ status: true, solved: !!ac });
   } catch (error) {
     next(error);
   }

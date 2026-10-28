@@ -30,3 +30,6 @@ export const problemRoute      = `${host}/api/problems`;         // GET /:slug
 export const submissionsRoute  = `${host}/api/submissions`;      // POST (create)
 export const mySubmissionsRoute= `${host}/api/submissions/me`;   // GET history
 export const problemSubmissionsRoute = (slug) => `${host}/api/submissions/problem/${slug}`;
+export const checkSolvedRoute  = (slug) => `${host}/api/submissions/check/${slug}`;  // GET has AC?
+export const setExerciseRoute  = `${host}/api/quiz/setexercise`;                     // POST (admin)
+

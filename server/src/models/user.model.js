@@ -65,6 +65,9 @@ const userSchema=new mongoose.Schema({
             {
               unitNumber: { type: Number },
               level: { type: Number },
+              // true once the user gets their first AC on the unit's coding exercise.
+              // Defaults to false — safe for all existing progress documents.
+              exerciseSolved: { type: Boolean, default: false },
             },
           ],
         },

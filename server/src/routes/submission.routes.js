@@ -4,8 +4,10 @@ import {
   getSubmission,
   getMySubmissions,
   getProblemSubmissions,
+  checkSolved,
 } from "../controllers/submission.controller.js";
 import { protect } from "../middlewares/auth.middleware.js";
+
 
 const router = express.Router();
 
@@ -17,6 +19,9 @@ router.post("/", protect, createSubmission);
 // GET /api/submissions/me  — current user's submission history
 // NOTE: this route must be declared BEFORE /:id so Express matches "me" first
 router.get("/me", protect, getMySubmissions);
+
+// GET /api/submissions/check/:slug  — has the current user ever got AC on this problem?
+router.get("/check/:slug", protect, checkSolved);
 
 // GET /api/submissions/problem/:slug  — history for one problem (for the history tab)
 router.get("/problem/:slug", protect, getProblemSubmissions);

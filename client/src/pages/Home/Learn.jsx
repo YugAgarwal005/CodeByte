@@ -10,6 +10,7 @@ import axios from 'axios';
 import err from '../../assets/images/4044.png'
 import { getAssetUrl } from '../../utils/assets';
 
+
 function Learn() {
 
   const [course, setCourse] = useState(null);
@@ -123,6 +124,19 @@ function Learn() {
                         </button>
                       ))}
                     </div>
+                    {/* ── Coding exercise badge (Phase 2) ─────────────────── */}
+                    {unit.codingExercise && (
+                      <ExerciseBadge
+                        solved={unit.exerciseSolved}
+                        onClick={() => navigate(`/problems/${unit.codingExercise}`)}
+                        title={unit.exerciseSolved
+                          ? `Exercise solved! ✓ — ${unit.codingExercise}`
+                          : `Complete coding exercise: ${unit.codingExercise}`}
+                      >
+                        {unit.exerciseSolved ? '✅' : '⚡'}
+                        <span>{unit.exerciseSolved ? 'Exercise Solved' : 'Coding Challenge'}</span>
+                      </ExerciseBadge>
+                    )}
                   </div>
                 );
               })}
@@ -192,6 +206,33 @@ overflow: hidden;
     z-index: -1;
     transform: translateY(-3%);
 }`;
+
+// ── Coding exercise badge shown below each unit's lesson circles ───────────────
+const ExerciseBadge = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px auto 0;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid ${({ solved }) => solved ? '#22c55e' : '#444'};
+  background: ${({ solved }) => solved ? 'rgba(34,197,94,0.12)' : 'rgba(255,255,255,0.04)'};
+  color: ${({ solved }) => solved ? '#4ade80' : '#888'};
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    background: ${({ solved }) => solved ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.08)'};
+    border-color: ${({ solved }) => solved ? '#4ade80' : '#666'};
+    color: ${({ solved }) => solved ? '#86efac' : '#aaa'};
+    transform: translateY(-1px);
+  }
+
+  span { font-family: 'Bricolage Grotesque', sans-serif; }
+`;
 
 const Container = styled.div`
 display:flex;

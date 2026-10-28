@@ -1,6 +1,6 @@
 import Quiz from '../models/quiz.model.js';
 import { Users } from '../models/user.model.js';
-import { calculateStreak, calculateMaxStreak } from '../utils/streak.js';
+import { awardXPAndStreak } from '../utils/gamification.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -164,8 +164,24 @@ export const getQuestions = async (req, res, next) => {
         const progress = User.courseProgress.find(c => c.courseName === course);
         if (progress) {
             const unit = progress.units.find(u => u.unitNumber == unitnum);
+
+            // Standard lesson-level gate: can't jump more than one level ahead
             if (unit && levelnum > unit.level + 1) {
                 return res.json(null);
+            }
+
+            // Coding-exercise gate: the PREVIOUS unit's exercise must be solved
+            // before lessons in the CURRENT unit are accessible (unitnum > 1).
+            if (unitnum > 1) {
+                const prevUnitProgress = progress.units.find(u => u.unitNumber == unitnum - 1);
+                const prevUnitCourse   = Topic.units.find(u => u.unitNumber == unitnum - 1);
+                if (
+                    prevUnitCourse?.codingExercise &&   // previous unit has a coding exercise
+                    prevUnitProgress &&
+                    !prevUnitProgress.exerciseSolved    // and the user hasn't solved it yet
+                ) {
+                    return res.json(null); // lock the entire current unit
+                }
             }
         }
 
@@ -251,7 +267,9 @@ export const getcourse = async (req, res, next) => {
                 const progressUnit = progress.units.find(progressUnit => progressUnit.unitNumber === courseUnit.unitNumber);
                 return {
                     ...courseUnit,
-                    level: progressUnit ? progressUnit.level : 0, // Adding progress level data to the courseUnit or default to 0
+                    // Progress fields merged into the course structure:
+                    level:          progressUnit?.level          ?? 0,
+                    exerciseSolved: progressUnit?.exerciseSolved ?? false, // Phase 2
                 };
             });
             // Return the updated Topic object
@@ -271,9 +289,10 @@ export const getcourse = async (req, res, next) => {
 export const submitResults = async (req, res, next) => {
     try {
         const { xp, noofques, level, gems, unitnum, topic, id, totalques } = JSON.parse(req.body.postDataString);
-        
+
         const quizDoc = await seedCourseIfNeeded(topic);
 
+        // ── Ensure the user has a courseProgress entry for this topic ────────────
         let User = await Users.findOne({ _id: id, 'courseProgress.courseName': topic });
         if (!User) {
             User = await Users.findOne({ _id: id });
@@ -303,6 +322,7 @@ export const submitResults = async (req, res, next) => {
             return res.status(404).json({ message: "User not found" });
         }
 
+        // ── Advance lesson level if the user just completed it ───────────────────
         const progress = User.courseProgress.find(course => course.courseName === topic);
         if (progress) {
             const unit = progress.units.find(unit => unit.unitNumber == unitnum);
@@ -313,59 +333,57 @@ export const submitResults = async (req, res, next) => {
             }
         }
 
-        // Add today's date to streak.dates array if not already present
-        const now = new Date();
-        const offset = 5.5 * 60 * 60 * 1000;
-        const today = (new Date(now.getTime() + offset)).toISOString().split('T')[0];
-
-        if (!User.userData) {
-            User.userData = {
-                xp: 100,
-                gems: 200,
-                correctQues: 0,
-                streak: { dates: [], days: 0 },
-                dailyChallenges: { xp: 0, correctQuestions: 0, lessonsNumber: 0, date: today }
-            };
-        }
-        if (!User.userData.streak) {
-            User.userData.streak = { dates: [], days: 0 };
-        }
-        if (!User.userData.streak.dates) {
-            User.userData.streak.dates = [];
-        }
-        if (!User.userData.dailyChallenges) {
-            User.userData.dailyChallenges = { xp: 0, correctQuestions: 0, lessonsNumber: 0, date: today };
-        }
-
-        if (!User.userData.streak.dates.some(date => {
-            try {
-                return new Date(date).toISOString().split('T')[0] === today;
-            } catch (e) {
-                return false;
-            }
-        })) {
-            User.userData.streak.dates.push(today);
-        }
-
-        User.userData.streak.days = calculateStreak(User.userData.streak.dates);
-        User.userData.streak.maxStreak = calculateMaxStreak(User.userData.streak.dates);
-
-        User.userData.xp += xp;
-        User.userData.dailyChallenges.xp += xp;
-        User.userData.dailyChallenges.correctQuestions += noofques;
-        if (totalques == noofques) {
-            User.userData.dailyChallenges.lessonsNumber += 1;
-        }
-        User.userData.gems += gems;
-        User.userData.correctQues += noofques;
-        // Save the changes to the database
+        // ── Update gems (quiz-specific reward; not part of shared helper) ─────────
+        User.userData.gems = (User.userData.gems || 0) + gems;
         await User.save();
+
+        // ── Award XP + streak via shared helper ─────────────────────────────────
+        // lessonsCompleted = 1 only if the user answered ALL questions correctly
+        await awardXPAndStreak(id, xp, noofques, totalques == noofques ? 1 : 0);
+
         res.send({ msg: "result submission successful" });
     } catch (error) {
         console.error("submitResults error:", error);
-        next(error)
+        next(error);
     }
-}
+};
 
+/**
+ * setExercise (admin only)
+ * POST /api/quiz/setexercise
+ *
+ * Attaches a coding problem (by slug) to a specific unit in a course.
+ * Body: { topic, unitNumber, problemSlug }
+ * Pass problemSlug as null to detach an existing exercise.
+ */
+export const setExercise = async (req, res, next) => {
+    try {
+        const { topic, unitNumber, problemSlug } = req.body;
+        if (!topic || !unitNumber) {
+            return res.status(400).json({ status: false, message: 'topic and unitNumber are required' });
+        }
 
+        const quiz = await Quiz.findOne({ name: topic });
+        if (!quiz) {
+            return res.status(404).json({ status: false, message: `Course "${topic}" not found` });
+        }
 
+        const unit = quiz.units.find(u => u.unitNumber == unitNumber);
+        if (!unit) {
+            return res.status(404).json({ status: false, message: `Unit ${unitNumber} not found in course "${topic}"` });
+        }
+
+        // null means "remove the exercise"
+        unit.codingExercise = problemSlug || null;
+        await quiz.save();
+
+        return res.json({
+            status: true,
+            message: problemSlug
+                ? `Coding exercise "${problemSlug}" attached to Unit ${unitNumber} of "${topic}"`
+                : `Coding exercise detached from Unit ${unitNumber} of "${topic}"`,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

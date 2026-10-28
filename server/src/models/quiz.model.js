@@ -44,6 +44,12 @@ const unitSchema = new mongoose.Schema({
     type: [lessonSchema],
     required: true,
   },
+  // Optional: slug of a Problem the user must solve to complete this unit.
+  // null means no coding exercise is required — unit unlocks after quiz alone.
+  codingExercise: {
+    type: String,
+    default: null,
+  },
 });
 
 const topicSchema = new mongoose.Schema({
