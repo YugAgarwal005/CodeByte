@@ -38,3 +38,39 @@ CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course st
       * `question`: (String, required)
       * `options`: (Array of 4 Strings, required)
       * `correctAnswer`: (Number, 1-4, required)
+
+## 3. Problems Collection Schema (`problems`)
+* **`title`**: (String, required, trim) Problem title (e.g. "Two Sum").
+* **`slug`**: (String, required, unique, lowercase) URL-friendly identifier.
+* **`statement`**: (String, required) Markdown-formatted problem statement, constraints, and examples.
+* **`difficulty`**: (String, enum: `["easy", "medium", "hard"]`, default: `"easy"`).
+* **`tags`**: (Array of Strings) Categories (e.g. `["arrays", "hash-map"]`).
+* **`starterCode`**: Array of starter templates:
+  * `language`: (String, enum: `["cpp", "java", "python"]`, required)
+  * `code`: (String, required)
+* **`testCases`**: Array of test cases:
+  * `input`: (String, default: `""`) Standard input provided to code.
+  * `expected`: (String, required) Expected standard output.
+  * `hidden`: (Boolean, default: `false`) When `true`, stripped from public problem view; only evaluated during "submit".
+* **`timeLimitMs`**: (Number, default: 2000) Time limit per test case in milliseconds.
+* **`memLimitMb`**: (Number, default: 256) Memory limit per test case in megabytes.
+
+## 4. Submissions Collection Schema (`submissions`)
+* **`user`**: (ObjectId, ref: `"User"`, required) Submitting user.
+* **`problem`**: (ObjectId, ref: `"Problem"`, required) Problem being attempted.
+* **`language`**: (String, enum: `["cpp", "java", "python"]`, required).
+* **`code`**: (String, required) Source code submitted.
+* **`status`**: (String, enum: `["queued", "running", "completed", "error"]`, default: `"completed"`).
+* **`verdict`**: (String, enum: `["AC", "WA", "TLE", "CE", "RE", "MLE", "PENDING"]`, default: `"PENDING"`).
+* **`runtimeMs`**: (Number) Execution time in milliseconds.
+* **`memoryKb`**: (Number) Memory consumed in kilobytes.
+* **`testResults`**: Array of individual test evaluations:
+  * `testCaseIndex`: (Number)
+  * `passed`: (Boolean)
+  * `verdict`: (String)
+  * `stdout`: (String)
+  * `stderr`: (String)
+  * `time`: (Number, seconds)
+  * `memory`: (Number, kilobytes)
+* **`createdAt`**: (Date, default: Date.now)
+

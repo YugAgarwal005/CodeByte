@@ -69,3 +69,109 @@ The CodeByte application separates concerns into discrete endpoints. All routes 
 ### Submit Lesson Quiz Result
 * **Method**: `POST`
 * **Path**: `/api/quiz/submit`
+
+---
+
+## Problem Routes (`/api/problems`)
+
+### List Problems
+* **Method**: `GET`
+* **Path**: `/api/problems`
+* **Auth**: None required (or protected if guest browsing disabled)
+* **Response**:
+  ```json
+  {
+    "status": true,
+    "problems": [
+      {
+        "_id": "...",
+        "title": "Two Sum",
+        "slug": "two-sum",
+        "difficulty": "medium",
+        "tags": ["arrays", "hash-map"],
+        "createdAt": "..."
+      }
+    ]
+  }
+  ```
+
+### Get Single Problem
+* **Method**: `GET`
+* **Path**: `/api/problems/:slug`
+* **Auth**: None required
+* **Note**: Hidden test cases are strictly stripped before returning to client.
+* **Response**:
+  ```json
+  {
+    "status": true,
+    "problem": {
+      "title": "Two Sum",
+      "slug": "two-sum",
+      "statement": "...",
+      "difficulty": "medium",
+      "starterCode": [
+        { "language": "cpp", "code": "..." },
+        { "language": "java", "code": "..." },
+        { "language": "python", "code": "..." }
+      ],
+      "timeLimitMs": 2000,
+      "memLimitMb": 256,
+      "testCases": [
+        { "input": "...", "expected": "...", "hidden": false }
+      ]
+    }
+  }
+  ```
+
+---
+
+## Submission Routes (`/api/submissions`)
+
+All submission routes require JWT Bearer token authentication via the `protect` middleware.
+
+### Create Submission (Run or Submit)
+* **Method**: `POST`
+* **Path**: `/api/submissions`
+* **Request Body**:
+  ```json
+  {
+    "problemSlug": "two-sum",
+    "language": "python",
+    "code": "print('hello')",
+    "mode": "run" // or "submit"
+  }
+  ```
+* **Response**:
+  ```json
+  {
+    "status": true,
+    "submission": {
+      "_id": "...",
+      "verdict": "AC", // AC, WA, TLE, RE, CE
+      "runtimeMs": 45,
+      "memoryKb": 12400,
+      "testResults": [
+        {
+          "testCaseIndex": 0,
+          "passed": true,
+          "verdict": "AC",
+          "stdout": "...",
+          "time": 0.04
+        }
+      ]
+    }
+  }
+  ```
+
+### Get Current User's Submissions
+* **Method**: `GET`
+* **Path**: `/api/submissions/me`
+
+### Get Submissions for Problem
+* **Method**: `GET`
+* **Path**: `/api/submissions/problem/:slug`
+
+### Get Single Submission
+* **Method**: `GET`
+* **Path**: `/api/submissions/:id`
+

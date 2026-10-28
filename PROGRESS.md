@@ -1,4 +1,4 @@
-# CodeByte — Online Judge Integration Progress
+ï»¿# CodeByte ï¿½ Online Judge Integration Progress
 
 > Updated after every meaningful commit. Resume from here in a fresh session.
 
@@ -8,16 +8,16 @@
 
 | Phase | Status |
 |---|---|
-| Phase 0 — Exploration & Plan | ? Done |
-| Phase 1 — Judge core (Judge0) | ?? In Progress |
-| Phase 2 — Learning integration | ? Not started |
-| Phase 3 — Smart feedback | ? Not started |
-| Phase 4 — Own runner | ? Not started |
-| Phase 5 — Daily challenge / duels | ? Not started |
+| Phase 0 ï¿½ Exploration & Plan | ? Done |
+| Phase 1 ï¿½ Judge core (Judge0) | ?? In Progress |
+| Phase 2 ï¿½ Learning integration | ? Not started |
+| Phase 3 ï¿½ Smart feedback | ? Not started |
+| Phase 4 ï¿½ Own runner | ? Not started |
+| Phase 5 ï¿½ Daily challenge / duels | ? Not started |
 
 ---
 
-## Phase 1 — What is Done
+## Phase 1 ï¿½ What is Done
 
 | Commit | Description |
 |---|---|
@@ -36,12 +36,12 @@
 | App.jsx | `/problems` and `/problems/:slug` routes registered |
 | .env.example | `EXECUTOR_ADAPTER`, `JUDGE0_BASE_URL`, `JUDGE0_API_KEY` added |
 
-## Phase 1 — Still To Do
+## Phase 1 ï¿½ Still To Do
 
-- [ ] Run seed script against real DB and verify (`node server/src/data/seed-problems.js`)
-- [ ] Manual end-to-end test (see PLAN.md §4.12)
-- [ ] Update `docs/api-docs.md` and `docs/db-schema.md`
-- [ ] Commit to `feature/judge-phase1` branch
+- [x] Run seed script against real DB and verify (`node server/src/data/seed-problems.js`)
+- [x] Manual end-to-end test (see PLAN.md Â§ 4.12)
+- [x] Update `docs/api-docs.md` and `docs/db-schema.md`
+- [x] Commit to `feature/judge-phase1` branch
 
 ---
 
@@ -50,25 +50,25 @@
 | Decision | Rationale |
 |---|---|
 | Judge0 CE public free instance (`https://ce.judge0.com`) | Free, no Docker setup required, no API key for basic use |
-| `wait=true` on Judge0 — synchronous execution | Simpler in Phase 1; avoids polling loop; Phase 4 moves to async queue |
-| Executor interface (`executor/index.js`) | Single function to call — swapping to Docker runner in Phase 4 needs zero API/frontend changes |
+| `wait=true` on Judge0 ï¿½ synchronous execution | Simpler in Phase 1; avoids polling loop; Phase 4 moves to async queue |
+| Executor interface (`executor/index.js`) | Single function to call ï¿½ swapping to Docker runner in Phase 4 needs zero API/frontend changes |
 | ProblemPage as standalone route (no sidebar) | Full screen needed for editor; same pattern as existing Quiz page |
 | ProblemList inside CodeByte layout (sidebar visible) | Consistent with the rest of the app for a list-only view |
 | `requireAdmin` does a DB lookup, not JWT claim | Avoids stale isAdmin=true in old tokens; real-time accuracy |
-| `safeTestResults` strips hidden test case input/expected | Core security requirement — users must not see hidden test data |
+| `safeTestResults` strips hidden test case input/expected | Core security requirement ï¿½ users must not see hidden test data |
 | `/api/submissions/me` declared before `/:id` | Prevents Express treating the literal string "me" as an ObjectId |
 | npm only (bun.lock deleted) | Vercel uses npm; eliminates lock file conflict |
 
 ---
 
-## Open Risks (from Phase 0 — still relevant)
+## Open Risks (from Phase 0 ï¿½ still relevant)
 
 | ID | Risk | Status |
 |---|---|---|
 | R1 | `postDataString` double-encoding in quiz submit | Deferred to Phase 2 |
 | R2 | No server-side admin guard on createunit/createquestion | ? Fixed in Phase 1 |
 | R3 | Hardcoded fallback JWT secrets | Documented in .env.example; not changed (would log out users) |
-| R4 | Vercel serverless can't run code execution | N/A for Phase 1 — Judge0 is a remote HTTP call |
+| R4 | Vercel serverless can't run code execution | N/A for Phase 1 ï¿½ Judge0 is a remote HTTP call |
 | R7 | Hidden test case exposure | Mitigated by `stripHiddenTestCases` + `safeTestResults` helpers |
 
 ---
@@ -100,7 +100,7 @@ npm install
 # 2. Copy and fill env vars
 cp .env.example .env
 # Fill in MONGO_URL, JWT_SECRET, JWT_REFRESH_SECRET
-# JUDGE0_BASE_URL defaults to https://ce.judge0.com — no change needed
+# JUDGE0_BASE_URL defaults to https://ce.judge0.com ï¿½ no change needed
 
 # 3. Seed problems
 node server/src/data/seed-problems.js
