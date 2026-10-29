@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { styled } from 'styled-components';
-import { problemsRoute } from '../../utils/Apiroutes';
+import { problemsRoute, mySubmissionsRoute } from '../../utils/Apiroutes';
 
 /**
  * ProblemList — displays all available coding problems as a table.
@@ -15,6 +15,8 @@ function ProblemList() {
   const [loading,  setLoading]    = useState(true);
   const [filter,   setFilter]     = useState('all'); // 'all' | 'easy' | 'medium' | 'hard'
   const [search,   setSearch]     = useState('');
+  // Set of problem slugs the current user has solved (AC submit)
+  const [solved,   setSolved]     = useState(new Set());
 
   useEffect(() => {
     // Redirect to login if not authenticated
@@ -23,6 +25,7 @@ function ProblemList() {
       return;
     }
     fetchProblems();
+    fetchSolved();
   }, []);
 
   const fetchProblems = async () => {
@@ -33,12 +36,35 @@ function ProblemList() {
       console.error('Failed to fetch problems:', err);
     } finally {
       setLoading(false);
+      &.active.solved  { border-color: #4ade80; background: #4ade8020; color: #4ade80; }
     }
   };
 
-  // Filter by difficulty and search query
+  // Fetch the user's submission history and extract slugs of AC'd problems
+  const fetchSolved = async () => {
+    try {
+      const { data } = await axios.get(mySubmissionsRoute);
+      if (data.status) {
+        const acSlugs = new Set(
+          data.submissions
+            .filter(s => s.verdict === 'AC' && s.mode === 'submit')
+            .map(s => s.problemId?.slug)
+            .filter(Boolean)
+        );
+        setSolved(acSlugs);
+      }
+    } catch (err) {
+      // Non-critical — silently ignore
+      console.error('Failed to fetch solved set:', err);
+      &.active.solved  { border-color: #4ade80; background: #4ade8020; color: #4ade80; }
+    }
+  };
+
+  // Filter by difficulty, search query, and solved status
   const visible = problems.filter((p) => {
-    const matchesDiff   = filter === 'all' || p.difficulty === filter;
+    const matchesDiff   = filter === 'all' || filter === 'solved'
+      ? filter === 'solved' ? solved.has(p.slug) : true
+      : p.difficulty === filter;
     const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase()) ||
                           (p.tags || []).some(t => t.toLowerCase().includes(search.toLowerCase()));
     return matchesDiff && matchesSearch;
@@ -73,6 +99,7 @@ function ProblemList() {
           <span className="stat easy">{problems.filter(p=>p.difficulty==='easy').length} Easy</span>
           <span className="stat medium">{problems.filter(p=>p.difficulty==='medium').length} Medium</span>
           <span className="stat hard">{problems.filter(p=>p.difficulty==='hard').length} Hard</span>
+          <span className="stat solved-stat">{solved.size} Solved</span>
         </div>
       </div>
 
@@ -85,13 +112,13 @@ function ProblemList() {
           onChange={(e) => setSearch(e.target.value)}
         />
         <div className="filter-buttons">
-          {['all','easy','medium','hard'].map(d => (
+          {['all','easy','medium','hard','solved'].map(d => (
             <button
               key={d}
               className={`filter-btn ${filter === d ? 'active' : ''} ${d}`}
               onClick={() => setFilter(d)}
             >
-              {d.charAt(0).toUpperCase() + d.slice(1)}
+              {d === 'solved' ? '✓ Solved' : d.charAt(0).toUpperCase() + d.slice(1)}
             </button>
           ))}
         </div>
@@ -102,6 +129,7 @@ function ProblemList() {
         <table>
           <thead>
             <tr>
+              <th className="status-col">Status</th>
               <th>#</th>
               <th>Title</th>
               <th>Difficulty</th>
@@ -110,14 +138,20 @@ function ProblemList() {
           </thead>
           <tbody>
             {visible.length === 0 ? (
-              <tr><td colSpan={4} style={{textAlign:'center', padding:'2rem', color:'#555'}}>No problems match your filter.</td></tr>
+              <tr><td colSpan={5} style={{textAlign:'center', padding:'2rem', color:'#555'}}>No problems match your filter.</td></tr>
             ) : (
               visible.map((p, i) => (
                 <tr
                   key={p.slug}
-                  className="problem-row"
+                  className={`problem-row ${solved.has(p.slug) ? 'is-solved' : ''}`}
                   onClick={() => navigate(`/problems/${p.slug}`)}
                 >
+                  <td className="status-col">
+                    {solved.has(p.slug)
+                      ? <span className="solved-check" title="Solved">✓</span>
+                      : <span className="unsolved-dash">–</span>
+                    }
+                  </td>
                   <td className="num">{i + 1}</td>
                   <td className="title-cell">{p.title}</td>
                   <td>
@@ -203,6 +237,7 @@ const Container = styled.div`
     .easy   { color: #4ade80; border-color: #4ade8040; background: #4ade8010; }
     .medium { color: #facc15; border-color: #facc1540; background: #facc1510; }
     .hard   { color: #f87171; border-color: #f8717140; background: #f8717110; }
+    .solved-stat { color: #4ade80; border-color: #4ade8040; background: #4ade8010; }
   }
 
   /* controls */
@@ -240,6 +275,7 @@ const Container = styled.div`
       &.active.easy   { border-color: #4ade80; background: #4ade8020; color: #4ade80; }
       &.active.medium { border-color: #facc15; background: #facc1520; color: #facc15; }
       &.active.hard   { border-color: #f87171; background: #f8717120; color: #f87171; }
+      &.active.solved  { border-color: #4ade80; background: #4ade8020; color: #4ade80; }
     }
   }
 
@@ -272,7 +308,23 @@ const Container = styled.div`
       &:last-child td { border-bottom: none; }
     }
     .num { color: #444; width: 44px; font-size: 0.8rem; }
+    .status-col {
+      width: 56px;
+      text-align: center;
+    }
+    .solved-check {
+      color: #4ade80;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .unsolved-dash {
+      color: #333;
+      font-size: 1rem;
+    }
     .title-cell { font-weight: 500; color: #e0e0e0; }
+    /* Dim solved rows slightly so unsolved ones stand out */
+    .is-solved .title-cell { color: #999; }
+    .is-solved .num { color: #333; }
     .badge {
       padding: 0.2rem 0.65rem;
       border-radius: 12px;
@@ -289,13 +341,14 @@ const Container = styled.div`
       border-radius: 6px;
       padding: 0.15rem 0.5rem;
       font-size: 0.72rem;
+      &.active.solved  { border-color: #4ade80; background: #4ade8020; color: #4ade80; }
     }
   }
 
   @media (max-width: 600px) {
     padding: 1rem;
     .header { flex-direction: column; }
-    table th:nth-child(4), table td:nth-child(4) { display: none; }
+    table th:nth-child(5), table td:nth-child(5) { display: none; }
   }
 `;
 

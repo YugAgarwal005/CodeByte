@@ -1,4 +1,4 @@
-/**
+﻿/**
  * seed-problems.js
  *
  * Standalone script to populate the problems collection.
@@ -13,13 +13,25 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import { Problem } from "../models/problem.model.js";
 
-// ─── Starter code templates ───────────────────────────────────────────────────
+// ─── Blank starter code templates (no solution given to the student) ─────────
 
 const CPP_IO = `#include <iostream>
 using namespace std;
 
 int main() {
-    // Write your solution here
+    // Read input, solve, then print output
+    
+    return 0;
+}`;
+
+// For array/multi-line input problems
+const CPP_ARRAY = `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    // Read n elements and solve
     
     return 0;
 }`;
@@ -29,12 +41,12 @@ const JAVA_IO = `import java.util.Scanner;
 public class Solution {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        // Write your solution here
+        // Read input, solve, then print output
         
     }
 }`;
 
-const PY_IO = `# Write your solution here
+const PY_IO = `# Read input, solve, then print output
 `;
 
 // ─── Problems data ────────────────────────────────────────────────────────────
@@ -67,9 +79,9 @@ Output: Hello, World!
       { input: "", expected: "Hello, World!", hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, World!" << endl;\n    return 0;\n}` },
-      { language: "java",   code: `public class Solution {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}` },
-      { language: "python", code: `print("Hello, World!")` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -110,9 +122,9 @@ Output: 6
       { input: "1000000000 -1000000000", expected: "0", hidden: true },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\nusing namespace std;\n\nint main() {\n    long long a, b;\n    cin >> a >> b;\n    cout << a + b << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        long a = sc.nextLong();\n        long b = sc.nextLong();\n        System.out.println(a + b);\n    }\n}` },
-      { language: "python", code: `a, b = map(int, input().split())\nprint(a + b)` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -156,9 +168,9 @@ Output: 1
       { input: "12", expected: "479001600",  hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\nusing namespace std;\n\nint main() {\n    long long n;\n    cin >> n;\n    long long result = 1;\n    for (long long i = 2; i <= n; i++) result *= i;\n    cout << result << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        long n = sc.nextLong();\n        long result = 1;\n        for (long i = 2; i <= n; i++) result *= i;\n        System.out.println(result);\n    }\n}` },
-      { language: "python", code: `n = int(input())\nresult = 1\nfor i in range(2, n + 1):\n    result *= i\nprint(result)` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -202,9 +214,9 @@ Output: 0
       { input: "30", expected: "832040", hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    if (n == 0) { cout << 0; return 0; }\n    long long a = 0, b = 1;\n    for (int i = 2; i <= n; i++) {\n        long long c = a + b;\n        a = b; b = c;\n    }\n    cout << b << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        if (n == 0) { System.out.println(0); return; }\n        long a = 0, b = 1;\n        for (int i = 2; i <= n; i++) {\n            long c = a + b; a = b; b = c;\n        }\n        System.out.println(b);\n    }\n}` },
-      { language: "python", code: `n = int(input())\nif n == 0:\n    print(0)\nelse:\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    print(b)` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -243,9 +255,9 @@ Output: NO
       { input: "abcd",    expected: "NO",  hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    string rev = s;\n    reverse(rev.begin(), rev.end());\n    cout << (s == rev ? "YES" : "NO") << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.next();\n        String rev = new StringBuilder(s).reverse().toString();\n        System.out.println(s.equals(rev) ? "YES" : "NO");\n    }\n}` },
-      { language: "python", code: `s = input()\nprint("YES" if s == s[::-1] else "NO")` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -283,9 +295,9 @@ Output: 5
       { input: "aeiouAEIOU",  expected: "10", hidden: true },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    string vowels = "aeiouAEIOU";\n    int count = 0;\n    for (char c : s) {\n        if (vowels.find(c) != string::npos) count++;\n    }\n    cout << count << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.nextLine();\n        String vowels = "aeiouAEIOU";\n        int count = 0;\n        for (char c : s.toCharArray()) {\n            if (vowels.indexOf(c) >= 0) count++;\n        }\n        System.out.println(count);\n    }\n}` },
-      { language: "python", code: `s = input()\nprint(sum(1 for c in s if c in "aeiouAEIOU"))` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -319,9 +331,9 @@ Output: olleh
       { input: "racecar", expected: "racecar",  hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    reverse(s.begin(), s.end());\n    cout << s << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.next();\n        System.out.println(new StringBuilder(s).reverse().toString());\n    }\n}` },
-      { language: "python", code: `s = input()\nprint(s[::-1])` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -359,9 +371,9 @@ Output: 5
       { input: "6\n9 2 7 3 8 1",     expected: "9",    hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\n#include <climits>\nusing namespace std;\n\nint main() {\n    int n; cin >> n;\n    int maxVal = INT_MIN;\n    for (int i = 0; i < n; i++) {\n        int x; cin >> x;\n        if (x > maxVal) maxVal = x;\n    }\n    cout << maxVal << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int max = Integer.MIN_VALUE;\n        for (int i = 0; i < n; i++) {\n            int x = sc.nextInt();\n            if (x > max) max = x;\n        }\n        System.out.println(max);\n    }\n}` },
-      { language: "python", code: `n = int(input())\narr = list(map(int, input().split()))\nprint(max(arr))` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -405,9 +417,9 @@ Buzz
       { input: "3",  expected: "1\n2\nFizz",                                     hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n; cin >> n;\n    for (int i = 1; i <= n; i++) {\n        if (i % 15 == 0) cout << "FizzBuzz";\n        else if (i % 3 == 0) cout << "Fizz";\n        else if (i % 5 == 0) cout << "Buzz";\n        else cout << i;\n        cout << "\\n";\n    }\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        for (int i = 1; i <= n; i++) {\n            if (i % 15 == 0) System.out.println("FizzBuzz");\n            else if (i % 3 == 0) System.out.println("Fizz");\n            else if (i % 5 == 0) System.out.println("Buzz");\n            else System.out.println(i);\n        }\n    }\n}` },
-      { language: "python", code: `n = int(input())\nfor i in range(1, n + 1):\n    if i % 15 == 0:\n        print("FizzBuzz")\n    elif i % 3 == 0:\n        print("Fizz")\n    elif i % 5 == 0:\n        print("Buzz")\n    else:\n        print(i)` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -447,9 +459,9 @@ Output: 2
       { input: "5\n5 5 5 5 5\n5",       expected: "0",  hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n; cin >> n;\n    int arr[n];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int target; cin >> target;\n    for (int i = 0; i < n; i++) {\n        if (arr[i] == target) { cout << i; return 0; }\n    }\n    cout << -1;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n        int target = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            if (arr[i] == target) { System.out.println(i); return; }\n        }\n        System.out.println(-1);\n    }\n}` },
-      { language: "python", code: `n = int(input())\narr = list(map(int, input().split()))\ntarget = int(input())\ntry:\n    print(arr.index(target))\nexcept ValueError:\n    print(-1)` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -490,9 +502,9 @@ Output: 3
       { input: "7\n1 2 3 4 5 6 7\n1", expected: "0",  hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n; cin >> n;\n    int arr[n];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int target; cin >> target;\n    int lo = 0, hi = n - 1;\n    while (lo <= hi) {\n        int mid = lo + (hi - lo) / 2;\n        if (arr[mid] == target) { cout << mid; return 0; }\n        else if (arr[mid] < target) lo = mid + 1;\n        else hi = mid - 1;\n    }\n    cout << -1;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n        int target = sc.nextInt();\n        int lo = 0, hi = n - 1;\n        while (lo <= hi) {\n            int mid = lo + (hi - lo) / 2;\n            if (arr[mid] == target) { System.out.println(mid); return; }\n            else if (arr[mid] < target) lo = mid + 1;\n            else hi = mid - 1;\n        }\n        System.out.println(-1);\n    }\n}` },
-      { language: "python", code: `n = int(input())\narr = list(map(int, input().split()))\ntarget = int(input())\nlo, hi = 0, n - 1\nwhile lo <= hi:\n    mid = (lo + hi) // 2\n    if arr[mid] == target:\n        print(mid)\n        break\n    elif arr[mid] < target:\n        lo = mid + 1\n    else:\n        hi = mid - 1\nelse:\n    print(-1)` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -531,9 +543,9 @@ Output: 12 22 25 34 64
       { input: "5\n1 2 3 4 5",     expected: "1 2 3 4 5",      hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n; cin >> n;\n    int arr[n];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    // Bubble sort\n    for (int i = 0; i < n - 1; i++)\n        for (int j = 0; j < n - i - 1; j++)\n            if (arr[j] > arr[j + 1]) swap(arr[j], arr[j + 1]);\n    for (int i = 0; i < n; i++)\n        cout << arr[i] << (i < n - 1 ? " " : "\\n");\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n        for (int i = 0; i < n - 1; i++)\n            for (int j = 0; j < n - i - 1; j++)\n                if (arr[j] > arr[j + 1]) { int t = arr[j]; arr[j] = arr[j+1]; arr[j+1] = t; }\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < n; i++) sb.append(arr[i]).append(i < n-1 ? " " : "");\n        System.out.println(sb);\n    }\n}` },
-      { language: "python", code: `n = int(input())\narr = list(map(int, input().split()))\nfor i in range(n - 1):\n    for j in range(n - i - 1):\n        if arr[j] > arr[j + 1]:\n            arr[j], arr[j + 1] = arr[j + 1], arr[j]\nprint(*arr)` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -571,9 +583,9 @@ Output: 3
       { input: "9999999999", expected: "10", hidden: true },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\n#include <string>\n#include <cstdlib>\nusing namespace std;\n\nint main() {\n    string s; cin >> s;\n    if (s[0] == '-') s = s.substr(1);\n    cout << s.size() << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.next();\n        if (s.charAt(0) == '-') s = s.substring(1);\n        System.out.println(s.length());\n    }\n}` },
-      { language: "python", code: `n = input().strip()\nif n.startswith('-'):\n    n = n[1:]\nprint(len(n))` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -615,9 +627,9 @@ Output: NO
       { input: "999983", expected: "YES", hidden: true },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\n#include <cmath>\nusing namespace std;\n\nbool isPrime(int n) {\n    if (n < 2) return false;\n    for (int i = 2; i <= sqrt(n); i++)\n        if (n % i == 0) return false;\n    return true;\n}\n\nint main() {\n    int n; cin >> n;\n    cout << (isPrime(n) ? "YES" : "NO") << endl;\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.Scanner;\n\npublic class Solution {\n    static boolean isPrime(int n) {\n        if (n < 2) return false;\n        for (int i = 2; i * i <= n; i++)\n            if (n % i == 0) return false;\n        return true;\n    }\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        System.out.println(isPrime(n) ? "YES" : "NO");\n    }\n}` },
-      { language: "python", code: `import math\nn = int(input())\nif n < 2:\n    print("NO")\nelse:\n    prime = all(n % i != 0 for i in range(2, int(math.sqrt(n)) + 1))\n    print("YES" if prime else "NO")` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 
@@ -663,9 +675,9 @@ Output: 0 1
       { input: "4\n1 5 3 7\n8",      expected: "1 3", hidden: true  },
     ],
     starterCode: [
-      { language: "cpp",    code: `#include <iostream>\n#include <unordered_map>\nusing namespace std;\n\nint main() {\n    int n; cin >> n;\n    int arr[n];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int target; cin >> target;\n    unordered_map<int, int> seen;\n    for (int i = 0; i < n; i++) {\n        int complement = target - arr[i];\n        if (seen.count(complement)) {\n            cout << seen[complement] << " " << i;\n            return 0;\n        }\n        seen[arr[i]] = i;\n    }\n    return 0;\n}` },
-      { language: "java",   code: `import java.util.*;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n        int target = sc.nextInt();\n        Map<Integer, Integer> seen = new HashMap<>();\n        for (int i = 0; i < n; i++) {\n            int comp = target - arr[i];\n            if (seen.containsKey(comp)) {\n                System.out.println(seen.get(comp) + " " + i);\n                return;\n            }\n            seen.put(arr[i], i);\n        }\n    }\n}` },
-      { language: "python", code: `n = int(input())\narr = list(map(int, input().split()))\ntarget = int(input())\nseen = {}\nfor i, v in enumerate(arr):\n    comp = target - v\n    if comp in seen:\n        print(seen[comp], i)\n        break\n    seen[v] = i` },
+      { language: "cpp",    code: CPP_IO },
+      { language: "java",   code: JAVA_IO },
+      { language: "python", code: PY_IO },
     ],
   },
 ];
