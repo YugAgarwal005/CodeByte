@@ -46,6 +46,7 @@ CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course st
 * **`slug`**: (String, required, unique, lowercase) URL-friendly identifier.
 * **`statement`**: (String, required) Markdown-formatted problem statement, constraints, and examples.
 * **`difficulty`**: (String, enum: `["easy", "medium", "hard"]`, default: `"easy"`).
+* **`requiredLanguage`**: (String, enum: `["cpp", "java", "python"]`, default: `null`) When set, locks the coding challenge to this specific programming language track.
 * **`tags`**: (Array of Strings) Categories (e.g. `["arrays", "hash-map"]`).
 * **`starterCode`**: Array of starter templates:
   * `language`: (String, enum: `["cpp", "java", "python"]`, required)

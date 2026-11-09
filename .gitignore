@@ -12,6 +12,12 @@
 
 # production
 /build
+/dist
+/client/dist
+
+# IDE / Editor
+.vscode
+.idea
 
 # misc
 .DS_Store

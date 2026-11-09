@@ -122,6 +122,7 @@ The CodeByte application separates concerns into discrete endpoints. All routes 
       "slug": "two-sum",
       "statement": "...",
       "difficulty": "medium",
+      "requiredLanguage": "python", // null or "cpp" | "java" | "python"
       "starterCode": [
         { "language": "cpp", "code": "..." },
         { "language": "java", "code": "..." },
@@ -145,6 +146,7 @@ All submission routes require JWT Bearer token authentication via the `protect` 
 ### Create Submission (Run or Submit)
 * **Method**: `POST`
 * **Path**: `/api/submissions`
+* **Note**: If the problem has a `requiredLanguage` set, `language` must match it; otherwise, the endpoint responds with HTTP `400 Bad Request`.
 * **Request Body**:
   ```json
   {
