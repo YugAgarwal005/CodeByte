@@ -33,7 +33,7 @@ export const listProblems = async (req, res, next) => {
   try {
     // .select() limits which fields are returned, reducing payload size
     const problems = await Problem.find()
-      .select("title slug difficulty tags createdAt")
+      .select("title slug difficulty tags requiredLanguage createdAt")
       .sort({ difficulty: 1, title: 1 }) // easy first, then alphabetical
       .lean(); // returns plain JS objects (faster than Mongoose Documents)
 
