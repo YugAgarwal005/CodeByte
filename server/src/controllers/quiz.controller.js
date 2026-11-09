@@ -86,19 +86,34 @@ export const createQuestions = async (req, res, next) => {
 
 const seedCourseIfNeeded = async (topic) => {
     let quiz = await Quiz.findOne({ name: topic });
+    const courseData = getCourseDataFromFile();
+    const fileUnits = courseData[topic] || courseData['java'] || [];
+
     const needsReseed = !quiz || quiz.units.length !== 5 || quiz.units.some(u => u.lessons.length !== 6);
     if (needsReseed) {
         if (quiz) {
             await Quiz.deleteOne({ name: topic });
         }
-        const courseData = getCourseDataFromFile();
-        const units = courseData[topic] || courseData['java'] || [];
-
         quiz = await Quiz.create({
             name: topic,
-            units: units
+            units: fileUnits
         });
+        return quiz;
     }
+
+    // Ensure all existing units retain their codingExercise from courses.json
+    let modified = false;
+    for (const unit of quiz.units) {
+        const fileUnit = fileUnits.find(fu => fu.unitNumber === unit.unitNumber);
+        if (fileUnit?.codingExercise && unit.codingExercise !== fileUnit.codingExercise) {
+            unit.codingExercise = fileUnit.codingExercise;
+            modified = true;
+        }
+    }
+    if (modified) {
+        await quiz.save();
+    }
+
     return quiz;
 };
 

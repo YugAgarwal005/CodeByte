@@ -1,9 +1,14 @@
 import mongoose from "mongoose";
 
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
 export const connectDB = async () => {
-  if (mongoose.connection.readyState >= 1) {
-    console.log("Using existing database connection");
-    return;
+  if (cached.conn && mongoose.connection.readyState === 1) {
+    return cached.conn;
   }
 
   let mongoUrl = process.env.MONGO_URL;
@@ -30,11 +35,30 @@ export const connectDB = async () => {
     console.error("Error sanitizing MONGO_URL:", err);
   }
 
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    };
+
+    cached.promise = mongoose.connect(mongoUrl, opts).then((mongooseInstance) => {
+      console.log("Database Connection Successful");
+      return mongooseInstance;
+    }).catch((err) => {
+      cached.promise = null;
+      console.error("Database connection error:", err);
+      throw err;
+    });
+  }
+
   try {
-    await mongoose.connect(mongoUrl);
-    console.log("Database Connection Successful");
+    cached.conn = await cached.promise;
   } catch (err) {
-    console.error("Database connection error:", err);
+    cached.promise = null;
     throw err;
   }
+
+  return cached.conn;
 };

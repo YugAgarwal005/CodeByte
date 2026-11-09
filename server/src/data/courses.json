@@ -10,12 +10,22 @@
           "questions": [
             {
               "question": "What is the correct syntax to output 'Hello World' in C++?",
-              "options": ["cout << 'Hello World';", "printf('Hello World');", "std::cout << \"Hello World\";", "System.out.println(\"Hello World\");"],
+              "options": [
+                "cout << 'Hello World';",
+                "printf('Hello World');",
+                "std::cout << \"Hello World\";",
+                "System.out.println(\"Hello World\");"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which operator is used to start a preprocessor directive in C/C++?",
-              "options": ["$", "#", "@", "&"],
+              "options": [
+                "$",
+                "#",
+                "@",
+                "&"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -25,12 +35,22 @@
           "questions": [
             {
               "question": "Which data type is used to store fractional numbers in C++?",
-              "options": ["int", "char", "double", "bool"],
+              "options": [
+                "int",
+                "char",
+                "double",
+                "bool"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "What is the size of the 'char' data type in C++ (typically)?",
-              "options": ["1 byte", "2 bytes", "4 bytes", "8 bytes"],
+              "options": [
+                "1 byte",
+                "2 bytes",
+                "4 bytes",
+                "8 bytes"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -40,12 +60,22 @@
           "questions": [
             {
               "question": "How do you start an 'if' statement in C++?",
-              "options": ["if (x > y)", "if x > y then:", "if x > y", "if (x > y) then"],
+              "options": [
+                "if (x > y)",
+                "if x > y then:",
+                "if x > y",
+                "if (x > y) then"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which expression represents logical AND in C++?",
-              "options": ["&", "and", "&&", "||"],
+              "options": [
+                "&",
+                "and",
+                "&&",
+                "||"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -55,12 +85,22 @@
           "questions": [
             {
               "question": "Which loop is guaranteed to execute at least once?",
-              "options": ["for", "while", "do-while", "foreach"],
+              "options": [
+                "for",
+                "while",
+                "do-while",
+                "foreach"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which keyword is used to skip the current iteration of a loop?",
-              "options": ["break", "continue", "skip", "pass"],
+              "options": [
+                "break",
+                "continue",
+                "skip",
+                "pass"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -70,12 +110,22 @@
           "questions": [
             {
               "question": "What is the return type of a function that does not return a value?",
-              "options": ["int", "void", "null", "empty"],
+              "options": [
+                "int",
+                "void",
+                "null",
+                "empty"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which parameter passing method copies the actual value of an argument into the formal parameter?",
-              "options": ["Pass by value", "Pass by reference", "Pass by pointer", "Pass by address"],
+              "options": [
+                "Pass by value",
+                "Pass by reference",
+                "Pass by pointer",
+                "Pass by address"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -85,17 +135,28 @@
           "questions": [
             {
               "question": "Which operator is used to access members of a structure through a pointer?",
-              "options": [".", "->", "*", "&"],
+              "options": [
+                ".",
+                "->",
+                "*",
+                "&"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which keyword is used to create a class in C++?",
-              "options": ["class", "struct", "object", "define"],
+              "options": [
+                "class",
+                "struct",
+                "object",
+                "define"
+              ],
               "correctAnswer": 1
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "cpp-basics-sum-and-average"
     },
     {
       "unitNumber": 2,
@@ -107,12 +168,22 @@
           "questions": [
             {
               "question": "Which of the following correctly declares a pointer to an integer in C++?",
-              "options": ["int p*;", "int* p;", "pointer int p;", "int &p;"],
+              "options": [
+                "int p*;",
+                "int* p;",
+                "pointer int p;",
+                "int &p;"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What operator is used to dereference a pointer to access the value?",
-              "options": ["&", "->", "*", "."],
+              "options": [
+                "&",
+                "->",
+                "*",
+                "."
+              ],
               "correctAnswer": 3
             }
           ]
@@ -122,12 +193,22 @@
           "questions": [
             {
               "question": "What is a null pointer in C/C++?",
-              "options": ["A pointer pointing to address 0", "An uninitialized pointer", "A pointer that points to a function", "A pointer pointing to multiple values"],
+              "options": [
+                "A pointer pointing to address 0",
+                "An uninitialized pointer",
+                "A pointer that points to a function",
+                "A pointer pointing to multiple values"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "What is the size of a pointer on a 64-bit operating system?",
-              "options": ["2 bytes", "4 bytes", "8 bytes", "16 bytes"],
+              "options": [
+                "2 bytes",
+                "4 bytes",
+                "8 bytes",
+                "16 bytes"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -137,12 +218,22 @@
           "questions": [
             {
               "question": "Which keyword is used to allocate memory dynamically on the heap in C++?",
-              "options": ["malloc", "new", "alloc", "create"],
+              "options": [
+                "malloc",
+                "new",
+                "alloc",
+                "create"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which keyword is used to release dynamically allocated memory in C++?",
-              "options": ["delete", "free", "destruct", "remove"],
+              "options": [
+                "delete",
+                "free",
+                "destruct",
+                "remove"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -152,12 +243,22 @@
           "questions": [
             {
               "question": "What happens if you allocate memory with 'new' but never delete it?",
-              "options": ["Memory leak", "Segmentation fault", "Compiler error", "Automatic garbage collection"],
+              "options": [
+                "Memory leak",
+                "Segmentation fault",
+                "Compiler error",
+                "Automatic garbage collection"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "What is the correct syntax to allocate a dynamic array of 10 integers in C++?",
-              "options": ["int* arr = new int(10);", "int* arr = new int[10];", "int arr = dynamic int[10];", "int* arr = malloc(10);"],
+              "options": [
+                "int* arr = new int(10);",
+                "int* arr = new int[10];",
+                "int arr = dynamic int[10];",
+                "int* arr = malloc(10);"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -167,12 +268,22 @@
           "questions": [
             {
               "question": "If 'arr' is an array of size 5, what does standard pointer arithmetic *(arr + 1) refer to?",
-              "options": ["First element", "Second element", "Address of the array", "Size of the array"],
+              "options": [
+                "First element",
+                "Second element",
+                "Address of the array",
+                "Size of the array"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "If 'p' is an int pointer pointing to address 1000, what is address 'p + 1' if int is 4 bytes?",
-              "options": ["1001", "1002", "1004", "1008"],
+              "options": [
+                "1001",
+                "1002",
+                "1004",
+                "1008"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -182,17 +293,28 @@
           "questions": [
             {
               "question": "Which of the following statements is true about references in C++?",
-              "options": ["They can be null", "They can be reassigned to refer to another variable", "They must be initialized when declared", "They use dereferencing operators"],
+              "options": [
+                "They can be null",
+                "They can be reassigned to refer to another variable",
+                "They must be initialized when declared",
+                "They use dereferencing operators"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which symbol is used to declare a reference variable in C++?",
-              "options": ["*", "&", "->", "ref"],
+              "options": [
+                "*",
+                "&",
+                "->",
+                "ref"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "cpp-pointer-swap"
     },
     {
       "unitNumber": 3,
@@ -204,12 +326,22 @@
           "questions": [
             {
               "question": "Which access specifier makes members accessible only within the class and its derived classes?",
-              "options": ["private", "public", "protected", "friend"],
+              "options": [
+                "private",
+                "public",
+                "protected",
+                "friend"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "What is a constructor in C++?",
-              "options": ["A function to destroy objects", "A special member function to initialize objects", "A tool to compile class headers", "A class definition syntax"],
+              "options": [
+                "A function to destroy objects",
+                "A special member function to initialize objects",
+                "A tool to compile class headers",
+                "A class definition syntax"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -219,12 +351,22 @@
           "questions": [
             {
               "question": "What is a destructor in C++?",
-              "options": ["A function to copy an object", "A special member function called when an object is destroyed", "An operator to delete classes", "A function that has arguments"],
+              "options": [
+                "A function to copy an object",
+                "A special member function called when an object is destroyed",
+                "An operator to delete classes",
+                "A function that has arguments"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which access specifier is the default for members of a class in C++?",
-              "options": ["public", "private", "protected", "friend"],
+              "options": [
+                "public",
+                "private",
+                "protected",
+                "friend"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -234,12 +376,22 @@
           "questions": [
             {
               "question": "Which symbol is used to inherit from a base class in C++?",
-              "options": ["extends", "inherits", ":", "implements"],
+              "options": [
+                "extends",
+                "inherits",
+                ":",
+                "implements"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which type of inheritance is NOT supported in Java but is supported in C++?",
-              "options": ["Single inheritance", "Multilevel inheritance", "Multiple inheritance", "Hierarchical inheritance"],
+              "options": [
+                "Single inheritance",
+                "Multilevel inheritance",
+                "Multiple inheritance",
+                "Hierarchical inheritance"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -249,12 +401,22 @@
           "questions": [
             {
               "question": "What does the protected access specifier do in inheritance?",
-              "options": ["Makes members invisible to everyone", "Makes members public to everyone", "Makes members accessible only to the class and its derived classes", "Prevents class from being inherited"],
+              "options": [
+                "Makes members invisible to everyone",
+                "Makes members public to everyone",
+                "Makes members accessible only to the class and its derived classes",
+                "Prevents class from being inherited"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "What keyword is used to enable dynamic binding/polymorphism for a member function?",
-              "options": ["dynamic", "virtual", "polymorphic", "override"],
+              "options": [
+                "dynamic",
+                "virtual",
+                "polymorphic",
+                "override"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -264,12 +426,22 @@
           "questions": [
             {
               "question": "What is a pure virtual function?",
-              "options": ["A function with no arguments", "A function defined with '= 0'", "A function in a friend class", "A function that cannot be overridden"],
+              "options": [
+                "A function with no arguments",
+                "A function defined with '= 0'",
+                "A function in a friend class",
+                "A function that cannot be overridden"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What is the name of the table used to resolve virtual function calls at runtime?",
-              "options": ["Symbol table", "Vtable", "Hash table", "Lookup table"],
+              "options": [
+                "Symbol table",
+                "Vtable",
+                "Hash table",
+                "Lookup table"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -279,17 +451,28 @@
           "questions": [
             {
               "question": "A class containing at least one pure virtual function (= 0) is called:",
-              "options": ["Concrete class", "Static class", "Abstract class", "Friend class"],
+              "options": [
+                "Concrete class",
+                "Static class",
+                "Abstract class",
+                "Friend class"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Can you instantiate an abstract class in C++?",
-              "options": ["Yes, always", "No, never", "Yes, if it has a constructor", "Yes, using the new keyword"],
+              "options": [
+                "Yes, always",
+                "No, never",
+                "Yes, if it has a constructor",
+                "Yes, using the new keyword"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "cpp-oop-rectangle-area"
     },
     {
       "unitNumber": 4,
@@ -301,12 +484,22 @@
           "questions": [
             {
               "question": "Which STL container is implemented as a contiguous dynamic array?",
-              "options": ["std::list", "std::vector", "std::deque", "std::forward_list"],
+              "options": [
+                "std::list",
+                "std::vector",
+                "std::deque",
+                "std::forward_list"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which STL container represents a first-in, first-out (FIFO) structure?",
-              "options": ["std::stack", "std::queue", "std::vector", "std::map"],
+              "options": [
+                "std::stack",
+                "std::queue",
+                "std::vector",
+                "std::map"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -316,12 +509,22 @@
           "questions": [
             {
               "question": "Which container is a last-in, first-out (LIFO) structure?",
-              "options": ["std::queue", "std::stack", "std::list", "std::vector"],
+              "options": [
+                "std::queue",
+                "std::stack",
+                "std::list",
+                "std::vector"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which container is implemented as a doubly linked list?",
-              "options": ["std::vector", "std::list", "std::set", "std::forward_list"],
+              "options": [
+                "std::vector",
+                "std::list",
+                "std::set",
+                "std::forward_list"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -331,12 +534,22 @@
           "questions": [
             {
               "question": "Which method of std::vector returns an iterator pointing to the first element?",
-              "options": ["first()", "start()", "begin()", "front()"],
+              "options": [
+                "first()",
+                "start()",
+                "begin()",
+                "front()"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which method is used to add an element to the end of a std::vector?",
-              "options": ["add()", "push_back()", "append()", "insert()"],
+              "options": [
+                "add()",
+                "push_back()",
+                "append()",
+                "insert()"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -346,12 +559,22 @@
           "questions": [
             {
               "question": "Which container stores unique elements sorted automatically in logarithmic time?",
-              "options": ["std::vector", "std::set", "std::list", "std::unordered_map"],
+              "options": [
+                "std::vector",
+                "std::set",
+                "std::list",
+                "std::unordered_map"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which key-value associative container stores elements ordered by key?",
-              "options": ["std::unordered_map", "std::map", "std::set", "std::vector"],
+              "options": [
+                "std::unordered_map",
+                "std::map",
+                "std::set",
+                "std::vector"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -361,12 +584,22 @@
           "questions": [
             {
               "question": "What is the average time complexity for searching an element in std::unordered_map?",
-              "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+              "options": [
+                "O(1)",
+                "O(log n)",
+                "O(n)",
+                "O(n log n)"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "What is the average time complexity for searching in std::map?",
-              "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+              "options": [
+                "O(1)",
+                "O(log n)",
+                "O(n)",
+                "O(n log n)"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -376,17 +609,28 @@
           "questions": [
             {
               "question": "Which template function is used to sort a vector 'v' from start to finish?",
-              "options": ["std::sort(v.begin(), v.end())", "v.sort()", "std::order(v)", "sort(v)"],
+              "options": [
+                "std::sort(v.begin(), v.end())",
+                "v.sort()",
+                "std::order(v)",
+                "sort(v)"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which algorithm can be used to search for an element in a sorted container in logarithmic time?",
-              "options": ["std::find", "std::binary_search", "std::count", "std::search"],
+              "options": [
+                "std::find",
+                "std::binary_search",
+                "std::count",
+                "std::search"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "cpp-stl-vector-sort"
     },
     {
       "unitNumber": 5,
@@ -398,12 +642,22 @@
           "questions": [
             {
               "question": "What is the primary purpose of templates in C++?",
-              "options": ["To create code layouts", "To support generic programming", "To define class structures", "To compile faster"],
+              "options": [
+                "To create code layouts",
+                "To support generic programming",
+                "To define class structures",
+                "To compile faster"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which keyword is used to declare a template function?",
-              "options": ["generic", "template", "typename", "class"],
+              "options": [
+                "generic",
+                "template",
+                "typename",
+                "class"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -413,12 +667,22 @@
           "questions": [
             {
               "question": "How are templates instantiated in C++?",
-              "options": ["At runtime", "At compile-time", "By the linker", "Manually by the programmer"],
+              "options": [
+                "At runtime",
+                "At compile-time",
+                "By the linker",
+                "Manually by the programmer"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which keyword can be used interchangeably with 'typename' in a template parameter list?",
-              "options": ["struct", "class", "auto", "template"],
+              "options": [
+                "struct",
+                "class",
+                "auto",
+                "template"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -428,12 +692,22 @@
           "questions": [
             {
               "question": "Which block is used to group code that may throw an exception in C++?",
-              "options": ["throw", "catch", "try", "finally"],
+              "options": [
+                "throw",
+                "catch",
+                "try",
+                "finally"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "What keyword is used to raise an exception in C++?",
-              "options": ["raise", "throw", "except", "signal"],
+              "options": [
+                "raise",
+                "throw",
+                "except",
+                "signal"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -443,12 +717,22 @@
           "questions": [
             {
               "question": "What is the base class for standard C++ exceptions?",
-              "options": ["std::error", "std::exception", "std::throwable", "std::failure"],
+              "options": [
+                "std::error",
+                "std::exception",
+                "std::throwable",
+                "std::failure"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which standard C++ stream class is used for file writing operations?",
-              "options": ["ifstream", "ofstream", "fstream", "iostream"],
+              "options": [
+                "ifstream",
+                "ofstream",
+                "fstream",
+                "iostream"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -458,12 +742,22 @@
           "questions": [
             {
               "question": "Which stream class is used to read data from a file?",
-              "options": ["ofstream", "ifstream", "fstream", "iostream"],
+              "options": [
+                "ofstream",
+                "ifstream",
+                "fstream",
+                "iostream"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which method is used to close an open file stream?",
-              "options": ["stop()", "close()", "exit()", "terminate()"],
+              "options": [
+                "stop()",
+                "close()",
+                "exit()",
+                "terminate()"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -473,17 +767,28 @@
           "questions": [
             {
               "question": "Which smart pointer type in C++11 represents exclusive ownership of a heap resource?",
-              "options": ["std::shared_ptr", "std::unique_ptr", "std::weak_ptr", "std::auto_ptr"],
+              "options": [
+                "std::shared_ptr",
+                "std::unique_ptr",
+                "std::weak_ptr",
+                "std::auto_ptr"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which smart pointer keeps a reference count of owners?",
-              "options": ["std::unique_ptr", "std::shared_ptr", "std::weak_ptr", "std::auto_ptr"],
+              "options": [
+                "std::unique_ptr",
+                "std::shared_ptr",
+                "std::weak_ptr",
+                "std::auto_ptr"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "cpp-generic-find-max"
     }
   ],
   "java": [
@@ -497,12 +802,22 @@
           "questions": [
             {
               "question": "What is the entry point of a Java program?",
-              "options": ["public static void main(String[] args)", "void main()", "public void start()", "init()"],
+              "options": [
+                "public static void main(String[] args)",
+                "void main()",
+                "public void start()",
+                "init()"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which tool is used to compile Java code?",
-              "options": ["java", "javac", "javap", "javadoc"],
+              "options": [
+                "java",
+                "javac",
+                "javap",
+                "javadoc"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -512,12 +827,22 @@
           "questions": [
             {
               "question": "Which of the following is not a primitive data type in Java?",
-              "options": ["int", "double", "String", "boolean"],
+              "options": [
+                "int",
+                "double",
+                "String",
+                "boolean"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which data type is used to store a single 16-bit Unicode character in Java?",
-              "options": ["byte", "char", "String", "short"],
+              "options": [
+                "byte",
+                "char",
+                "String",
+                "short"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -527,12 +852,22 @@
           "questions": [
             {
               "question": "How do you check for equality between two objects in Java?",
-              "options": ["==", "equals()", "===", "compare()"],
+              "options": [
+                "==",
+                "equals()",
+                "===",
+                "compare()"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which method is used to compare two strings lexicographically in Java?",
-              "options": ["equals()", "compare()", "compareTo()", "equalsString()"],
+              "options": [
+                "equals()",
+                "compare()",
+                "compareTo()",
+                "equalsString()"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -542,12 +877,22 @@
           "questions": [
             {
               "question": "How do you find the length of an array named 'arr' in Java?",
-              "options": ["arr.size()", "arr.length()", "arr.length", "length(arr)"],
+              "options": [
+                "arr.size()",
+                "arr.length()",
+                "arr.length",
+                "length(arr)"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which exception is thrown when accessing an invalid array index?",
-              "options": ["NullPointerException", "ArrayIndexOutOfBoundsException", "IndexOutOfBoundsException", "ArithmeticException"],
+              "options": [
+                "NullPointerException",
+                "ArrayIndexOutOfBoundsException",
+                "IndexOutOfBoundsException",
+                "ArithmeticException"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -557,12 +902,22 @@
           "questions": [
             {
               "question": "Which keyword is used to inherit a class in Java?",
-              "options": ["implements", "extends", "inherits", "using"],
+              "options": [
+                "implements",
+                "extends",
+                "inherits",
+                "using"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What keyword is used to represent the current instance of a class?",
-              "options": ["this", "super", "self", "me"],
+              "options": [
+                "this",
+                "super",
+                "self",
+                "me"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -572,17 +927,28 @@
           "questions": [
             {
               "question": "Which block is used to catch exceptions in Java?",
-              "options": ["try", "catch", "finally", "throw"],
+              "options": [
+                "try",
+                "catch",
+                "finally",
+                "throw"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which block is used to execute cleanup code regardless of exceptions?",
-              "options": ["try", "catch", "finally", "cleanup"],
+              "options": [
+                "try",
+                "catch",
+                "finally",
+                "cleanup"
+              ],
               "correctAnswer": 3
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "java-fundamentals-multiplication-table"
     },
     {
       "unitNumber": 2,
@@ -594,12 +960,22 @@
           "questions": [
             {
               "question": "Which keyword is used to refer to the direct parent class constructor or methods?",
-              "options": ["this", "super", "parent", "base"],
+              "options": [
+                "this",
+                "super",
+                "parent",
+                "base"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which class is the ultimate superclass of all classes in Java?",
-              "options": ["Class", "Object", "System", "String"],
+              "options": [
+                "Class",
+                "Object",
+                "System",
+                "String"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -609,12 +985,22 @@
           "questions": [
             {
               "question": "Does Java support multiple inheritance of classes?",
-              "options": ["Yes", "No", "Only for abstract classes", "Only using final classes"],
+              "options": [
+                "Yes",
+                "No",
+                "Only for abstract classes",
+                "Only using final classes"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which keyword is used to define a completely abstract type (interface) in Java?",
-              "options": ["class", "interface", "abstract", "implements"],
+              "options": [
+                "class",
+                "interface",
+                "abstract",
+                "implements"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -624,12 +1010,22 @@
           "questions": [
             {
               "question": "Which keyword is used by a class to use/implement an interface?",
-              "options": ["extends", "implements", "uses", "inherits"],
+              "options": [
+                "extends",
+                "implements",
+                "uses",
+                "inherits"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Can an interface in Java 8 or later contain method implementations?",
-              "options": ["No, never", "Yes, using default or static keywords", "Yes, any standard method", "Yes, only abstract methods"],
+              "options": [
+                "No, never",
+                "Yes, using default or static keywords",
+                "Yes, any standard method",
+                "Yes, only abstract methods"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -639,12 +1035,22 @@
           "questions": [
             {
               "question": "Having multiple methods with the same name but different signatures in the same class is:",
-              "options": ["Method overriding", "Method overloading", "Method hiding", "Method polymorphism"],
+              "options": [
+                "Method overriding",
+                "Method overloading",
+                "Method hiding",
+                "Method polymorphism"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What annotation is recommended when overriding a parent class method?",
-              "options": ["@Overload", "@Override", "@Inherit", "@Replace"],
+              "options": [
+                "@Overload",
+                "@Override",
+                "@Inherit",
+                "@Replace"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -654,12 +1060,22 @@
           "questions": [
             {
               "question": "Can you override a static method in Java?",
-              "options": ["Yes, always", "No, static methods can only be hidden", "Yes, if it is public", "Yes, using super"],
+              "options": [
+                "Yes, always",
+                "No, static methods can only be hidden",
+                "Yes, if it is public",
+                "Yes, using super"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which keyword is used to make a method non-overridable in subclasses?",
-              "options": ["static", "final", "private", "synchronized"],
+              "options": [
+                "static",
+                "final",
+                "private",
+                "synchronized"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -669,17 +1085,28 @@
           "questions": [
             {
               "question": "Which keyword modifier prevents a class from being inherited or subclassed in Java?",
-              "options": ["static", "final", "abstract", "private"],
+              "options": [
+                "static",
+                "final",
+                "abstract",
+                "private"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What happens if you declare a variable as 'final' in Java?",
-              "options": ["It cannot be accessed", "Its value cannot be changed after initialization", "It becomes static", "It is stored on the stack"],
+              "options": [
+                "It cannot be accessed",
+                "Its value cannot be changed after initialization",
+                "It becomes static",
+                "It is stored on the stack"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "java-oop-bank-account"
     },
     {
       "unitNumber": 3,
@@ -691,12 +1118,22 @@
           "questions": [
             {
               "question": "Which class provides a resizable-array implementation of the List interface in Java?",
-              "options": ["LinkedList", "ArrayList", "Vector", "HashSet"],
+              "options": [
+                "LinkedList",
+                "ArrayList",
+                "Vector",
+                "HashSet"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which method is used to append an element to an ArrayList?",
-              "options": ["add()", "push()", "insert()", "append()"],
+              "options": [
+                "add()",
+                "push()",
+                "insert()",
+                "append()"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -706,12 +1143,22 @@
           "questions": [
             {
               "question": "What is the initial default capacity of an ArrayList in Java?",
-              "options": ["5", "10", "16", "20"],
+              "options": [
+                "5",
+                "10",
+                "16",
+                "20"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which method is used to retrieve an element at a specific index in an ArrayList?",
-              "options": ["get(index)", "at(index)", "element(index)", "index(index)"],
+              "options": [
+                "get(index)",
+                "at(index)",
+                "element(index)",
+                "index(index)"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -721,12 +1168,22 @@
           "questions": [
             {
               "question": "Which Set implementation does not allow duplicate elements and does not guarantee insertion order?",
-              "options": ["TreeSet", "HashSet", "LinkedHashSet", "ArrayList"],
+              "options": [
+                "TreeSet",
+                "HashSet",
+                "LinkedHashSet",
+                "ArrayList"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which Set implementation maintains insertion order of elements?",
-              "options": ["HashSet", "TreeSet", "LinkedHashSet", "ArrayList"],
+              "options": [
+                "HashSet",
+                "TreeSet",
+                "LinkedHashSet",
+                "ArrayList"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -736,12 +1193,22 @@
           "questions": [
             {
               "question": "Which interface class represents key-value associations in Java?",
-              "options": ["HashMap", "HashSet", "TreeMap", "ArrayList"],
+              "options": [
+                "HashMap",
+                "HashSet",
+                "TreeMap",
+                "ArrayList"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which method is used to associate a key with a value in a HashMap?",
-              "options": ["add(key, value)", "put(key, value)", "set(key, value)", "insert(key, value)"],
+              "options": [
+                "add(key, value)",
+                "put(key, value)",
+                "set(key, value)",
+                "insert(key, value)"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -751,12 +1218,22 @@
           "questions": [
             {
               "question": "What does a HashMap return if you call get(key) with a key that does not exist?",
-              "options": ["Throws NoSuchElementException", "Returns null", "Returns 0", "Throws NullPointerException"],
+              "options": [
+                "Throws NoSuchElementException",
+                "Returns null",
+                "Returns 0",
+                "Throws NullPointerException"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which method can be used to safely get a value from a HashMap or return a default if it's missing?",
-              "options": ["get()", "getOrDefault()", "find()", "retrieve()"],
+              "options": [
+                "get()",
+                "getOrDefault()",
+                "find()",
+                "retrieve()"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -766,17 +1243,28 @@
           "questions": [
             {
               "question": "Which standard interface is used to iterate over elements of any Java Collection?",
-              "options": ["Iterator", "Iterable", "ListIterator", "Enumerator"],
+              "options": [
+                "Iterator",
+                "Iterable",
+                "ListIterator",
+                "Enumerator"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which method of the Iterator interface returns true if there are more elements?",
-              "options": ["next()", "hasNext()", "hasMore()", "checkNext()"],
+              "options": [
+                "next()",
+                "hasNext()",
+                "hasMore()",
+                "checkNext()"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "java-collections-frequency-count"
     },
     {
       "unitNumber": 4,
@@ -788,12 +1276,22 @@
           "questions": [
             {
               "question": "Which class is the ultimate root of the Java exception hierarchy?",
-              "options": ["Exception", "RuntimeException", "Throwable", "Error"],
+              "options": [
+                "Exception",
+                "RuntimeException",
+                "Throwable",
+                "Error"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which of the following is a checked exception in Java?",
-              "options": ["NullPointerException", "ArithmeticException", "IOException", "ArrayIndexOutOfBoundsException"],
+              "options": [
+                "NullPointerException",
+                "ArithmeticException",
+                "IOException",
+                "ArrayIndexOutOfBoundsException"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -803,12 +1301,22 @@
           "questions": [
             {
               "question": "What keyword is used to declare that a method might throw certain exceptions?",
-              "options": ["throw", "throws", "try", "catch"],
+              "options": [
+                "throw",
+                "throws",
+                "try",
+                "catch"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which interface should be implemented to define a task executable by a Thread class?",
-              "options": ["Runnable", "Thread", "Callable", "Executor"],
+              "options": [
+                "Runnable",
+                "Thread",
+                "Callable",
+                "Executor"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -818,12 +1326,22 @@
           "questions": [
             {
               "question": "Which class in Java represents a thread of execution?",
-              "options": ["Thread", "Process", "Runnable", "Task"],
+              "options": [
+                "Thread",
+                "Process",
+                "Runnable",
+                "Task"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "What is the state of a thread that has been created but not yet started?",
-              "options": ["RUNNABLE", "NEW", "BLOCKED", "TERMINATED"],
+              "options": [
+                "RUNNABLE",
+                "NEW",
+                "BLOCKED",
+                "TERMINATED"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -833,12 +1351,22 @@
           "questions": [
             {
               "question": "Which keyword prevents multiple threads from concurrently entering a block or method?",
-              "options": ["static", "synchronized", "volatile", "locked"],
+              "options": [
+                "static",
+                "synchronized",
+                "volatile",
+                "locked"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What is a deadlock in multithreading?",
-              "options": ["A thread terminates unexpectedly", "Two or more threads are blocked forever, waiting for each other", "A thread runs out of memory", "The CPU usage reaches 100%"],
+              "options": [
+                "A thread terminates unexpectedly",
+                "Two or more threads are blocked forever, waiting for each other",
+                "A thread runs out of memory",
+                "The CPU usage reaches 100%"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -848,12 +1376,22 @@
           "questions": [
             {
               "question": "Which method is used to pause thread execution for a specified duration?",
-              "options": ["Thread.sleep()", "Thread.pause()", "Thread.wait()", "Thread.stop()"],
+              "options": [
+                "Thread.sleep()",
+                "Thread.pause()",
+                "Thread.wait()",
+                "Thread.stop()"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which method is called on a Thread object to begin its concurrent execution?",
-              "options": ["run()", "start()", "init()", "execute()"],
+              "options": [
+                "run()",
+                "start()",
+                "init()",
+                "execute()"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -863,17 +1401,28 @@
           "questions": [
             {
               "question": "What happens if you call run() directly instead of start() on a Thread object?",
-              "options": ["A new thread is started", "The run() method executes in the current thread instead of a new one", "An IllegalThreadStateException is thrown", "The thread is paused"],
+              "options": [
+                "A new thread is started",
+                "The run() method executes in the current thread instead of a new one",
+                "An IllegalThreadStateException is thrown",
+                "The thread is paused"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which keyword can be used to make a variable's updates visible to all threads immediately?",
-              "options": ["synchronized", "volatile", "transient", "final"],
+              "options": [
+                "synchronized",
+                "volatile",
+                "transient",
+                "final"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "java-exceptions-safe-division"
     },
     {
       "unitNumber": 5,
@@ -885,12 +1434,22 @@
           "questions": [
             {
               "question": "Which package provides modern File Input/Output (NIO) features in Java?",
-              "options": ["java.io", "java.nio", "java.file", "java.util"],
+              "options": [
+                "java.io",
+                "java.nio",
+                "java.file",
+                "java.util"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which class is used to read text from a character-input stream with efficient buffering?",
-              "options": ["FileReader", "BufferedReader", "InputStreamReader", "Scanner"],
+              "options": [
+                "FileReader",
+                "BufferedReader",
+                "InputStreamReader",
+                "Scanner"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -900,12 +1459,22 @@
           "questions": [
             {
               "question": "Which class in java.nio represents a path in the file system?",
-              "options": ["File", "Path", "Paths", "FilePath"],
+              "options": [
+                "File",
+                "Path",
+                "Paths",
+                "FilePath"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which class was introduced in Java 7 to utility-read all lines from a file easily?",
-              "options": ["FileReader", "Files", "BufferedReader", "Scanner"],
+              "options": [
+                "FileReader",
+                "Files",
+                "BufferedReader",
+                "Scanner"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -915,12 +1484,22 @@
           "questions": [
             {
               "question": "Which operator symbol is used to denote Java Lambda expressions?",
-              "options": ["->", "=>", "::", "::>"],
+              "options": [
+                "->",
+                "=>",
+                "::",
+                "::>"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "What type of interfaces can be target types for lambda expressions?",
-              "options": ["Marker interfaces", "Functional interfaces", "Abstract interfaces", "Any interface"],
+              "options": [
+                "Marker interfaces",
+                "Functional interfaces",
+                "Abstract interfaces",
+                "Any interface"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -930,12 +1509,22 @@
           "questions": [
             {
               "question": "Which symbol is used for method references in Java?",
-              "options": [".", "->", "::", "=>"],
+              "options": [
+                ".",
+                "->",
+                "::",
+                "=>"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which terminal stream operation is used to collect elements into a List collection?",
-              "options": ["collect()", "toList()", "map()", "filter()"],
+              "options": [
+                "collect()",
+                "toList()",
+                "map()",
+                "filter()"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -945,12 +1534,22 @@
           "questions": [
             {
               "question": "Is a Java Stream operation executed lazily or eagerly by default for intermediate operations?",
-              "options": ["Eagerly", "Lazily", "Asynchronously", "Immediately"],
+              "options": [
+                "Eagerly",
+                "Lazily",
+                "Asynchronously",
+                "Immediately"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which Stream intermediate operation is used to transform elements from one type to another?",
-              "options": ["filter", "map", "reduce", "collect"],
+              "options": [
+                "filter",
+                "map",
+                "reduce",
+                "collect"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -960,17 +1559,28 @@
           "questions": [
             {
               "question": "An interface containing exactly one single abstract method is called a:",
-              "options": ["Marker interface", "Single interface", "Functional interface", "Abstract interface"],
+              "options": [
+                "Marker interface",
+                "Single interface",
+                "Functional interface",
+                "Abstract interface"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which functional interface in java.util.function takes one argument and returns a boolean?",
-              "options": ["Function", "Consumer", "Predicate", "Supplier"],
+              "options": [
+                "Function",
+                "Consumer",
+                "Predicate",
+                "Supplier"
+              ],
               "correctAnswer": 3
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "java-streams-filter-even-sum"
     }
   ],
   "python": [
@@ -984,12 +1594,22 @@
           "questions": [
             {
               "question": "How do you output text to the console in Python?",
-              "options": ["System.out.println('Hello');", "console.log('Hello');", "print('Hello')", "echo 'Hello';"],
+              "options": [
+                "System.out.println('Hello');",
+                "console.log('Hello');",
+                "print('Hello')",
+                "echo 'Hello';"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which symbol is used to start a single-line comment in Python?",
-              "options": ["//", "/*", "#", "--"],
+              "options": [
+                "//",
+                "/*",
+                "#",
+                "--"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -999,12 +1619,22 @@
           "questions": [
             {
               "question": "Which data type is mutable in Python?",
-              "options": ["tuple", "str", "list", "int"],
+              "options": [
+                "tuple",
+                "str",
+                "list",
+                "int"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "What is the result of 3 ** 2 in Python?",
-              "options": ["6", "9", "8", "1.5"],
+              "options": [
+                "6",
+                "9",
+                "8",
+                "1.5"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1014,12 +1644,22 @@
           "questions": [
             {
               "question": "What keyword is used for 'else if' in Python?",
-              "options": ["else if", "elseif", "elif", "if else"],
+              "options": [
+                "else if",
+                "elseif",
+                "elif",
+                "if else"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "How is a code block delimited in Python instead of curly braces?",
-              "options": ["Parentheses ()", "Indentation", "Semicolons ;", "Square brackets []"],
+              "options": [
+                "Parentheses ()",
+                "Indentation",
+                "Semicolons ;",
+                "Square brackets []"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1029,12 +1669,22 @@
           "questions": [
             {
               "question": "Which built-in function is commonly used with 'for' loops to iterate a number of times?",
-              "options": ["range()", "count()", "loop()", "repeat()"],
+              "options": [
+                "range()",
+                "count()",
+                "loop()",
+                "repeat()"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "What keyword is used to break out of a loop immediately?",
-              "options": ["stop", "break", "exit", "continue"],
+              "options": [
+                "stop",
+                "break",
+                "exit",
+                "continue"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1044,12 +1694,22 @@
           "questions": [
             {
               "question": "Which keyword is used to define a function in Python?",
-              "options": ["function", "def", "func", "define"],
+              "options": [
+                "function",
+                "def",
+                "func",
+                "define"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "How do you specify a default parameter value in a Python function?",
-              "options": ["def func(x = 10):", "def func(x: 10):", "def func(default x = 10):", "def func(x := 10):"],
+              "options": [
+                "def func(x = 10):",
+                "def func(x: 10):",
+                "def func(default x = 10):",
+                "def func(x := 10):"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -1059,17 +1719,28 @@
           "questions": [
             {
               "question": "Which keyword allows you to modify a global variable inside a function?",
-              "options": ["global", "outer", "super", "var"],
+              "options": [
+                "global",
+                "outer",
+                "super",
+                "var"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which built-in function returns the number of items in a list or string?",
-              "options": ["size()", "length()", "len()", "count()"],
+              "options": [
+                "size()",
+                "length()",
+                "len()",
+                "count()"
+              ],
               "correctAnswer": 3
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "python-basics-grade-calculator"
     },
     {
       "unitNumber": 2,
@@ -1081,12 +1752,22 @@
           "questions": [
             {
               "question": "How do you append an item to the end of a list 'lst' in Python?",
-              "options": ["lst.add(item)", "lst.append(item)", "lst.push(item)", "lst.insert(item)"],
+              "options": [
+                "lst.add(item)",
+                "lst.append(item)",
+                "lst.push(item)",
+                "lst.insert(item)"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What does lst[-1] return for a non-empty list 'lst'?",
-              "options": ["First element", "Last element", "Second element", "An index error"],
+              "options": [
+                "First element",
+                "Last element",
+                "Second element",
+                "An index error"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1096,12 +1777,22 @@
           "questions": [
             {
               "question": "Which syntax creates a tuple in Python?",
-              "options": ["[1, 2, 3]", "{1, 2, 3}", "(1, 2, 3)", "<1, 2, 3>"],
+              "options": [
+                "[1, 2, 3]",
+                "{1, 2, 3}",
+                "(1, 2, 3)",
+                "<1, 2, 3>"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Can you modify an element of a tuple after creation?",
-              "options": ["Yes, always", "No, tuples are immutable", "Yes, using append()", "Only if it contains integers"],
+              "options": [
+                "Yes, always",
+                "No, tuples are immutable",
+                "Yes, using append()",
+                "Only if it contains integers"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1111,12 +1802,22 @@
           "questions": [
             {
               "question": "What data structure in Python stores key-value pairs?",
-              "options": ["list", "tuple", "set", "dict"],
+              "options": [
+                "list",
+                "tuple",
+                "set",
+                "dict"
+              ],
               "correctAnswer": 4
             },
             {
               "question": "Which method safely retrieves a value from a dictionary without raising a KeyError?",
-              "options": ["dict.fetch(key)", "dict.get(key)", "dict.find(key)", "dict.value(key)"],
+              "options": [
+                "dict.fetch(key)",
+                "dict.get(key)",
+                "dict.find(key)",
+                "dict.value(key)"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1126,12 +1827,22 @@
           "questions": [
             {
               "question": "Which data structure stores unique elements with no duplicates in Python?",
-              "options": ["list", "tuple", "set", "dictionary"],
+              "options": [
+                "list",
+                "tuple",
+                "set",
+                "dictionary"
+              ],
               "correctAnswer": 3
             },
             {
               "question": "Which operator performs a set union in Python?",
-              "options": ["&", "|", "^", "+"],
+              "options": [
+                "&",
+                "|",
+                "^",
+                "+"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1141,12 +1852,22 @@
           "questions": [
             {
               "question": "What is the correct syntax for a list comprehension squaring numbers in range(5)?",
-              "options": ["[x^2 for x in range(5)]", "[x**2 for x in range(5)]", "(x**2 for x in range(5))", "{x**2 for x in range(5)}"],
+              "options": [
+                "[x^2 for x in range(5)]",
+                "[x**2 for x in range(5)]",
+                "(x**2 for x in range(5))",
+                "{x**2 for x in range(5)}"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What is the result of [x for x in range(10) if x % 2 == 0]?",
-              "options": ["[0, 2, 4, 6, 8]", "[1, 3, 5, 7, 9]", "[2, 4, 6, 8, 10]", "[0, 1, 2, 3, 4]"],
+              "options": [
+                "[0, 2, 4, 6, 8]",
+                "[1, 3, 5, 7, 9]",
+                "[2, 4, 6, 8, 10]",
+                "[0, 1, 2, 3, 4]"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -1156,17 +1877,28 @@
           "questions": [
             {
               "question": "What is the difference between list.sort() and sorted(list)?",
-              "options": ["list.sort() returns a new list; sorted() modifies in-place", "list.sort() modifies in-place; sorted() returns a new list", "They are identical", "sorted() only works on tuples"],
+              "options": [
+                "list.sort() returns a new list; sorted() modifies in-place",
+                "list.sort() modifies in-place; sorted() returns a new list",
+                "They are identical",
+                "sorted() only works on tuples"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which function pairs elements from two iterables together into tuples?",
-              "options": ["map()", "zip()", "combine()", "pair()"],
+              "options": [
+                "map()",
+                "zip()",
+                "combine()",
+                "pair()"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "python-ds-list-comprehension-squares"
     },
     {
       "unitNumber": 3,
@@ -1178,12 +1910,22 @@
           "questions": [
             {
               "question": "What is the convention name for the instance initializer method in Python classes?",
-              "options": ["__construct__", "__init__", "init()", "__new__"],
+              "options": [
+                "__construct__",
+                "__init__",
+                "init()",
+                "__new__"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What does the 'self' parameter represent in a Python class method?",
-              "options": ["The parent class", "The current instance of the class", "A global variable", "The module object"],
+              "options": [
+                "The parent class",
+                "The current instance of the class",
+                "A global variable",
+                "The module object"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1193,12 +1935,22 @@
           "questions": [
             {
               "question": "Where are instance attributes usually defined in a Python class?",
-              "options": ["Outside the class", "Inside __init__ using self.attr", "In a global statement", "In the class header"],
+              "options": [
+                "Outside the class",
+                "Inside __init__ using self.attr",
+                "In a global statement",
+                "In the class header"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "How do you define a class attribute shared across all instances?",
-              "options": ["Directly inside the class body outside any method", "Inside __init__ without self", "In a static function", "Using global keyword"],
+              "options": [
+                "Directly inside the class body outside any method",
+                "Inside __init__ without self",
+                "In a static function",
+                "Using global keyword"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -1208,12 +1960,22 @@
           "questions": [
             {
               "question": "How does a class 'Child' inherit from a class 'Parent' in Python?",
-              "options": ["class Child extends Parent:", "class Child(Parent):", "class Child : Parent:", "class Child implements Parent:"],
+              "options": [
+                "class Child extends Parent:",
+                "class Child(Parent):",
+                "class Child : Parent:",
+                "class Child implements Parent:"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which function is used to call methods from a parent class in Python?",
-              "options": ["parent()", "super()", "base()", "ancestor()"],
+              "options": [
+                "parent()",
+                "super()",
+                "base()",
+                "ancestor()"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1223,12 +1985,22 @@
           "questions": [
             {
               "question": "What prefix convention indicates a private/protected attribute in Python?",
-              "options": ["@private", "Underscore prefix (_ or __)", "private keyword", "# symbol"],
+              "options": [
+                "@private",
+                "Underscore prefix (_ or __)",
+                "private keyword",
+                "# symbol"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which decorator is used to turn a method into a read-only property getter?",
-              "options": ["@property", "@getter", "@attribute", "@field"],
+              "options": [
+                "@property",
+                "@getter",
+                "@attribute",
+                "@field"
+              ],
               "correctAnswer": 1
             }
           ]
@@ -1238,12 +2010,22 @@
           "questions": [
             {
               "question": "Which dunder method controls the string representation returned by str(obj)?",
-              "options": ["__repr__", "__str__", "__string__", "__text__"],
+              "options": [
+                "__repr__",
+                "__str__",
+                "__string__",
+                "__text__"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which dunder method enables an object to be evaluated for length with len()?",
-              "options": ["__size__", "__count__", "__len__", "__length__"],
+              "options": [
+                "__size__",
+                "__count__",
+                "__len__",
+                "__length__"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -1253,17 +2035,28 @@
           "questions": [
             {
               "question": "Which decorator marks a method as not requiring a class or instance reference?",
-              "options": ["@classmethod", "@staticmethod", "@property", "@abstract"],
+              "options": [
+                "@classmethod",
+                "@staticmethod",
+                "@property",
+                "@abstract"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What decorator marks a method that receives the class object 'cls' as its first parameter?",
-              "options": ["@staticmethod", "@classmethod", "@instancemethod", "@type"],
+              "options": [
+                "@staticmethod",
+                "@classmethod",
+                "@instancemethod",
+                "@type"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "python-oop-car-speed"
     },
     {
       "unitNumber": 4,
@@ -1275,12 +2068,22 @@
           "questions": [
             {
               "question": "How do you import a specific function 'sqrt' from the 'math' module?",
-              "options": ["import math.sqrt", "from math import sqrt", "using math import sqrt", "include math(sqrt)"],
+              "options": [
+                "import math.sqrt",
+                "from math import sqrt",
+                "using math import sqrt",
+                "include math(sqrt)"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What file makes a directory recognized as a Python package?",
-              "options": ["__package__.py", "__init__.py", "__main__.py", "setup.py"],
+              "options": [
+                "__package__.py",
+                "__init__.py",
+                "__main__.py",
+                "setup.py"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1290,12 +2093,22 @@
           "questions": [
             {
               "question": "Which block is used to catch and handle exceptions in Python?",
-              "options": ["try ... catch", "try ... except", "try ... handle", "catch ... except"],
+              "options": [
+                "try ... catch",
+                "try ... except",
+                "try ... handle",
+                "catch ... except"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which block always executes regardless of whether an exception occurred?",
-              "options": ["else", "finally", "always", "after"],
+              "options": [
+                "else",
+                "finally",
+                "always",
+                "after"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1305,12 +2118,22 @@
           "questions": [
             {
               "question": "What keyword is used to explicitly trigger an exception in Python?",
-              "options": ["throw", "raise", "trigger", "error"],
+              "options": [
+                "throw",
+                "raise",
+                "trigger",
+                "error"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "To create a custom exception class, which base class should you inherit from?",
-              "options": ["Error", "Exception", "BaseError", "Object"],
+              "options": [
+                "Error",
+                "Exception",
+                "BaseError",
+                "Object"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1320,12 +2143,22 @@
           "questions": [
             {
               "question": "Which built-in statement is recommended for handling file streams safely with automatic closing?",
-              "options": ["with open(...) as f:", "using open(...) as f:", "try open(...) as f:", "file open(...)"],
+              "options": [
+                "with open(...) as f:",
+                "using open(...) as f:",
+                "try open(...) as f:",
+                "file open(...)"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "What mode parameter opens a file for writing, replacing existing contents?",
-              "options": ["'r'", "'a'", "'w'", "'x'"],
+              "options": [
+                "'r'",
+                "'a'",
+                "'w'",
+                "'x'"
+              ],
               "correctAnswer": 3
             }
           ]
@@ -1335,12 +2168,22 @@
           "questions": [
             {
               "question": "Which standard Python module is used to parse and convert JSON data?",
-              "options": ["json", "pickle", "marshal", "xml"],
+              "options": [
+                "json",
+                "pickle",
+                "marshal",
+                "xml"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which function in the json module converts a Python dictionary into a JSON string?",
-              "options": ["json.load()", "json.dumps()", "json.parse()", "json.stringify()"],
+              "options": [
+                "json.load()",
+                "json.dumps()",
+                "json.parse()",
+                "json.stringify()"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1350,17 +2193,28 @@
           "questions": [
             {
               "question": "Which standard module provides tools for working with dates and times in Python?",
-              "options": ["time", "datetime", "calendar", "clock"],
+              "options": [
+                "time",
+                "datetime",
+                "calendar",
+                "clock"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "Which module provides functions for interacting with the operating system?",
-              "options": ["sys", "os", "platform", "shutil"],
+              "options": [
+                "sys",
+                "os",
+                "platform",
+                "shutil"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "python-exceptions-safe-int-parser"
     },
     {
       "unitNumber": 5,
@@ -1372,12 +2226,22 @@
           "questions": [
             {
               "question": "What is a lambda function in Python?",
-              "options": ["A function with multiple statements", "An anonymous single-expression function", "A recursive function", "A method inside a class"],
+              "options": [
+                "A function with multiple statements",
+                "An anonymous single-expression function",
+                "A recursive function",
+                "A method inside a class"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What does map(lambda x: x*2, [1, 2, 3]) do?",
-              "options": ["Filters numbers greater than 2", "Applies function x*2 to each item in the list", "Sums all numbers in the list", "Sorts the list in descending order"],
+              "options": [
+                "Filters numbers greater than 2",
+                "Applies function x*2 to each item in the list",
+                "Sums all numbers in the list",
+                "Sorts the list in descending order"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1387,12 +2251,22 @@
           "questions": [
             {
               "question": "Which keyword transforms a standard function into a generator function?",
-              "options": ["return", "yield", "generate", "produce"],
+              "options": [
+                "return",
+                "yield",
+                "generate",
+                "produce"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What benefit do generators provide compared to returning a full list?",
-              "options": ["Faster execution", "Memory efficiency through lazy evaluation", "Automatic type conversion", "Thread safety"],
+              "options": [
+                "Faster execution",
+                "Memory efficiency through lazy evaluation",
+                "Automatic type conversion",
+                "Thread safety"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1402,12 +2276,22 @@
           "questions": [
             {
               "question": "What is a decorator in Python?",
-              "options": ["A class attribute", "A function that takes another function and extends its behavior", "A syntax highlighter tool", "A method for formatting strings"],
+              "options": [
+                "A class attribute",
+                "A function that takes another function and extends its behavior",
+                "A syntax highlighter tool",
+                "A method for formatting strings"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What symbol is used to apply a decorator above a function definition?",
-              "options": ["#", "@", "$", "&"],
+              "options": [
+                "#",
+                "@",
+                "$",
+                "&"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1417,12 +2301,22 @@
           "questions": [
             {
               "question": "Which two dunder methods must a class implement to act as a custom context manager?",
-              "options": ["__start__ and __stop__", "__enter__ and __exit__", "__open__ and __close__", "__init__ and __del__"],
+              "options": [
+                "__start__ and __stop__",
+                "__enter__ and __exit__",
+                "__open__ and __close__",
+                "__init__ and __del__"
+              ],
               "correctAnswer": 2
             },
             {
               "question": "What standard library module provides a @contextmanager decorator?",
-              "options": ["functools", "contextlib", "itertools", "sys"],
+              "options": [
+                "functools",
+                "contextlib",
+                "itertools",
+                "sys"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1432,12 +2326,22 @@
           "questions": [
             {
               "question": "What is the correct syntax for function return type annotation in Python 3.5+?",
-              "options": ["def func() -> int:", "def func() : int:", "def func() => int:", "def int func():"],
+              "options": [
+                "def func() -> int:",
+                "def func() : int:",
+                "def func() => int:",
+                "def int func():"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which standard library module contains advanced type hinting definitions like List, Dict, Optional?",
-              "options": ["types", "typing", "annotations", "hinting"],
+              "options": [
+                "types",
+                "typing",
+                "annotations",
+                "hinting"
+              ],
               "correctAnswer": 2
             }
           ]
@@ -1447,17 +2351,28 @@
           "questions": [
             {
               "question": "Which function in functools memoizes function call results (caches them)?",
-              "options": ["@lru_cache", "@memoize", "@cache_result", "@store"],
+              "options": [
+                "@lru_cache",
+                "@memoize",
+                "@cache_result",
+                "@store"
+              ],
               "correctAnswer": 1
             },
             {
               "question": "Which module provides iterators for efficient looping (like chain, cycle, combinations)?",
-              "options": ["functools", "itertools", "collections", "operator"],
+              "options": [
+                "functools",
+                "itertools",
+                "collections",
+                "operator"
+              ],
               "correctAnswer": 2
             }
           ]
         }
-      ]
+      ],
+      "codingExercise": "python-advanced-generator-countdown"
     }
   ]
 }

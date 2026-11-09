@@ -18,6 +18,18 @@ export const saveAuthData = (userObj) => {
   localStorage.setItem('codebyte-user', JSON.stringify(userObj));
 };
 
+export const isTokenExpired = (token) => {
+  if (!token) return true;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    if (!payload.exp) return false;
+    // Consider expired if less than 60 seconds remaining
+    return payload.exp * 1000 < (Date.now() + 60000);
+  } catch (e) {
+    return true;
+  }
+};
+
 export const refreshAuthToken = async () => {
   const user = getStoredUser();
   const refreshToken = user?.refreshToken;
@@ -37,13 +49,16 @@ export const refreshAuthToken = async () => {
       saveAuthData(updatedUser);
       return data.accessToken;
     } else {
-      // Refresh token invalid or expired
+      // Refresh token invalid or expired explicitly returned by server
       saveAuthData(null);
       return null;
     }
   } catch (err) {
     console.error("Failed to refresh token:", err);
-    saveAuthData(null);
+    // Only wipe stored session if server explicitly responded with 401/403 or expired flag
+    if (err.response && (err.response.status === 401 || err.response.status === 403 || err.response.data?.expired)) {
+      saveAuthData(null);
+    }
     return null;
   }
 };

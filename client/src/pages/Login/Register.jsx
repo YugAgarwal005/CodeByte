@@ -38,6 +38,7 @@ function Register() {
   });
 
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleValidation = () => {
     const { password, username, cnfpassword, email } = values;
@@ -66,23 +67,32 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (isLoading) return;
     if (handleValidation()) {
-      const { password, username, email } = values;
-      const { data } = await axios.post(registerRoute, {
-        username,
-        password,
-        email,
-        rememberMe
-      });
-      if (data.status === false) {
-        toast.error(data.msg, options);
+      setIsLoading(true);
+      try {
+        const { password, username, email } = values;
+        const { data } = await axios.post(registerRoute, {
+          username: username.trim(),
+          password,
+          email: email.trim(),
+          rememberMe
+        });
+        if (data.status === false) {
+          toast.error(data.msg, options);
+        } else if (data.status === true) {
+          localStorage.setItem('codebyte-user', JSON.stringify(data.user));
+          navigate("/");
+        }
+      } catch (err) {
+        console.error("Registration error:", err);
+        const errMsg = err.response?.data?.message || err.response?.data?.msg || "Registration failed. Please check your network or try again.";
+        toast.error(errMsg, options);
+      } finally {
+        setIsLoading(false);
       }
-      if (data.status === true) {
-        localStorage.setItem('codebyte-user', JSON.stringify(data.user));
-        navigate("/");
-      }
-    };
-  }
+    }
+  };
 
   const handleChange = (event) => {
     setValues(
@@ -111,7 +121,7 @@ function Register() {
             </label>
           </div>
 
-          <button type="submit">Sign Up</button>
+          <button type="submit" disabled={isLoading}>{isLoading ? "Creating account..." : "Sign Up"}</button>
           <span>Already Have An Account ? <Link to='/login'>Login</Link></span>
           <div className='line'></div>
           <a className="btn btn-block btn-social btn-lg btn-google" onClick={()=>{childref.current.click()}}>

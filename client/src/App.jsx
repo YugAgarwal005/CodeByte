@@ -19,7 +19,7 @@ import ProblemPage from './pages/Judge/ProblemPage';
 import { styled } from 'styled-components';
 import axios from 'axios';
 import { getuserRoute } from './utils/Apiroutes';
-import { setupAxiosInterceptors, startTokenRefreshTimer, refreshAuthToken, getStoredUser } from './utils/tokenManager';
+import { setupAxiosInterceptors, startTokenRefreshTimer, refreshAuthToken, getStoredUser, isTokenExpired } from './utils/tokenManager';
 
 // Setup global axios interceptors for Bearer token & auto retry on 401
 setupAxiosInterceptors();
@@ -33,17 +33,18 @@ function App() {
     const initAuth = async () => {
       const stored = getStoredUser();
       if (stored) {
-        if (stored.refreshToken) {
+        // Immediately initialize user state so UI renders with zero network delay
+        setUser(stored);
+        startTokenRefreshTimer();
+
+        // If the access token is expired, refresh in background
+        if (stored.refreshToken && isTokenExpired(stored.accessToken)) {
           const newAccessToken = await refreshAuthToken();
           if (newAccessToken) {
             setUser(getStoredUser());
-            startTokenRefreshTimer();
-          } else {
+          } else if (!getStoredUser()) {
             setUser(null);
           }
-        } else {
-          setUser(stored);
-          startTokenRefreshTimer();
         }
       }
     };

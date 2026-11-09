@@ -36,6 +36,7 @@ function Login() {
   });
 
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleValidation = () => {
     const { password, username } = values;
@@ -48,22 +49,31 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (isLoading) return;
     if (handleValidation()) {
-      const { password, username } = values;
-      const { data } = await axios.post(loginRoute, {
-        username,
-        password,
-        rememberMe
-      });
-      if (data.status === false) {
-        toast.error(data.msg, options);
+      setIsLoading(true);
+      try {
+        const { password, username } = values;
+        const { data } = await axios.post(loginRoute, {
+          username: username.trim(),
+          password,
+          rememberMe
+        });
+        if (data.status === false) {
+          toast.error(data.msg, options);
+        } else if (data.status === true) {
+          localStorage.setItem('codebyte-user', JSON.stringify(data.user));
+          navigate("/");
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        const errMsg = err.response?.data?.message || err.response?.data?.msg || "Login failed. Please check your network or try again.";
+        toast.error(errMsg, options);
+      } finally {
+        setIsLoading(false);
       }
-      if (data.status === true) {
-        localStorage.setItem('codebyte-user', JSON.stringify(data.user));
-        navigate("/");
-      }
-    };
-  }
+    }
+  };
 
   const handleChange = (event) => {
     setValues(
@@ -90,7 +100,7 @@ function Login() {
             </label>
           </div>
 
-          <button type="submit">Login</button>
+          <button type="submit" disabled={isLoading}>{isLoading ? "Logging in..." : "Login"}</button>
           <span>Don't Have An Account ? <Link to='/register'>Register</Link></span>
           <div className='line'></div>
           <a className="btn btn-block btn-social btn-lg btn-google" onClick={()=>{childref.current.click()}}>
