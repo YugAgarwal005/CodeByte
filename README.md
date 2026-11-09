@@ -2,88 +2,128 @@
 
 ### 🔗 Live Link: [https://codebyte-by-yug.vercel.app/](https://codebyte-by-yug.vercel.app/)
 
-CodeByte is a gamified full-stack coding education platform that provides a structured, progressive pathway for learning coding languages (such as Java, C/C++, and Python). Designed with an elegant, distraction-free interface, CodeByte helps learners master key computer science concepts through dynamic interactive quizzes, daily streaks, customizable avatars, and a real-time competitive leaderboard league.
-
-To ensure an immersive and high-focus learning environment, CodeByte prioritizes progress and consistency, allowing users to focus 100% on what matters most: **learning to code**.
+CodeByte is an interactive, gamified full-stack coding education platform offering structured, progressive pathways for mastering programming languages (**Java**, **C/C++**, and **Python**). Designed with a distraction-free, Duolingo-style course progression, CodeByte pairs interactive concept quizzes with real, sandboxed coding challenges in a full-screen **Monaco code editor** powered by an **online judge engine**.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-*   **📚 Structured Progression**: Code-learning units broken down into progressive lessons and quizzes to build foundational and advanced skills.
-*   **🔥 Streak & Consistency Tracker**: Tracks active days to encourage daily practice and maintain a continuous learning habit.
-*   **🏆 Technical Leagues & Leaderboard**: Compare progress with other developers globally in real-time, encouraging friendly competition.
-*   **🎭 Customizable Avatars**: Select and set personalized developer profiles with dynamic avatar fetching.
-*   **📱 Responsive & Clean Interface**: A modern, mobile-friendly design featuring seamless navigation and beautiful visual transitions.
+* **📚 Gamified Circular Learning Pathways**: Each unit is broken down into progressive quiz lessons followed by an integrated **Coding Challenge** checkpoint at the end of the unit.
+* **⚡ Hands-On Coding Challenges & Online Judge**:
+  * Write and run real code directly in the browser with syntax highlighting, auto-completion, and dark mode in the **Monaco Editor**.
+  * Instant feedback with test case evaluation (runtime, memory, passed/failed tests, and diff output).
+  * **Course Track Language Locking**: Challenges are specifically tailored to concepts taught in that unit (e.g. C++ Pointers, Java OOP, Python List Comprehensions) and locked to that track's programming language.
+  * **Unit Progression Gating**: Finishing a unit's coding challenge with an Accepted (`AC`) verdict awards **+50 XP** and unlocks the next unit.
+* **💡 Progressive Hint Ladder**: Stuck on a coding challenge? Unlock 3-tier hints sequentially (Gentle Nudge 💡 → Conceptual Approach 🗺️ → Step-by-Step Logic 🔍) without spoiling the solution.
+* **🔥 Streak & Consistency Tracker**: Tracks daily active learning to encourage steady coding habits.
+* **🏆 Leagues & Leaderboards**: Compete against other developers globally in real-time.
+* **🎭 Customizable Avatars**: Select and customize personalized developer avatars.
+* **📱 Fully Responsive Design**: Seamless experience across mobile, tablet, and desktop screens.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-*   **Framework**: React.js (Vite)
-*   **Styling**: Tailwind CSS & Styled Components
-*   **Routing**: React Router DOM v6
-*   **State & Networking**: Axios for API calls, HTML5 LocalStorage for session states
-*   **Sounds**: `use-sound` for immersive feedback on correct and incorrect answers
+* **Core Framework**: React 19 (Vite bundler)
+* **Code Editor**: `@monaco-editor/react` (VS Code editor engine in browser)
+* **Styling**: Styled Components & Tailwind CSS
+* **Icons & Animation**: React Icons, Lucide React, and Motion
+* **Routing**: React Router DOM v7
+* **Markdown Rendering**: `react-markdown` with `remark-gfm`
+* **Audio Feedback**: `use-sound` for immersive success/error sound effects
 
-### Backend
-*   **Runtime**: Node.js & Express.js
-*   **Database**: MongoDB with Mongoose ODM
-*   **Authentication**: Secure password hashing with bcrypt, JSON Web Tokens (JWT) for session persistence
+### Backend & Judge Infrastructure
+* **Runtime**: Node.js & Express.js (ES Modules)
+* **Database**: MongoDB with Mongoose ODM
+* **Code Execution Engine**: Judge0 CE API adapter with pluggable runner interface (`server/src/executor/`)
+* **Security & Auth**: JWT (access & refresh tokens with auto-refresh interceptors), bcryptjs password hashing, and admin role verification middleware
+* **Asset CDN**: ImageKit for avatar storage and profile media
 
 ---
 
 ## 📂 Documentation Directory
 
-To explore detailed specifications of the backend and database architecture, refer to our official documents under the `/docs` folder:
+Explore the architectural specifications and database designs in the `/docs` folder:
 
-*   **[API Documentation](./docs/api-docs.md)**: Full list of RESTful API endpoints for authentication, profile management, and quiz submission.
-*   **[Database Schema Documentation](./docs/db-schema.md)**: Details on the MongoDB Mongoose models, user collections, courses, and unit-progress tracking schemas.
+* **[API Documentation](./docs/api-docs.md)**: Full RESTful specification for auth, user profiles, course data, online judge submissions, and progressive hints.
+* **[Database Schema Documentation](./docs/db-schema.md)**: Detailed Mongoose models for users, courses, quizzes, problem definitions, test cases, submissions, and hint ladders.
+* **[Integration Progress](./PROGRESS.md)**: Roadmap, milestone logs, and technical decisions made during the online judge integration.
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these simple steps to run the application locally on your machine.
+Follow these steps to run the application locally on your machine.
 
 ### Prerequisites
-*   **Node.js** (v18 or higher recommended)
-*   **npm** (Node Package Manager)
+* **Node.js** (v18 or higher)
+* **npm** (v9 or higher)
+* A **MongoDB** database (local or MongoDB Atlas connection string)
 
-### Step 1: Clone the Repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/YugAgarwal005/CodeByte.git
 cd CodeByte
 ```
 
-### Step 2: Install Dependencies
-Install all package dependencies for both the frontend client and the backend server:
+### 2. Install Dependencies
+All dependencies for both client and server are managed through the root `package.json`:
 ```bash
-# Install root/server dependencies
 npm install
-
-# Install client dependencies
-cd client
-npm install
-cd ..
 ```
 
-### Step 3: Environment Configuration
-Create a `.env` file in the root directory and add your secret keys and connection strings:
+### 3. Environment Configuration
+Create a `.env` file in the root directory (refer to `.env.example`):
 ```env
 PORT=3000
 MONGO_URL=your_mongodb_connection_string
 
-# ImageKit Configuration (for CDN asset serving and profile uploads)
-VITE_IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
-IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
-IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+# JWT Authentication
+JWT_SECRET=your_jwt_secret_key
+JWT_REFRESH_SECRET=your_jwt_refresh_secret_key
+
+# Online Judge Execution (Judge0 CE public instance is free and requires no key)
+EXECUTOR_ADAPTER=judge0
+JUDGE0_BASE_URL=https://ce.judge0.com
+JUDGE0_API_KEY=
+
+# ImageKit Configuration (for avatar uploads)
+VITE_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your_endpoint
+IMAGEKIT_PUBLIC_KEY=your_public_key
+IMAGEKIT_PRIVATE_KEY=your_private_key
 ```
 
-### Step 4: Run the Development Server
-From the root directory, start the development server using:
+### 4. Seed the Database
+Populate the course units, coding challenges, and progressive hints into MongoDB:
+```bash
+npm run seed:all
+```
+*(Alternatively, run individual seed commands: `npm run seed:problems`, `npm run seed:hints`, or `npm run seed:wire`)*
+
+### 5. Run the Application
+Start the development server with Vite middleware:
 ```bash
 npm run dev
 ```
-Open your browser and navigate to `http://localhost:3000` to start using CodeByte!
+
+Open your browser at **[http://localhost:3000](http://localhost:3000)** to start learning!
+
+---
+
+## 📜 Available Scripts
+
+| Script | Command | Description |
+|---|---|---|
+| `npm run dev` | `node server/src/server.js` | Starts server with Vite development middleware |
+| `npm run build` | `vite build --config client/vite.config.js` | Builds production frontend assets to `client/dist` |
+| `npm run start` | `NODE_ENV=production node server/src/server.js` | Runs production server serving built static assets |
+| `npm run seed:all` | Runs all problem, hint, and course-wiring seed scripts |
+| `npm run seed:problems` | `node server/src/data/seed-problems.js` | Seeds the 15 track-aligned coding challenges |
+| `npm run seed:hints` | `node server/src/data/seed-hints.js` | Seeds 3-tier progressive hints for all challenges |
+| `npm run seed:wire` | `node server/src/data/wire-exercises.js` | Wires coding challenges into course unit pathways |
+
+---
+
+## 🤝 Contributing & License
+Contributions, feedback, and pull requests are welcome. Distributed under the MIT License.

@@ -111,6 +111,14 @@ export const createSubmission = async (req, res, next) => {
       return res.status(404).json({ status: false, message: "Problem not found" });
     }
 
+    // Language lock enforcement for course-specific challenges
+    if (problem.requiredLanguage && language !== problem.requiredLanguage) {
+      return res.status(400).json({
+        status: false,
+        message: `This challenge is locked to ${problem.requiredLanguage.toUpperCase()} for this course track.`,
+      });
+    }
+
     // ── Decide which test cases to run ────────────────────────────────────────
     // mode="run"    → visible test cases only (faster, no official verdict)
     // mode="submit" → ALL test cases (hidden ones determine the real verdict)

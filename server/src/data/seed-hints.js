@@ -1,10 +1,11 @@
 /**
  * seed-hints.js
  *
- * Seeds progressive hints (nudge → approach → deeper) for every problem.
- * NO full solutions are stored here — just conceptual guidance.
+ * Seeds progressive hints for all 15 track-aligned problems.
+ * NO complete code solutions are revealed — strictly Socratic guidance.
  *
- * Run: node server/src/data/seed-hints.js
+ * Run:
+ *   node server/src/data/seed-hints.js
  */
 
 import "dotenv/config";
@@ -13,130 +14,135 @@ import { Hint } from "../models/hint.model.js";
 import { connectDB } from "../config/db.js";
 
 const hints = [
+  // ── C++ Track Hints ────────────────────────────────────────────────────────
   {
-    slug: "hello-world",
+    slug: "cpp-basics-sum-and-average",
     hints: [
-      { level: 1, title: "Nudge",    content: "Every language has a built-in way to print text to the screen. Look up the print/output statement for your chosen language." },
-      { level: 2, title: "Approach", content: "In C++ use `cout`, in Java use `System.out.println`, in Python use `print()`. The string to print is `Hello, World!` — note the comma and exclamation mark." },
-      { level: 3, title: "Details",  content: "Make sure the output matches **exactly**: `Hello, World!` — capital H, comma after Hello, space, capital W, exclamation mark. A single character difference will give WA." },
+      { level: 1, title: "Nudge", content: "You need to accumulate numbers in a loop. Think about what variable type you need for the running sum." },
+      { level: 2, title: "Approach", content: "Read `n` first. Initialize `long long sum = 0`. In a loop running `n` times, read each number `x` and do `sum += x`. Afterwards, calculate `int avg = sum / n`." },
+      { level: 3, title: "Details", content: "Output with `cout << sum << \" \" << (sum / n) << endl;`. Use integer division (`/`) as requested by the problem description." },
     ],
   },
   {
-    slug: "sum-of-two-numbers",
+    slug: "cpp-pointer-swap",
     hints: [
-      { level: 1, title: "Nudge",    content: "You need to read two numbers from one line of input, then output their sum." },
-      { level: 2, title: "Approach", content: "Read both values into integer/long variables. Use `+` to add them. Print the result. Watch for large values — A and B can be up to 10^9, so their sum needs a 64-bit integer (long in Java/C++)." },
-      { level: 3, title: "Details",  content: "In C++: `long long a, b; cin >> a >> b; cout << a + b;`. In Python: `a, b = map(int, input().split()); print(a + b)`. The key insight is the data type — `int` overflows for 2×10^9." },
+      { level: 1, title: "Nudge", content: "Remember that dereferencing a pointer with `*ptr` accesses the value stored at that memory address." },
+      { level: 2, title: "Approach", content: "In `swapWithPointers(int* x, int* y)`, use a temporary variable: `int temp = *x; *x = *y; *y = temp;`. Then in `main`, call it using the address-of operator `&a` and `&b`." },
+      { level: 3, title: "Details", content: "Pass addresses with `swapWithPointers(&a, &b)`. Print the swapped variables: `cout << a << \" \" << b << endl;`." },
     ],
   },
   {
-    slug: "factorial",
+    slug: "cpp-oop-rectangle-area",
     hints: [
-      { level: 1, title: "Nudge",    content: "Factorial is a repeated multiplication. Think about iterating from 1 to N and multiplying as you go." },
-      { level: 2, title: "Approach", content: "Start with `result = 1`. Loop from `i = 2` to `N` (inclusive), multiplying `result *= i` each step. For N=0 or N=1, the answer is 1 (handle as a base case or the loop naturally gives 1)." },
-      { level: 3, title: "Details",  content: "N ≤ 12 so 12! = 479,001,600 which fits in a 32-bit int, but using `long long` is safer. No recursion is needed — a simple loop is cleaner and avoids stack overhead." },
+      { level: 1, title: "Nudge", content: "Encapsulate the dimensions inside private variables in your class, and provide public methods for calculations." },
+      { level: 2, title: "Approach", content: "Inside `class Rectangle`: `public: int getArea() { return length * width; } int getPerimeter() { return 2 * (length + width); }`." },
+      { level: 3, title: "Details", content: "Instantiate the class: `Rectangle rect(l, w);`. Output `cout << rect.getArea() << \" \" << rect.getPerimeter() << endl;`." },
     ],
   },
   {
-    slug: "fibonacci-nth-term",
+    slug: "cpp-stl-vector-sort",
     hints: [
-      { level: 1, title: "Nudge",    content: "Each Fibonacci number is the sum of the two before it. You don't need to store the whole sequence — just track the last two values." },
-      { level: 2, title: "Approach", content: "Use two variables `a = 0, b = 1`. For each step from 2 to N, compute `c = a + b`, then shift: `a = b, b = c`. After the loop, `b` holds F(N). Handle the edge case N=0 → return 0." },
-      { level: 3, title: "Details",  content: "F(30) = 832,040 which fits easily in an int. The loop runs at most 29 times — no memoisation needed. The 'two-pointer slide' approach uses O(1) space." },
+      { level: 1, title: "Nudge", content: "`<algorithm>` provides `std::sort()` which takes an iterator range `(begin, end)`." },
+      { level: 2, title: "Approach", content: "Fill the vector with `for (int i = 0; i < n; i++) cin >> vec[i];`. Call `sort(vec.begin(), vec.end());`." },
+      { level: 3, title: "Details", content: "Iterate over the sorted vector and print each element with a trailing space: `for (int x : vec) cout << x << \" \";`." },
     ],
   },
   {
-    slug: "check-palindrome",
+    slug: "cpp-generic-find-max",
     hints: [
-      { level: 1, title: "Nudge",    content: "A palindrome reads the same forwards and backwards. Can you compare the string to its reverse?" },
-      { level: 2, title: "Approach", content: "Create a reversed copy of the string and check if it equals the original. Alternatively, use two pointers — one at the start, one at the end — and walk them inward, comparing characters." },
-      { level: 3, title: "Details",  content: "In Python: `s == s[::-1]` is the slickest way. In C++: `string rev = s; reverse(rev.begin(), rev.end()); return s == rev;`. Print `YES` or `NO` (uppercase, as the judge is case-sensitive)." },
+      { level: 1, title: "Nudge", content: "A template function starts with `template <typename T>` and works with any type that supports the `>` comparison operator." },
+      { level: 2, title: "Approach", content: "In `findMax`, set `T maxVal = arr[0]`. Loop from `i = 1` to `arr.size() - 1`. If `arr[i] > maxVal`, update `maxVal = arr[i]`. Return `maxVal`." },
+      { level: 3, title: "Details", content: "Call `findMax(arr)` from `main()`. This keeps your search logic completely decoupled from the underlying data type." },
+    ],
+  },
+
+  // ── Java Track Hints ───────────────────────────────────────────────────────
+  {
+    slug: "java-fundamentals-multiplication-table",
+    hints: [
+      { level: 1, title: "Nudge", content: "A simple `for` loop counting from 1 to 5 will give you the multipliers you need." },
+      { level: 2, title: "Approach", content: "Use `Scanner sc = new Scanner(System.in); int n = sc.nextInt();`. Loop `for (int i = 1; i <= 5; i++) System.out.print((n * i) + (i < 5 ? \" \" : \"\"));`." },
+      { level: 3, title: "Details", content: "Ensure output is on a single line separated by spaces. Don't add a trailing newline before each number." },
     ],
   },
   {
-    slug: "count-vowels",
+    slug: "java-oop-bank-account",
     hints: [
-      { level: 1, title: "Nudge",    content: "Iterate through each character of the string and check if it is one of a, e, i, o, u (upper or lower case)." },
-      { level: 2, title: "Approach", content: "Maintain a counter starting at 0. For each character, check membership in the set `{a,e,i,o,u,A,E,I,O,U}`. Increment the counter on a match. Print the counter after the loop." },
-      { level: 3, title: "Details",  content: "In Python: `sum(1 for c in s if c in 'aeiouAEIOU')`. In C++: use `string::find` on `\"aeiouAEIOU\"`. Use `getline` not `cin >>` so you read the whole line including spaces." },
+      { level: 1, title: "Nudge", content: "Look at the `BankAccount` class structure in the starter code. Methods like `deposit` and `withdraw` mutate `this.balance`." },
+      { level: 2, title: "Approach", content: "In `main`, read `init`, `dep`, and `with`. Create `BankAccount acc = new BankAccount(init);`. Call `acc.deposit(dep); acc.withdraw(with);`." },
+      { level: 3, title: "Details", content: "Print the final balance using `System.out.println(account.getBalance());`." },
     ],
   },
   {
-    slug: "reverse-a-string",
+    slug: "java-collections-frequency-count",
     hints: [
-      { level: 1, title: "Nudge",    content: "Think about how to access a string's characters from the end to the beginning." },
-      { level: 2, title: "Approach", content: "Build the reversed string by iterating from the last index to index 0. Or use a built-in reverse function if your language has one." },
-      { level: 3, title: "Details",  content: "Python: `s[::-1]`. C++: `reverse(s.begin(), s.end())` from `<algorithm>`. Java: `new StringBuilder(s).reverse().toString()`. All O(n) time, O(n) space." },
+      { level: 1, title: "Nudge", content: "You can count matches while scanning the collection or use `Collections.frequency()`." },
+      { level: 2, title: "Approach", content: "Read each word into an `ArrayList<String>`. Read the query word. Loop through the list and increment a counter whenever `word.equals(query)` is true." },
+      { level: 3, title: "Details", content: "Remember to compare strings using `.equals()` in Java, not `==`! Output the integer count with `System.out.println(count);`." },
     ],
   },
   {
-    slug: "find-maximum-in-array",
+    slug: "java-exceptions-safe-division",
     hints: [
-      { level: 1, title: "Nudge",    content: "Track the largest element seen so far as you scan through the array." },
-      { level: 2, title: "Approach", content: "Initialise `max` to the smallest possible integer (or the first element). Loop through the array; whenever you see a value greater than `max`, update `max`. Print `max` after the loop." },
-      { level: 3, title: "Details",  content: "In C++: initialise with `INT_MIN` from `<climits>`. In Python: just call `max(arr)`. Watch the input format — N is on line 1, the array on line 2. Read N first, then read N integers." },
+      { level: 1, title: "Nudge", content: "When integer division by zero happens in Java, the JVM throws an `ArithmeticException`." },
+      { level: 2, title: "Approach", content: "Wrap the division `int res = a / b;` inside `try { ... } catch (ArithmeticException e) { System.out.println(\"DIV_BY_ZERO\"); }`." },
+      { level: 3, title: "Details", content: "If no exception occurs, print `res`. This ensures your program never crashes with an unhandled exception." },
     ],
   },
   {
-    slug: "fizzbuzz",
+    slug: "java-streams-filter-even-sum",
     hints: [
-      { level: 1, title: "Nudge",    content: "Loop from 1 to N. For each number, check divisibility conditions — check the combined condition first." },
-      { level: 2, title: "Approach", content: "For each `i`: if `i % 15 == 0` print `FizzBuzz`; else if `i % 3 == 0` print `Fizz`; else if `i % 5 == 0` print `Buzz`; else print `i`. The order matters — check 15 before 3 or 5." },
-      { level: 3, title: "Details",  content: "Each number goes on its own line. The `% 15` check is equivalent to `% 3 == 0 && % 5 == 0`. If you check 3 first, you'll print `Fizz` for numbers like 15 that should be `FizzBuzz`." },
+      { level: 1, title: "Nudge", content: "Stream operations allow chained functional transformations like `.filter()` and `.mapToInt()`." },
+      { level: 2, title: "Approach", content: "Convert your list: `numbers.stream().filter(x -> x % 2 == 0).mapToInt(Integer::intValue).sum()`." },
+      { level: 3, title: "Details", content: "If you prefer traditional loops: `int sum = 0; for (int x : numbers) { if (x % 2 == 0) sum += x; } System.out.println(sum);`." },
+    ],
+  },
+
+  // ── Python Track Hints ─────────────────────────────────────────────────────
+  {
+    slug: "python-basics-grade-calculator",
+    hints: [
+      { level: 1, title: "Nudge", content: "Use an `if` - `elif` - `else` ladder in descending order of score thresholds." },
+      { level: 2, title: "Approach", content: "If `score >= 90`: print('A'); `elif score >= 80`: print('B'); `elif score >= 70`: print('C'); `elif score >= 60`: print('D'); `else`: print('F')." },
+      { level: 3, title: "Details", content: "Testing scores in descending order ensures each range is checked accurately without needing compound `and` conditions." },
     ],
   },
   {
-    slug: "linear-search",
+    slug: "python-ds-list-comprehension-squares",
     hints: [
-      { level: 1, title: "Nudge",    content: "Scan every element from left to right and stop the moment you find the target." },
-      { level: 2, title: "Approach", content: "Iterate from index 0 to N-1. If `arr[i] == target`, print `i` and stop. If you finish the loop without finding it, print `-1`." },
-      { level: 3, title: "Details",  content: "Return (or break) as soon as you find the first match — the problem says 'first occurrence'. In Python you can use `arr.index(target)` inside a try/except ValueError for -1." },
+      { level: 1, title: "Nudge", content: "List comprehensions have the syntax `[expression for item in iterable if condition]`." },
+      { level: 2, title: "Approach", content: "`evens = [x**2 for x in nums if x % 2 == 0]`. Check `if evens:` print with `print(*evens)` else `print(\"NONE\")`." },
+      { level: 3, title: "Details", content: "The `*` unpacking operator prints list items space-separated: `print(*evens)`." },
     ],
   },
   {
-    slug: "binary-search",
+    slug: "python-oop-car-speed",
     hints: [
-      { level: 1, title: "Nudge",    content: "Because the array is sorted, you can eliminate half the remaining candidates with each comparison. Think about maintaining a search window [lo, hi]." },
-      { level: 2, title: "Approach", content: "Set `lo = 0, hi = n-1`. While `lo <= hi`: compute `mid = (lo+hi)/2`. If `arr[mid] == target` return `mid`. If `arr[mid] < target` move `lo = mid+1`. Otherwise `hi = mid-1`. Return -1 if the loop ends." },
-      { level: 3, title: "Details",  content: "Use `mid = lo + (hi - lo) / 2` instead of `(lo + hi) / 2` to avoid integer overflow when lo and hi are both large. Binary search runs in O(log n) — much faster than O(n) linear search." },
+      { level: 1, title: "Nudge", content: "Instance methods in Python take `self` as their first parameter to access instance variables." },
+      { level: 2, title: "Approach", content: "In `Car`: `self.speed += amount` inside `accelerate()`, and `self.speed = max(0, self.speed - amount)` inside `brake()`." },
+      { level: 3, title: "Details", content: "Using `max(0, ...)` guarantees the speed never drops below zero even when braking hard." },
     ],
   },
   {
-    slug: "bubble-sort",
+    slug: "python-exceptions-safe-int-parser",
     hints: [
-      { level: 1, title: "Nudge",    content: "In each pass, compare neighbouring elements and swap them if they are in the wrong order. Repeat until no swaps are needed." },
-      { level: 2, title: "Approach", content: "Use two nested loops: outer loop runs N-1 times; inner loop compares `arr[j]` and `arr[j+1]` for j from 0 to N-i-2 and swaps if `arr[j] > arr[j+1]`. After each outer iteration the largest unsorted element 'bubbles' to its correct position." },
-      { level: 3, title: "Details",  content: "Output the sorted array space-separated. In Python: `print(*arr)`. After sorting, the array is sorted in-place. An optimisation: track whether any swap happened in the inner loop — if not, the array is already sorted and you can break early." },
+      { level: 1, title: "Nudge", content: "Python uses `try` and `except` to catch runtime errors without crashing the script." },
+      { level: 2, title: "Approach", content: "Wrap the conversion: `try: val = int(token); print(f'INT: {val}') except ValueError: print('INVALID')`." },
+      { level: 3, title: "Details", content: "Make sure you catch `ValueError` specifically, which is raised when passing non-numeric strings to `int()`." },
     ],
   },
   {
-    slug: "count-digits",
+    slug: "python-advanced-generator-countdown",
     hints: [
-      { level: 1, title: "Nudge",    content: "How many characters does the number have when represented as a string? The minus sign doesn't count." },
-      { level: 2, title: "Approach", content: "Read the input as a string. If it starts with '-', remove that character. The number of remaining characters is the digit count." },
-      { level: 3, title: "Details",  content: "Python: `n = input().strip(); n = n.lstrip('-'); print(len(n))`. Avoid converting to int — very large numbers (the problem says 'up to 10 digits') are fine as strings. Special case: input `0` has 1 digit." },
-    ],
-  },
-  {
-    slug: "check-prime",
-    hints: [
-      { level: 1, title: "Nudge",    content: "A prime has no divisors other than 1 and itself. You only need to check divisors up to the square root of N." },
-      { level: 2, title: "Approach", content: "Handle N < 2 → not prime. Then loop i from 2 to √N (inclusive). If `N % i == 0`, N is not prime. If no divisor is found, N is prime." },
-      { level: 3, title: "Details",  content: "Why √N? If N = a × b and a ≤ b, then a ≤ √N. So if no factor ≤ √N exists, neither does any factor > √N. This gives O(√N) complexity, fast enough for N ≤ 10^6. Use `int(math.sqrt(n))` in Python or `(int)sqrt(n)` in C++." },
-    ],
-  },
-  {
-    slug: "two-sum",
-    hints: [
-      { level: 1, title: "Nudge",    content: "For each element, you need to know if its 'complement' (target − current value) has appeared earlier in the array. A hash map can answer membership queries in O(1)." },
-      { level: 2, title: "Approach", content: "Use a dictionary/map: iterate through the array with index i. Compute `complement = target - arr[i]`. If `complement` is already in the map, you found the pair — print `map[complement]` (the earlier index) and `i`. Otherwise, add `arr[i] → i` to the map and continue." },
-      { level: 3, title: "Details",  content: "This is O(n) time, O(n) space. The brute-force O(n²) double loop also works for small N but hash map is the intended approach. The problem guarantees exactly one valid answer, so you don't need to handle the no-answer case." },
+      { level: 1, title: "Nudge", content: "A function containing the `yield` keyword produces a generator object." },
+      { level: 2, title: "Approach", content: "In `countdown(n)`: `while n >= 1: yield n; n -= 1`. Or `for i in range(n, 0, -1): yield i`." },
+      { level: 3, title: "Details", content: "To print all values yielded by the generator: `print(*countdown(n))`." },
     ],
   },
 ];
 
 async function run() {
-  console.log("Connecting…");
+  console.log("Connecting to MongoDB...");
   await connectDB();
   console.log("Connected.\n");
 
@@ -151,5 +157,7 @@ async function run() {
   await mongoose.disconnect();
 }
 
-run().catch((e) => { console.error(e); process.exit(1); });
-
+run().catch((e) => {
+  console.error("Error:", e);
+  process.exit(1);
+});

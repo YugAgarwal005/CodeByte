@@ -45,6 +45,13 @@ const problemSchema = new mongoose.Schema(
     // Free-form topic tags, e.g. ["arrays", "loops", "strings"]
     tags: { type: [String], default: [] },
 
+    // If set, this problem must be solved in this specific language
+    requiredLanguage: {
+      type: String,
+      enum: ["cpp", "java", "python"],
+      default: null,
+    },
+
     // One entry per supported language
     starterCode: { type: [starterCodeSchema], default: [] },
 
@@ -58,6 +65,4 @@ const problemSchema = new mongoose.Schema(
   { timestamps: true } // adds createdAt and updatedAt automatically
 );
 
-// Export — guard against Mongoose "Cannot overwrite model" error in hot-reload
-export const Problem =
-  mongoose.models.Problem || mongoose.model("Problem", problemSchema);
+export const Problem = mongoose.model("Problem", problemSchema);

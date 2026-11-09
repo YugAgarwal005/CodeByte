@@ -1,8 +1,8 @@
 /**
  * wire-exercises.js
  *
- * One-off script that attaches seeded problems to specific units in each course.
- * Safe to run multiple times — uses findOne + explicit set, not upsert.
+ * Attaches the 15 track-specific, concept-aligned coding challenges
+ * to the corresponding units in each course.
  *
  * Usage:
  *   node server/src/data/wire-exercises.js
@@ -13,29 +13,27 @@ import mongoose from "mongoose";
 import Quiz from "../models/quiz.model.js";
 import { connectDB } from "../config/db.js";
 
-// Map: { courseName → [ { unitNumber, problemSlug } ] }
-// Adjust these pairings to match your course content.
 const EXERCISE_MAP = {
-  "java": [
-    { unitNumber: 1, problemSlug: "hello-world"       },
-    { unitNumber: 2, problemSlug: "sum-of-two-numbers" },
-    { unitNumber: 3, problemSlug: "factorial"           },
-    { unitNumber: 4, problemSlug: "fibonacci-nth-term"  },
-    { unitNumber: 5, problemSlug: "check-palindrome"    },
-  ],
   "c&c++": [
-    { unitNumber: 1, problemSlug: "hello-world"       },
-    { unitNumber: 2, problemSlug: "sum-of-two-numbers" },
-    { unitNumber: 3, problemSlug: "factorial"           },
-    { unitNumber: 4, problemSlug: "fibonacci-nth-term"  },
-    { unitNumber: 5, problemSlug: "check-palindrome"    },
+    { unitNumber: 1, problemSlug: "cpp-basics-sum-and-average"      },
+    { unitNumber: 2, problemSlug: "cpp-pointer-swap"                 },
+    { unitNumber: 3, problemSlug: "cpp-oop-rectangle-area"           },
+    { unitNumber: 4, problemSlug: "cpp-stl-vector-sort"              },
+    { unitNumber: 5, problemSlug: "cpp-generic-find-max"             },
+  ],
+  "java": [
+    { unitNumber: 1, problemSlug: "java-fundamentals-multiplication-table" },
+    { unitNumber: 2, problemSlug: "java-oop-bank-account"                 },
+    { unitNumber: 3, problemSlug: "java-collections-frequency-count"      },
+    { unitNumber: 4, problemSlug: "java-exceptions-safe-division"         },
+    { unitNumber: 5, problemSlug: "java-streams-filter-even-sum"          },
   ],
   "python": [
-    { unitNumber: 1, problemSlug: "hello-world"       },
-    { unitNumber: 2, problemSlug: "sum-of-two-numbers" },
-    { unitNumber: 3, problemSlug: "factorial"           },
-    { unitNumber: 4, problemSlug: "fibonacci-nth-term"  },
-    { unitNumber: 5, problemSlug: "check-palindrome"    },
+    { unitNumber: 1, problemSlug: "python-basics-grade-calculator"        },
+    { unitNumber: 2, problemSlug: "python-ds-list-comprehension-squares"  },
+    { unitNumber: 3, problemSlug: "python-oop-car-speed"                  },
+    { unitNumber: 4, problemSlug: "python-exceptions-safe-int-parser"     },
+    { unitNumber: 5, problemSlug: "python-advanced-generator-countdown"  },
   ],
 };
 

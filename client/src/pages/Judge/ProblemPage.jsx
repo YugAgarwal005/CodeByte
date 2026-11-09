@@ -78,8 +78,12 @@ function ProblemPage() {
         if (!data.status) { setNotFound(true); return; }
         setProblem(data.problem);
 
-        // Pre-load starter code for the default language (cpp)
-        const starter = data.problem.starterCode?.find(s => s.language === 'cpp');
+        // Pre-load starter code: use requiredLanguage or first available language
+        const targetLang = data.problem.requiredLanguage ||
+          (data.problem.starterCode?.length > 0 ? data.problem.starterCode[0].language : 'cpp');
+        setLanguage(targetLang);
+
+        const starter = data.problem.starterCode?.find(s => s.language === targetLang) || data.problem.starterCode?.[0];
         if (starter) setCode(starter.code);
       } catch {
         setNotFound(true);
@@ -176,15 +180,25 @@ function ProblemPage() {
           <span className={`diff-badge ${problem.difficulty}`}>{problem.difficulty}</span>
         </div>
         <div className="actions">
-          <select
-            className="lang-select"
-            value={language}
-            onChange={(e) => handleLanguageChange(e.target.value)}
-          >
-            <option value="cpp">C++</option>
-            <option value="java">Java</option>
-            <option value="python">Python</option>
-          </select>
+          {/* Language selector — locked if challenge is track-specific */}
+          {problem.requiredLanguage ? (
+            <div className="locked-lang-badge" title={`This coding challenge is locked to ${problem.requiredLanguage === 'cpp' ? 'C++' : problem.requiredLanguage === 'java' ? 'Java' : 'Python'} for this course track.`}>
+              <span className="lock-icon">🔒</span>
+              <span className="lang-label">
+                {problem.requiredLanguage === 'cpp' ? 'C++' : problem.requiredLanguage === 'java' ? 'Java' : 'Python'}
+              </span>
+            </div>
+          ) : (
+            <select
+              className="lang-select"
+              value={language}
+              onChange={(e) => handleLanguageChange(e.target.value)}
+            >
+              <option value="cpp">C++</option>
+              <option value="java">Java</option>
+              <option value="python">Python</option>
+            </select>
+          )}
           {/* Run — only visible test cases */}
           <button
             className="btn-run"
