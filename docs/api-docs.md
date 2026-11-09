@@ -70,6 +70,19 @@ The CodeByte application separates concerns into discrete endpoints. All routes 
 * **Method**: `POST`
 * **Path**: `/api/quiz/submit`
 
+### Set Coding Exercise for Unit (Admin Only)
+* **Method**: `POST`
+* **Path**: `/api/quiz/setexercise`
+* **Auth**: Admin JWT required
+* **Request Body**:
+  ```json
+  {
+    "courseName": "java",
+    "unitNumber": 1,
+    "problemSlug": "hello-world"
+  }
+  ```
+
 ---
 
 ## Problem Routes (`/api/problems`)
@@ -77,7 +90,7 @@ The CodeByte application separates concerns into discrete endpoints. All routes 
 ### List Problems
 * **Method**: `GET`
 * **Path**: `/api/problems`
-* **Auth**: None required (or protected if guest browsing disabled)
+* **Auth**: None required
 * **Response**:
   ```json
   {
@@ -158,8 +171,20 @@ All submission routes require JWT Bearer token authentication via the `protect` 
           "stdout": "...",
           "time": 0.04
         }
-      ]
+      ],
+      "firstAC": true
     }
+  }
+  ```
+
+### Check Problem Solved Status
+* **Method**: `GET`
+* **Path**: `/api/submissions/check/:slug`
+* **Response**:
+  ```json
+  {
+    "status": true,
+    "solved": true
   }
   ```
 
@@ -175,3 +200,39 @@ All submission routes require JWT Bearer token authentication via the `protect` 
 * **Method**: `GET`
 * **Path**: `/api/submissions/:id`
 
+---
+
+## Hint Routes (`/api/hints`)
+
+All hint routes require JWT Bearer token authentication via the `protect` middleware.
+
+### Get Hint Metadata
+* **Method**: `GET`
+* **Path**: `/api/hints/:slug/meta`
+* **Response**:
+  ```json
+  {
+    "status": true,
+    "totalAvailable": 3,
+    "revealedLevel": 1
+  }
+  ```
+
+### Get Progressive Hint
+* **Method**: `GET`
+* **Path**: `/api/hints/:slug?level=1` (Query: `level` = 1, 2, or 3)
+* **Note**: Sequential unlock enforced — unlocking level N requires level N-1 to be revealed first.
+* **Response**:
+  ```json
+  {
+    "status": true,
+    "hints": [
+      {
+        "level": 1,
+        "title": "Nudge",
+        "content": "..."
+      }
+    ],
+    "totalAvailable": 3
+  }
+  ```

@@ -10,7 +10,7 @@ CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course st
 * **`followers`**: (Array of ObjectIds) Lists users following this account.
 * **`following`**: (Array of ObjectIds) Lists accounts followed by this user.
 * **`userData`**:
-  * `xp`: (Number, default: 100) Accumulated experience points from lessons.
+  * `xp`: (Number, default: 100) Accumulated experience points from lessons and coding challenges.
   * `streak`:
     * `dates`: Array of Dates matching active learning days.
     * `days`: Number of continuous active streak days.
@@ -25,6 +25,7 @@ CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course st
     * `units`: Array of progress items:
       * `unitNumber`: (Number)
       * `level`: (Number) Maximum level/lesson completed.
+      * `exerciseSolved`: (Boolean, default: false) Indicates whether the unit's required coding exercise has been solved with an Accepted (AC) submission.
 
 ## 2. Quiz Collection Schema (`quizzes`)
 * **`name`**: (String, required) Course topic name, e.g., "java", "c&c++".
@@ -32,6 +33,7 @@ CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course st
   * `unitNumber`: (Number, required)
   * `heading`: (String, required) e.g., "Java Fundamentals".
   * `guideBook`: (String) Informational summary.
+  * `codingExercise`: (String, optional) Problem slug reference (e.g. "hello-world") that gates progression to subsequent units.
   * `lessons`: Array of lessons:
     * `lessonNumber`: (Number, required)
     * `questions`: Array of questions:
@@ -47,7 +49,7 @@ CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course st
 * **`tags`**: (Array of Strings) Categories (e.g. `["arrays", "hash-map"]`).
 * **`starterCode`**: Array of starter templates:
   * `language`: (String, enum: `["cpp", "java", "python"]`, required)
-  * `code`: (String, required)
+  * `code`: (String, required) Blank boilerplate (no solution pre-filled).
 * **`testCases`**: Array of test cases:
   * `input`: (String, default: `""`) Standard input provided to code.
   * `expected`: (String, required) Expected standard output.
@@ -56,11 +58,12 @@ CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course st
 * **`memLimitMb`**: (Number, default: 256) Memory limit per test case in megabytes.
 
 ## 4. Submissions Collection Schema (`submissions`)
-* **`user`**: (ObjectId, ref: `"User"`, required) Submitting user.
-* **`problem`**: (ObjectId, ref: `"Problem"`, required) Problem being attempted.
+* **`userId`**: (ObjectId, ref: `"User"`, required) Submitting user.
+* **`problemId`**: (ObjectId, ref: `"Problem"`, required) Problem being attempted.
 * **`language`**: (String, enum: `["cpp", "java", "python"]`, required).
 * **`code`**: (String, required) Source code submitted.
-* **`status`**: (String, enum: `["queued", "running", "completed", "error"]`, default: `"completed"`).
+* **`mode`**: (String, enum: `["run", "submit"]`, default: `"run"`).
+* **`status`**: (String, enum: `["queued", "processing", "done", "error"]`, default: `"queued"`).
 * **`verdict`**: (String, enum: `["AC", "WA", "TLE", "CE", "RE", "MLE", "PENDING"]`, default: `"PENDING"`).
 * **`runtimeMs`**: (Number) Execution time in milliseconds.
 * **`memoryKb`**: (Number) Memory consumed in kilobytes.
@@ -74,3 +77,10 @@ CodeByte utilizes MongoDB (via Mongoose ODM) to persist user accounts, course st
   * `memory`: (Number, kilobytes)
 * **`createdAt`**: (Date, default: Date.now)
 
+## 5. Hints Collection Schema (`hints`)
+* **`slug`**: (String, required, unique, trim) Associated problem slug.
+* **`hints`**: Array of progressive hint items:
+  * `level`: (Number, 1-3) 1 = Gentle nudge, 2 = Conceptual approach, 3 = Step-by-step logic.
+  * `title`: (String, required) e.g., "Nudge", "Approach", "Step-by-step".
+  * `content`: (String, required) Markdown-formatted guidance (never reveals code solution).
+* **`createdAt`** & **`updatedAt`**: (Date, timestamps automatically maintained).
