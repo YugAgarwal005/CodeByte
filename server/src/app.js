@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 import cors from "cors";
 import path from "path";
 import { connectDB } from "./config/db.js";
@@ -9,6 +9,7 @@ import userRoutes       from "./routes/user.routes.js";
 import quizRoutes       from "./routes/quiz.routes.js";
 import problemRoutes    from "./routes/problem.routes.js";
 import submissionRoutes from "./routes/submission.routes.js";
+import hintRoutes       from "./routes/hint.routes.js";
 
 // Import error middleware
 import { errorHandler } from "./middlewares/error.middleware.js";
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ limit: "20mb", extended: true }));
 
 // Database connection middleware (lazy connection with user-friendly error output)
 // Keep this list in sync whenever a new route prefix is added
-app.use(["/api", "/auth", "/quiz", "/problems", "/submissions"], async (req, res, next) => {
+app.use(["/api", "/auth", "/quiz", "/problems", "/submissions", "/hints"], async (req, res, next) => {
   try {
     await connectDB();
     next();
@@ -43,6 +44,7 @@ app.use("/api/auth",        userRoutes);
 app.use("/api/quiz",        quizRoutes);
 app.use("/api/problems",    problemRoutes);
 app.use("/api/submissions", submissionRoutes);
+app.use("/api/hints",        hintRoutes);
 
 // Vercel Serverless compatibility (Vercel strips /api prefix before routing to Express)
 app.use("/auth",        authRoutes);
@@ -50,6 +52,7 @@ app.use("/auth",        userRoutes);
 app.use("/quiz",        quizRoutes);
 app.use("/problems",    problemRoutes);
 app.use("/submissions", submissionRoutes);
+app.use("/hints",        hintRoutes);
 
 // Vite Integration for frontend (Dev vs Prod)
 const setupFrontend = async () => {

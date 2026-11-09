@@ -36,7 +36,6 @@ function ProblemList() {
       console.error('Failed to fetch problems:', err);
     } finally {
       setLoading(false);
-      &.active.solved  { border-color: #4ade80; background: #4ade8020; color: #4ade80; }
     }
   };
 
@@ -56,7 +55,6 @@ function ProblemList() {
     } catch (err) {
       // Non-critical — silently ignore
       console.error('Failed to fetch solved set:', err);
-      &.active.solved  { border-color: #4ade80; background: #4ade8020; color: #4ade80; }
     }
   };
 

@@ -1,4 +1,4 @@
-export const host=window.location.origin;
+﻿export const host=window.location.origin;
 
 // user routes
 
@@ -33,3 +33,5 @@ export const problemSubmissionsRoute = (slug) => `${host}/api/submissions/proble
 export const checkSolvedRoute  = (slug) => `${host}/api/submissions/check/${slug}`;  // GET has AC?
 export const setExerciseRoute  = `${host}/api/quiz/setexercise`;                     // POST (admin)
 
+export const hintMetaRoute     = (slug) => `${host}/api/hints/${slug}/meta`;
+export const hintRoute         = (slug) => `${host}/api/hints/${slug}`;

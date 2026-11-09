@@ -1,4 +1,4 @@
-﻿/**
+/**
  * seed-problems.js
  *
  * Standalone script to populate the problems collection.

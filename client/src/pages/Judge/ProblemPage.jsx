@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm';
 import axios from 'axios';
 import { styled } from 'styled-components';
 import { problemRoute, submissionsRoute, problemSubmissionsRoute } from '../../utils/Apiroutes';
+import HintPanel from '../../components/judge/HintPanel';
 
 // Verdict display config: colour + label for each verdict string
 const VERDICT_CONFIG = {
@@ -58,6 +59,9 @@ function ProblemPage() {
 
   // ── First-AC celebration toast (Phase 2) ─────────────────────────────────
   const [showXpToast, setShowXpToast] = useState(false);
+
+  // ── Hint panel (Phase 3) ─────────────────────────────────────────────────
+  const [showHints, setShowHints] = useState(false);
 
   // ── Auth guard ────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -197,8 +201,23 @@ function ProblemPage() {
           >
             {running ? '…Judging' : '⬆ Submit'}
           </button>
+          {/* Hint — Phase 3 */}
+          <button
+            className="btn-hint"
+            onClick={() => setShowHints(true)}
+            title="Progressive hints — try to use as few as possible!"
+          >
+            💡 Hint
+          </button>
         </div>
       </TopBar>
+
+      {/* ── Hint panel (Phase 3) ────────────────────────────────────────────── */}
+      <HintPanel
+        slug={slug}
+        visible={showHints}
+        onClose={() => setShowHints(false)}
+      />
 
       {/* ── Main split panel ─────────────────────────────────────────────── */}
       <SplitPane>
@@ -292,6 +311,37 @@ function ProblemPage() {
                   {!running && !verdict && (
                     <p className="hint">Click <strong>Run</strong> to test with sample cases, or <strong>Submit</strong> to judge against all tests.</p>
                   )}
+
+                  {/* ── Phase 3: First Failing Test card (shown on WA for visible tests) ── */}
+                  {!running && verdict === 'WA' && (() => {
+                    const firstFail = testResults.find(r => !r.passed && !r.hidden);
+                    if (!firstFail) return null;
+                    return (
+                      <div className="first-fail-card">
+                        <div className="ff-header">❌ First Failing Test</div>
+                        {firstFail.input != null && (
+                          <div className="ff-row">
+                            <span className="ff-label">Input</span>
+                            <pre>{firstFail.input || '(none)'}</pre>
+                          </div>
+                        )}
+                        <div className="ff-row">
+                          <span className="ff-label">Expected</span>
+                          <pre className="expected">{firstFail.expected ?? '(hidden)'}</pre>
+                        </div>
+                        <div className="ff-row">
+                          <span className="ff-label">Your Output</span>
+                          <pre className="got">{firstFail.stdout || '(empty)'}</pre>
+                        </div>
+                        <button
+                          className="hint-shortcut"
+                          onClick={() => setShowHints(true)}
+                        >
+                          💡 Need a nudge? Open Hints
+                        </button>
+                      </div>
+                    );
+                  })()}
 
                   {/* Compilation / runtime error block */}
                   {!running && errorOutput && (
@@ -493,6 +543,19 @@ const TopBar = styled.div`
       background: #1cb0f6;
       color: #fff;
       &:hover:not(:disabled) { background: #0fa3e6; }
+    }
+    /* Phase 3: Hint button */
+    .btn-hint {
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #facc1560;
+      background: rgba(250,204,21,0.07);
+      color: #facc15;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      &:hover { background: rgba(250,204,21,0.14); border-color: #facc15; }
     }
   }
 `;
@@ -710,6 +773,63 @@ const ResultsPane = styled.div`
     .history-mode { color: #444; font-size: 0.75rem; }
     .history-time { margin-left: auto; color: #444; font-size: 0.78rem; }
     .history-ms { color: #555; font-size: 0.78rem; }
+  }
+
+  /* ── Phase 3: First Failing Test card ───────────────────────────────────── */
+  .first-fail-card {
+    border: 1px solid #3a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+
+    .ff-header {
+      background: #1a0808;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #f87171;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .ff-row {
+      padding: 0.5rem 0.9rem;
+      border-top: 1px solid #2a1a1a;
+      .ff-label {
+        display: block;
+        font-size: 0.72rem;
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.25rem;
+      }
+      pre {
+        margin: 0;
+        font-size: 0.82rem;
+        color: #ccc;
+        background: #141414;
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+        white-space: pre-wrap;
+        word-break: break-all;
+        &.expected { color: #4ade80; }
+        &.got      { color: #f87171; }
+      }
+    }
+    .hint-shortcut {
+      display: block;
+      width: 100%;
+      padding: 0.6rem 0.9rem;
+      border: none;
+      border-top: 1px solid #2a1a1a;
+      background: rgba(250,204,21,0.05);
+      color: #facc15;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+      &:hover { background: rgba(250,204,21,0.12); }
+    }
   }
 `;
 
