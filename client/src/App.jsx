@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Register from './pages/Login/Register';
 import Login from './pages/Login/Login';
 import SetAvatar from './pages/Dashboard/SetAvatar';
@@ -15,7 +15,7 @@ import FriendProfile from './pages/Dashboard/FriendProfile';
 import CreateUnit from './pages/Dashboard/CreateUnit';
 import CreateQues from './pages/Dashboard/CreateQues';
 import ProblemPage from './pages/Judge/ProblemPage';
-import ProblemListPage from './pages/Judge/ProblemList';
+
 import { styled } from 'styled-components';
 import axios from 'axios';
 import { getuserRoute } from './utils/Apiroutes';
@@ -86,7 +86,7 @@ function App() {
           <Route path='profile' element={<Profile />} />
           <Route path='profile/u/:id' element={<FriendProfile />} />
           {/* Problem list page — inside CodeByte layout so sidebar is visible */}
-          <Route path='problems' element={<ProblemListPage />} />
+          <Route path='problems' element={<Navigate to='/' replace />} />
           {/* Catch-all route for any other paths */}
           <Route path='*' element={<ErrorPage />} />
         </Route>

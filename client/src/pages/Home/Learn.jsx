@@ -85,7 +85,10 @@ function Learn() {
               {course.units.filter((unit, index) => {
                 if (index === 0) return true;
                 const prevUnit = course.units[index - 1];
-                return prevUnit && prevUnit.level >= prevUnit.lessons.length;
+                if (!prevUnit) return false;
+                const prevLessonsDone = prevUnit.level >= prevUnit.lessons.length;
+                const prevExerciseDone = !prevUnit.codingExercise || prevUnit.exerciseSolved;
+                return prevLessonsDone && prevExerciseDone;
               }).map((unit) => {
                 const originalIndex = unit.unitNumber - 1;
                 return (
@@ -101,42 +104,75 @@ function Learn() {
                       </div>
                     </div>
                     <div className={`circles ${unit.level > 0 ? "circlesstarted" : null}`}>
-                      {unit.lessons.map((lesson, innerindex) => (
-                        <button
-                          className={`circle ${unit.unitNumber % 2 === 0 ? 'd' : 'c'}${innerindex + 1} ${unit.level < innerindex ? null : 'solved'}`}
-                          key={innerindex} onClick={() => {
-                            if (!(unit.level < innerindex) || innerindex === 0)
-                              navigate(`/quiz/unit/${unit.unitNumber}/level/${lesson.lessonNumber}`);
-                          }}
-                        >
-                          {innerindex === 0 && unit.level < innerindex + 1 ? <div className="float">JUMP HERE ?</div> : null}
-                          {innerindex != 0 && unit.level === innerindex ? <div className="float strt">START</div> : null}
-                          {unit.level < innerindex ? <div className="float locked">
-                            <h3>Complete all levels above to unlock this !</h3> <div>locked</div>
-                          </div> : null}
-                          {innerindex + 1 === unit.lessons.length ? <img src={getAssetUrl('trophy.png', trophy)} alt="" /> :
-                            unit.level === 0 && innerindex === 0 ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/5e4203031e39fc43d94371565fd0d369.svg" alt="" /> :
-                              unit.level === innerindex ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/ef9c771afdb674f0ff82fae25c6a7b0a.svg" alt="" />
-                                : unit.level < innerindex + 1 ?
-                                  <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/261caf5e7127c22944a432ef5c191cfa.svg" alt="" />
-                                  : <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/bfa591f6854b4de08e1656b3e8ca084f.svg" alt="" />
-                          }
-                        </button>
-                      ))}
+                      {unit.lessons.map((lesson, innerindex) => {
+                        const isLastLesson = innerindex + 1 === unit.lessons.length;
+                        return (
+                          <button
+                            className={`circle ${unit.unitNumber % 2 === 0 ? 'd' : 'c'}${innerindex + 1} ${unit.level < innerindex ? null : 'solved'}`}
+                            key={innerindex} onClick={() => {
+                              if (!(unit.level < innerindex) || innerindex === 0)
+                                navigate(`/quiz/unit/${unit.unitNumber}/level/${lesson.lessonNumber}`);
+                            }}
+                          >
+                            {innerindex === 0 && unit.level < innerindex + 1 ? <div className="float">JUMP HERE ?</div> : null}
+                            {innerindex != 0 && unit.level === innerindex ? <div className="float strt">START</div> : null}
+                            {unit.level < innerindex ? <div className="float locked">
+                              <h3>Complete all levels above to unlock this !</h3> <div>locked</div>
+                            </div> : null}
+                            {isLastLesson && !unit.codingExercise ? <img src={getAssetUrl('trophy.png', trophy)} alt="" /> :
+                              unit.level === 0 && innerindex === 0 ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/5e4203031e39fc43d94371565fd0d369.svg" alt="" /> :
+                                unit.level === innerindex ? <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/ef9c771afdb674f0ff82fae25c6a7b0a.svg" alt="" />
+                                  : unit.level < innerindex + 1 ?
+                                    <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/261caf5e7127c22944a432ef5c191cfa.svg" alt="" />
+                                    : <img src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/bfa591f6854b4de08e1656b3e8ca084f.svg" alt="" />
+                            }
+                          </button>
+                        );
+                      })}
+
+                      {/* ── Final Coding Challenge Circle at the end of the pathway ── */}
+                      {unit.codingExercise && (() => {
+                        const challengeIndex = unit.lessons.length;
+                        const isUnlocked = unit.level >= unit.lessons.length;
+                        const isSolved = Boolean(unit.exerciseSolved);
+                        const isActive = isUnlocked && !isSolved;
+                        const curveClass = `${unit.unitNumber % 2 === 0 ? 'd' : 'c'}${challengeIndex + 1}`;
+
+                        return (
+                          <button
+                            className={`circle challenge-node ${curveClass} ${isSolved ? 'solved' : ''} ${isActive ? 'active-challenge' : ''}`}
+                            key="challenge"
+                            onClick={() => {
+                              if (isUnlocked) {
+                                navigate(`/problems/${unit.codingExercise}`);
+                              }
+                            }}
+                            title={isSolved ? `Coding Challenge Solved! (${unit.codingExercise})` : isUnlocked ? `Start Coding Challenge (${unit.codingExercise})` : "Complete all lessons above to unlock this challenge"}
+                          >
+                            {isActive ? (
+                              <div className="float strt">CHALLENGE</div>
+                            ) : null}
+
+                            {!isUnlocked ? (
+                              <div className="float locked">
+                                <h3>Complete all lessons above to unlock the coding challenge!</h3>
+                                <div>locked</div>
+                              </div>
+                            ) : null}
+
+                            <img
+                              src={getAssetUrl('trophy.png', trophy)}
+                              alt="Coding Challenge"
+                              style={{
+                                opacity: isSolved ? 0.95 : isUnlocked ? 0.9 : 0.2,
+                                filter: isActive ? 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.75))' : 'none'
+                              }}
+                            />
+                            <span className="code-pill">CODE</span>
+                          </button>
+                        );
+                      })()}
                     </div>
-                    {/* ── Coding exercise badge (Phase 2) ─────────────────── */}
-                    {unit.codingExercise && (
-                      <ExerciseBadge
-                        solved={unit.exerciseSolved}
-                        onClick={() => navigate(`/problems/${unit.codingExercise}`)}
-                        title={unit.exerciseSolved
-                          ? `Exercise solved! ✓ — ${unit.codingExercise}`
-                          : `Complete coding exercise: ${unit.codingExercise}`}
-                      >
-                        {unit.exerciseSolved ? '✅' : '⚡'}
-                        <span>{unit.exerciseSolved ? 'Exercise Solved' : 'Coding Challenge'}</span>
-                      </ExerciseBadge>
-                    )}
                   </div>
                 );
               })}
@@ -207,32 +243,7 @@ overflow: hidden;
     transform: translateY(-3%);
 }`;
 
-// ── Coding exercise badge shown below each unit's lesson circles ───────────────
-const ExerciseBadge = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 12px auto 0;
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: 1.5px solid ${({ solved }) => solved ? '#22c55e' : '#444'};
-  background: ${({ solved }) => solved ? 'rgba(34,197,94,0.12)' : 'rgba(255,255,255,0.04)'};
-  color: ${({ solved }) => solved ? '#4ade80' : '#888'};
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  letter-spacing: 0.02em;
 
-  &:hover {
-    background: ${({ solved }) => solved ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.08)'};
-    border-color: ${({ solved }) => solved ? '#4ade80' : '#666'};
-    color: ${({ solved }) => solved ? '#86efac' : '#aaa'};
-    transform: translateY(-1px);
-  }
-
-  span { font-family: 'Bricolage Grotesque', sans-serif; }
-`;
 
 const Container = styled.div`
 display:flex;
@@ -503,6 +514,9 @@ box-sizing: border-box;
         right: 8%;
         @media (max-width: 500px) { right: 4%; }
     }
+    .c6, .c7{
+        right: 0%;
+    }
     .d2{
         right: -8%;
         @media (max-width: 500px) { right: -4%; }
@@ -518,6 +532,47 @@ box-sizing: border-box;
     .d5{
         right: -8%;
         @media (max-width: 500px) { right: -4%; }
+    }
+    .d6, .d7{
+        right: 0%;
+    }
+    .challenge-node{
+      position: relative;
+      &.active-challenge {
+        animation: pulseChallenge 1.6s infinite ease-in-out;
+      }
+      .code-pill {
+        position: absolute;
+        bottom: -7px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        padding: 1px 7px;
+        border-radius: 8px;
+        background: #111;
+        border: 1px solid #444;
+        color: #ffd700;
+        pointer-events: none;
+        white-space: nowrap;
+        font-family: 'Bricolage Grotesque', sans-serif;
+      }
+      &.solved .code-pill {
+        background: #0d2818;
+        border-color: #22c55e;
+        color: #4ade80;
+      }
+    }
+    @keyframes pulseChallenge {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0px 6px 0px 0px rgba(255, 215, 0, 0.4);
+      }
+      50% {
+        transform: scale(1.06);
+        box-shadow: 0px 8px 14px 0px rgba(255, 215, 0, 0.6);
+      }
     }
 
   }

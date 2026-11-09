@@ -156,7 +156,7 @@ function ProblemPage() {
 
   // ── Render guards ─────────────────────────────────────────────────────────
   if (loading) return <LoadingScreen><div className="spinner"/><p>Loading problem…</p></LoadingScreen>;
-  if (notFound) return <LoadingScreen><h2>Problem not found</h2><button onClick={() => navigate('/problems')}>← Back to problems</button></LoadingScreen>;
+  if (notFound) return <LoadingScreen><h2>Problem not found</h2><button onClick={() => navigate('/')}>← Back to problems</button></LoadingScreen>;
 
   const vc = verdict ? (VERDICT_CONFIG[verdict] || VERDICT_CONFIG.PENDING) : null;
 
@@ -170,7 +170,7 @@ function ProblemPage() {
       )}
       {/* ── Top bar ──────────────────────────────────────────────────────── */}
       <TopBar>
-        <button className="back-btn" onClick={() => navigate('/problems')}>← Problems</button>
+        <button className="back-btn" onClick={() => navigate('/')}>← Course</button>
         <div className="problem-title">
           <span className="title">{problem.title}</span>
           <span className={`diff-badge ${problem.difficulty}`}>{problem.difficulty}</span>
